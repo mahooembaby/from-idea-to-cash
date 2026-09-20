@@ -1,0 +1,380 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>From Idea To Cash - Master Interactive Checklist</title>
+<script src="https://cdn.tailwindcss.com"></script>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
+<style>
+  body{font-family:'Inter',sans-serif}
+  .check-card{transition: all 0.2s ease}
+  .check-card.checked{opacity:0.55}
+  .check-card.checked .step-title{text-decoration: line-through}
+  .custom-checkbox{appearance:none; -webkit-appearance:none; width:22px; height:22px; border:2px solid #e4e4e7; border-radius:6px; display:flex; align-items:center; justify-content:center; cursor:pointer; transition: all 0.2s; flex-shrink:0}
+  .custom-checkbox:checked{background:#C9A84C; border-color:#C9A84C}
+  .custom-checkbox:checked::after{content:'✓'; color:#18181b; font-weight:900; font-size:12px}
+  .progress-ring{transition: stroke-dashoffset 0.5s ease}
+</style>
+</head>
+<body class="bg-[#faf9f6] text-zinc-900 min-h-screen">
+<div class="max-w-[1120px] mx-auto px-4 py-6">
+
+  <!-- Header - Same design system as Chapter 01 -->
+  <div class="bg-zinc-900 text-white rounded-[24px] p-6 md:p-8 mb-6 relative overflow-hidden">
+    <div class="absolute -top-24 -right-24 w-[400px] h-[400px] bg-[#C9A84C]/20 blur-[70px] rounded-full pointer-events-none"></div>
+    <div class="absolute -bottom-20 -left-20 w-[300px] h-[300px] bg-white/[0.04] blur-[60px] rounded-full pointer-events-none"></div>
+    <div class="relative">
+      <div class="flex flex-wrap items-center gap-3 mb-4">
+        <div class="w-9 h-9 rounded-full bg-[#C9A84C] text-zinc-900 flex items-center justify-center font-black text-[14px]">✓</div>
+        <span class="text-[11px] tracking-[0.18em] opacity-60 font-bold">FROM IDEA TO CASH • MASTER CHECKLIST</span>
+        <span class="text-[11px] bg-white/10 border border-white/10 rounded-full px-3 py-1">💾 Auto-saves in browser • Ready for GitHub Pages</span>
+        <div class="ml-auto flex gap-2">
+          <button id="exportBtn" class="text-[11px] bg-white text-zinc-900 font-bold px-4 py-2 rounded-full hover:bg-zinc-100 transition">⬇️ Export Progress</button>
+          <button id="clearBtn" class="text-[11px] text-white/60 hover:text-white underline">Clear All</button>
+        </div>
+      </div>
+      <h1 class="text-[28px] md:text-[40px] font-black leading-[0.95] tracking-tight">The Complete<br><span class="text-[#C9A84C]">Execution Checklist</span></h1>
+      <p class="text-white/60 mt-3 text-[13px] md:text-[14px] max-w-2xl leading-relaxed">All 5 chapters • 54 actionable steps • Everything you saw in the Google Doc, now interactive. Check an item, it dims and gets saved in localStorage. Host this single file on GitHub Pages and your students' progress persists.</p>
+      
+      <!-- Overall Progress -->
+      <div class="mt-6 bg-white/5 border border-white/10 rounded-[16px] p-4 flex items-center gap-4">
+        <div class="flex-1">
+          <div class="flex justify-between mb-2">
+            <span class="text-[11px] font-bold tracking-widest opacity-60">OVERALL PROGRESS</span>
+            <span class="text-[11px] font-bold"><span id="overallPercent">0</span>% • <span id="overallCount">0/0</span> completed</span>
+          </div>
+          <div class="h-2 bg-white/10 rounded-full overflow-hidden">
+            <div id="overallBar" class="h-full bg-[#C9A84C] rounded-full transition-all duration-500" style="width:0%"></div>
+          </div>
+        </div>
+        <div class="hidden md:flex gap-2 text-[11px]">
+          <span class="bg-white/10 border border-white/10 rounded-full px-3 py-1.5" id="chapterProgressMini">5 chapters</span>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Workspace Nav - Same as Chapter 01 -->
+  <div class="bg-white border border-zinc-200 rounded-[20px] p-3 mb-6 flex flex-wrap items-center gap-2">
+    <a href="#" class="text-[11px] font-bold px-4 py-2 rounded-full bg-zinc-900 text-white">✓ Master Checklist</a>
+    <div class="hidden sm:block text-zinc-300">/</div>
+    <span class="text-[11px] font-bold tracking-widest text-zinc-500">ALL CHAPTERS</span>
+    <span class="text-[10px] px-3 py-1.5 rounded-full bg-[#FFF8E7] text-[#8a6d2b] font-bold border border-[#C9A84C]/30" id="timeEstimate">~7 hours total</span>
+    <div class="ml-auto flex flex-wrap gap-2">
+      <button id="expandAllBtn" class="text-[11px] font-bold px-4 py-2 rounded-full border border-zinc-200 hover:bg-zinc-50 transition">⬇️ Expand All</button>
+      <button id="collapseAllBtn" class="text-[11px] font-bold px-4 py-2 rounded-full border border-zinc-200 hover:bg-zinc-50 transition">⬆️ Collapse</button>
+    </div>
+  </div>
+
+  <!-- Chapters Container -->
+  <div id="chaptersContainer" class="space-y-5"></div>
+
+  <!-- Final Celebration -->
+  <div id="celebration" class="hidden mt-8 bg-zinc-900 text-white rounded-[24px] p-8 text-center relative overflow-hidden">
+    <div class="absolute inset-0 bg-[#C9A84C]/10"></div>
+    <div class="relative">
+      <div class="text-[48px] mb-3">🎉</div>
+      <h2 class="text-[24px] font-black">You finished the entire system!</h2>
+      <p class="text-white/60 mt-2 text-[13px]">All 54 steps checked. You now have a validated market, paying audience, 30 complaints, an offer page, and 48h validation. Ready for Go / No Go.</p>
+      <button id="copyCompletionBtn" class="mt-4 bg-[#C9A84C] text-zinc-900 font-bold text-[13px] px-6 py-3 rounded-full">Copy completion summary</button>
+    </div>
+  </div>
+
+  <div class="mt-8 text-center text-[11px] text-zinc-400 pb-10">
+    Built for From Idea To Cash students • Single HTML file • localStorage key: <code class="bg-white border px-1.5 py-0.5 rounded">FITC-Master-Checklist</code> • Host on GitHub Pages easily
+  </div>
+</div>
+
+<script>
+const STORAGE_KEY = 'FITC-Master-Checklist';
+
+const chaptersData = [
+  {
+    id: 'ch01',
+    number: '01',
+    title: 'THE MARKET',
+    subtitle: 'Pick ONE Profitable Market',
+    time: '60 min',
+    color: '#C9A84C',
+    steps: [
+      {id:'ch01-s0', title:'STEP 0: OPEN YOUR TOOLS', duration:'5 min', details:['Open Chapter-01-Market-Scoring-Interactive.html (auto-saves)', 'Open Master Context File (00-Master-Context-File.html)', 'Open 3 tabs: Google Trends, Gumroad, LinkedIn or Facebook', 'Set timer for 60 minutes - finish in time, no perfection']},
+      {id:'ch01-s1', title:'STEP 1: BRAIN DUMP 10 MARKETS', duration:'15 min', details:['Format: [Specific Person] + [Specific Recurring Problem]', 'GOOD: "Online teachers wasting 10 hours/week on lesson prep"', 'BAD: "Productivity" or "Business" -> TOO VAGUE, KILL IT', 'If experienced: 5 from experience + 5 from discovery', 'If ZERO experience: 10 from discovery - use Prompt A2', 'Find ideas: Gumroad search "Notion template for..." + TikTok "[niche] problem" read comments', 'Must have 10 rows filled, don\'t judge yet']},
+      {id:'ch01-s2', title:'STEP 2: SCORE PAIN POINTS (1-5)', duration:'10 min', details:['Does this problem cause REAL daily pain?', 'Pain counts only if: Wastes 5+ hrs/week, Blocks important goal, Loses money/clients, Causes chaos/stress', 'Check: YouTube/TikTok search "[your market] my biggest problem" or "I hate"', 'Tons of daily complaints = 5/5, Some = 3/5, No one = 1/5', 'Be honest - if beloved field but no complaints, give it 1']},
+      {id:'ch01-s3', title:'STEP 3: SCORE GROWING (1-5)', duration:'10 min', details:['Is this getting BIGGER or DYING?', 'Google Trends Past 12 months: UP=5, Flat stable=3, DOWN=1 (e.g., print newspapers)', 'Second check: Gumroad search market keyword - new products weekly?', 'Fresh weekly = 5/5, Last product 2 years ago = 1/5']},
+      {id:'ch01-s4', title:'STEP 4: SCORE EASY TO FIND (1-5)', duration:'10 min', details:['Can I find 1000+ of these people TODAY for free?', 'Facebook: "[market] group" - 10k+ members?', 'LinkedIn: "[market]" job title exists?', 'Reddit: r/[market] active?', 'EASY: Freelancers, HR managers, Notion users = 5/5, HARD: Heart surgeons = 1/5', 'If can\'t find free now, you\'ll pay $$$$ for ads later']},
+      {id:'ch01-s5', title:'STEP 5: SCORE CAN PAY (1-5) - THE KILLER', duration:'10 min', details:['MOST IMPORTANT - 90% fail here', '3 questions: Already paying for similar? Have income/budget? Desperate enough to pay $20-$100?', 'FAILURE: University students can\'t find jobs - Pain 5/5 Growing 5/5 Easy 5/5 but Can Pay 1/5 = TOTAL 16/20 but DEAD', 'PIVOT: Same problem audience = Companies hiring = 5/5 Can Pay', 'RULE: If Can Pay 1 or 2, KILL immediately even if total 15/20']},
+      {id:'ch01-s6', title:'STEP 6: LET THE SHEET PICK WINNER', duration:'2 min', details:['Look at Total /20 column - auto-calculates', 'Look at Verdict: 🔥 WINNER or ❌ FAIL', 'Rule: Winner = Highest total where Can Pay >=3', 'If no one has Can Pay >=3, warns it\'s dead', 'Top 3 Markets box shows best 3, Winning Market black box = winner']},
+      {id:'ch01-s7', title:'STEP 7: VALIDATE TOP 3 WITH REAL SEARCH', duration:'5 min', details:['Take Top 3 markets', 'Google Trends & Gumroad Check box: write notes', 'Market 1: Trends UP/DOWN? Gumroad fresh? Yes/No', 'If winner trending DOWN or no products on Gumroad, consider winner #2']},
+      {id:'ch01-s8', title:'STEP 8: WRITE FINAL ONE-LINER', duration:'3 min', details:['Black Winner box - field "FINAL ONE-LINER"', 'EXACT format: "I help [specific audience] solve [specific recurring problem]"', 'GOOD: "I help online teachers who waste 10h/week on lesson prep create reusable systems in 2h"', 'BAD: "I help people be productive" - too vague', 'More specific = easier to sell, copy it for Chapter 2,3,4']},
+      {id:'ch01-s9', title:'STEP 9: SAVE AND BACKUP', duration:'2 min', details:['Auto-saved in browser localStorage', 'Click Export button - save JSON to From Idea To Cash folder', 'Copy Final One-Liner into Master Context File and notes app']},
+      {id:'ch01-s10', title:'STEP 10: DONE CHECK BEFORE CHAPTER 02', duration:'3 min', details:['10 markets listed in [Audience + Problem] format?', 'Scored all 4 criteria honestly 1-5?', 'Killed any market with Can Pay <3?', 'Checked Google Trends + Gumroad for Top 3?', 'Have ONE final winner and ONE clear sentence?','If YES ready for Chapter 02, if NO go back']},
+    ]
+  },
+  {
+    id: 'ch02',
+    number: '02',
+    title: 'THE AUDIENCE',
+    subtitle: 'Find Audience Ready To Pay',
+    time: '90 min',
+    color: '#8a6d2b',
+    steps: [
+      {id:'ch02-s0', title:'STEP 0: OPEN EVERYTHING', duration:'5 min', details:['Open Chapter 02 HTML: Chapter-02-Audience-Finder-Interactive.html', 'Open Chapter 01 HTML - click Pull Winning Market', 'Open 5 tabs: Amazon, Facebook, Reddit, LinkedIn, Gumroad', 'Set timer 90 min, no perfection']},
+      {id:'ch02-s1', title:'STEP 1: LIST AUDIENCES INSIDE ONE MARKET', duration:'15 min', details:['Inside ONE market there are many audiences with different wallets', 'Format: [Specific Person + Money Spec]', 'GOOD: "Freelance video editors with 5+ clients (pay $29 for Notion)" vs "Film students (broke)"', 'GOOD: "HR managers at startups 10-50 employees (have budget)" vs "Graduates (broke)"', 'BAD: "Any freelancer" -> planet not audience', 'Score Pain/Growing/Easy/Can Pay - Can Pay <3 KILL']},
+      {id:'ch02-s2', title:'STEP 2: MINE 1 - AMAZON REVIEWS - PAYING PROOF', duration:'20 min', details:['Amazon search book/product related to market', 'Filter Best Sellers, pick product with 200+ reviews', '5-star & 4-star: What LOVE and PAY for? "worth every penny" "game changer" "saved hours" - copy to 5★ gems', '3-star & 2-star: GOLD - "Book nice but I wish it had X" = YOUR product gap', 'If Best Seller 500 reviews paying $20 = PROOF audience pays']},
+      {id:'ch02-s3', title:'STEP 3: MINE 2 - FACEBOOK GROUPS - CONCENTRATED + VOCAL', duration:'20 min', details:['Search: Groups + [audience name] e.g., "Groups Freelance Graphic Designers"', 'Join 3 groups bigger than 10k (if <1k or last post 2 months ago = dead skip)', 'Inside group search complaint keywords: struggling, help, recommendations, tired of, hate, looking for, wish, any free alternative?', 'Count daily complaints: 5-6/day = Active/Vocal Good, 0-1/day = Dead Bad']},
+      {id:'ch02-s4', title:'STEP 4: MINE 3 - REDDIT - REAL GOLD', duration:'20 min', details:['Reddit search field name -> communities subreddits', 'Enter biggest 2 subreddits e.g., r/videography', 'Search complaint keywords: struggling, help, recommendations, tired of', 'Filters New + Top Past Week: daily problem = Growing Good, only Top Past Year = seasonal Bad']},
+      {id:'ch02-s5', title:'STEP 5: COLLECT 20 VERBATIM COMPLAINTS', duration:'15 min', details:['Goal 20 rows EXACT copy-paste keep typos don\'t edit', 'Why? Exact words for sales page - real voice > your writing', 'Fields: Verbatim text, Source FB/Reddit/Amazon, Link, Keywords, Pain Type Time/Money/Blocked/Chaos', 'Paying signals: "worth every penny" "I bought" "game changer" / Broke signals: "any free alternative?" "free template?"']},
+      {id:'ch02-s6', title:'STEP 6: CHECK 5 SIGNALS - IS AUDIENCE READY?', duration:'5 min', details:['1 Can Pay: "I bought template saved me" or Gumroad $19/$39/$99? vs "any free alternative?"', '2 Concentrated: 3 places where gather? FB 20k + Subreddit 50k + LinkedIn hashtag', '3 Vocal: Complain daily long posts? Or silent?', '4 Job Signal: Employees? Freelancers USD? Business owners? vs student/job seeker', '5 Recommendation: "What tool do you recommend?" = strongest ready to pay', 'Rule: 4/5 signals = right audience, 2/5 = back to Part 1 pick another audience inside same market']},
+      {id:'ch02-s7', title:'STEP 7: WRITE FINAL AUDIENCE ONE-LINER', duration:'5 min', details:['Black box FINAL AUDIENCE ONE-LINER', 'Format: I help [specific audience with paying specs] solve [recurring problem]', 'GOOD: "I help freelance video editors with 5+ clients/month who lose revisions on WhatsApp organize feedback in one Notion system"', 'Include money spec: "with 5+ clients" or "who already pay $29"', 'Copy Sentence + Copy Full Context For AI']},
+      {id:'ch02-s8', title:'STEP 8: CHECKLIST READY FOR CHAPTER 03?', duration:'5 min', details:['3 places found (FB + Reddit + LinkedIn/Amazon/Gumroad)?', '20 complaints verbatim with keywords?', '1 paying proof Best Seller on Amazon/Gumroad?', 'Audience has job/business that lets pay (not student)?', 'They ask for recommendations daily "recommend/suggest"?', 'Wrote final sentence? Progress 6/6 = 100%']},
+      {id:'ch02-s9', title:'STEP 9: SAVE AND BACKUP', duration:'2 min', details:['Auto-saved in browser', 'Export JSON backup to From Idea To Cash folder', 'Copy final audience one-liner into Master Context File so Chapter 03 can pull']},
+    ]
+  },
+  {
+    id: 'ch03',
+    number: '03',
+    title: 'PROBLEM HUNTING',
+    subtitle: '30 Complaints = 30 Products',
+    time: '90-120 min',
+    color: '#C9A84C',
+    steps: [
+      {id:'ch03-s0', title:'STEP 0: OPEN EVERYTHING', duration:'5 min', details:['Open Ch03 HTML: Chapter-03-Problem-Bank-Interactive.html', 'Open Ch02 final audience sentence - Pull Audience button', 'Open 6 tabs: Amazon, Facebook, Reddit, YouTube, Gumroad/discover, App Store', 'Timer 90-120 min, goal 30 complaints not perfect']},
+      {id:'ch03-s1', title:'STEP 1: MINE 1 - AMAZON 3 STARS - PAYING PROOF', duration:'20 min', details:['Amazon search field related product', 'Left filter Best Sellers, choose first 3 products 100+ reviews', 'Filter 3 Stars ONLY: 5 stars says nice and leaves, 1 star says trash, 3 stars says "nice but I wish..." = GAP', 'Copy 5 sentences verbatim starting with I wish, I struggled, It would be better if', 'Search inside reviews: wish, struggle, missing, waste time, confusing']},
+      {id:'ch03-s2', title:'STEP 2: MINE 2 - FACEBOOK GROUPS - DAILY COMPLAINTS', duration:'20 min', details:['Search Groups + exact audience name: "Notion for Freelancers" "Video Editors Hub"', 'Enter 3 groups 10k+ join, if <1k or last post 2 months = dead skip', 'Use group search: struggling, help with, tired of, hate, I wish, recommendations, how do you handle', 'Don\'t copy general "How to succeed?" - copy clear pain with numbers "I waste 6 hours..."']},
+      {id:'ch03-s3', title:'STEP 3: MINE 3 - REDDIT - REAL TREASURE', duration:'20 min', details:['Enter reddit.com search field -> subreddits', 'Enter biggest 2 subreddits r/graphic_design r/SaaS etc', 'Search complaint words, filter New + Top Past Week daily vs Top Past Year seasonal', 'Open posts 20+ comments with stories "I spend 6 hours every week organizing feedback from 3 tools"']},
+      {id:'ch03-s4', title:'STEP 4: MINE 4 - YOUTUBE COMMENTS - HIDDEN PROBLEMS', duration:'15 min', details:['YouTube search "[field] tutorial" or "[field] workflow" e.g., "Notion client portal tutorial"', 'Choose 3 videos 50k+ views 200+ comments', 'Sort by Newest, look for "How do you...? What about...? This doesn\'t work when... I always struggle"', 'These are real problems video didn\'t solve']},
+      {id:'ch03-s5', title:'STEP 5: MINE 5 - GUMROAD / ETSY / APPSUMO - PAYING FOR DIGITAL', duration:'15 min', details:['Gumroad.com/discover search field name', 'Choose product that sells see sales + Reviews, read 3 stars "Good template but I wish it had automatic reminders" = idea for SaaS/Sheet', 'Etsy if Canva Templates, if 3 products selling $19/$29/$49 with reviews = Can Pay audience']},
+      {id:'ch03-s6', title:'STEP 6: MINE 6 - APP STORE REVIEWS - IF SAAS', duration:'15 min', details:['Optional but powerful if thinking small SaaS', 'App Store search famous tool Trello Notion Calendly', 'Reviews Most Critical: "Too expensive" "Missing simple export" "Too complicated for small teams"', 'Each complaint = idea for simpler cheaper SaaS or Template']},
+      {id:'ch03-s7', title:'STEP 7: YOU HAVE 30 COMPLAINTS - FIND GOLDEN PROBLEM', duration:'10 min', details:['Look at stats bar Total /30 Paying Yes count Golden keyword preview', 'Click Auto-Find Golden Problem - scans repeating keywords', 'Top keywords e.g., revisions 8 times WhatsApp 7 times forget 6 times', 'Keyword appears 5+ times = GOLDEN - problem you build offer on in Part 4']},
+      {id:'ch03-s8', title:'STEP 8: CHECK 5 PAYING PROOF SENTENCES', duration:'5 min', details:['Filter complaints where Paying = Yes, need at least 5', '"I bought this template and it saved me" "I would pay for..." "Worth every penny" "Finally found something that works" "Game changer"', 'If all say "any free alternative?" "too expensive" -> Audience broke go back to Ch02 pivot audience']},
+      {id:'ch03-s9', title:'STEP 9: FINAL CHECKLIST - READY FOR CHAPTER 04?', duration:'5 min', details:['30 complaints verbatim with source + link? Stats Total 30?', 'Each exact words not interpretation? Keep typos? Don\'t paraphrase', 'Distributed across 6 mines not 30 from one place? Each mine 5 at least 4 mines with 3+?', 'Found keyword repeating 5+ times? Auto-Find golden >=5?', 'Have 5 complaints with clear paying signal?']},
+      {id:'ch03-s10', title:'STEP 10: SAVE AND BACKUP + PREPARE FOR CH04', duration:'5 min', details:['Auto-saved browser, Export JSON backup', 'Copy All + Context For AI button - copies Master + Ch01 Winner + Ch02 Audience + 30 complaints + Golden', 'Copy Final Golden Problem into Master Context File so Chapter 04 can pull']},
+    ]
+  },
+  {
+    id: 'ch04',
+    number: '04',
+    title: 'OFFER PAGE BUILDER',
+    subtitle: 'Turn Sheet into $147 Offer',
+    time: '60-90 min',
+    color: '#8a6d2b',
+    steps: [
+      {id:'ch04-s1', title:'STEP 1: CHOOSE PAGE TYPE - DECISION MATRIX', duration:'5 min', details:['Audience >1000 + bought before high trust = Pre-order $19 full payment CTA: Reserve copy $19 Delivery Saturday 7 left of 10 GO: 3 payments $19 in 48h', 'Audience 100-1000 medium trust = Deposit $5 CTA: Pay $5 reserve + get $20 off GO: 5 reservations $5', '0 audience first product no trust = Waitlist filter CTA: Join first 15 + 50% off Answer 3Q GO: 15 entered + 5 said I\'ll pay now', '0 audience want fast test 24h = Fake Door ethical CTA Pre-order but Buy Now -> "Product ready Saturday leave email get 50% off" GO: 20% clicked Buy Now ethical don\'t take money only email']},
+      {id:'ch04-s2', title:'STEP 2: SECTION 1 HERO - TITLE (3 POINTS)', duration:'10 min', details:['Most important line - says specific result + time + without thing they hate', 'Structure: "How to [achieve specific result with numbers] in [short time] without [thing they hate]"', 'WEAK 0/3: "Sheet to track client revisions" vague small no numbers', 'STRONG 3/3: "Stop forgetting a single client revision on WhatsApp and save 4 hours every week in 15 minutes setup only - without changing how you talk to clients"']},
+      {id:'ch04-s3', title:'STEP 3: SECTION 2 MECHANISM - SUB-HEADLINE (2 POINTS)', duration:'5 min', details:['One line how you\'ll do result, defines product type without explaining product itself', 'Structure: "With [product type + how it works in 30 sec + where it works]"', 'Sheet: "With Google Sheet simple logs any revision in 30 seconds from mobile"', 'Notion: "With Notion System links all your revisions in one place"']},
+      {id:'ch04-s4', title:'STEP 4: SECTION 3 PAIN - 3 VERBATIM COMPLAINTS (3 POINTS)', duration:'10 min', details:['Proof you understand audience - literal text not interpretation', 'Don\'t write "Audience has organization problem" 0/3', 'Copy 3 verbatim from Ch03 with name source must have time/money/fight number', 'Example: "I waste 4 hours every week searching for client revision in WhatsApp" - Ahmed Video Editor FB 45k']},
+      {id:'ch04-s5', title:'STEP 5: SECTION 4 VALUE STACK - WHAT THEY GET (5 POINTS)', duration:'15 min', details:['MOST IMPORTANT - turning small cheap product into $147 offer', 'Don\'t write "you\'ll get Sheet" 0/5 looks cheap', 'Template: 1 Core System Value $49 2 lines desc works phone+laptop, 2 Bonus1 Bank 20 ready replies $19, 3 Bonus2 Setup video 10 min Loom $29, 4 Bonus3 Personal review first 10 $50', 'Total Value $147 - Pre-order first 10 only $19 instead of $39', 'Same Sheet but looks $147 product']},
+      {id:'ch04-s6', title:'STEP 6: SECTION 4.5 VIDEO + IMAGES WITHOUT PRODUCT', duration:'15 min', details:['Page without video/images looks empty Fake - how to make them product not made yet?', 'Video 2min Loom: First 60 sec problem - record WhatsApp messy, Next 60 sec mockup - Canva table 3 cols Client|Revision|Status, Last 30 sec delivery date + price Delivery Saturday 9 Aug 8PM $19 first10', 'Image1 Before Proof pain: Screenshot real WhatsApp messy blur names ethical', 'Image2 After Mockup: Canva 5 min table 3 rows Ahmed Change logo Done etc', 'Image3 Mobile Ease proof: Google Form screenshot Log new revision in 30 sec', 'Image4 Bonus Value proof: Google Docs screenshot 20 WhatsApp reply templates']},
+      {id:'ch04-s7', title:'STEP 7: SECTION 5 HOW IT WORKS 3 STEPS (1 POINT)', duration:'5 min', details:['Simplifying product to 3 easy steps - people love easy fear complicated', 'Don\'t write 10 steps complicated 0/1', 'Structure: Step1 action 30 sec from mobile, Step2 system does automatically, Step3 result 5 min morning', 'Example: Open form from mobile write revision 30 sec, System gathers all revisions automatically, Open sheet morning know what\'s still not done 5 min']},
+      {id:'ch04-s8', title:'STEP 8: SECTION 6 GUARANTEE + SECTION 7 FAQ (2 POINTS)', duration:'5 min', details:['Guarantee removes fear of paying', 'If have audience Pre-order: "If it doesn\'t save you 4 hours first week I\'ll refund $19 fully"', 'FAQ 3 questions repeating in 30 complaints: No time? Setup 15 min once then 30 sec, Use Trello/Notion? Works WITH it not against, Delivery when how? Saturday Aug 9 8PM Gumroad link + Loom 10 min']},
+      {id:'ch04-s9', title:'STEP 9: SECTION 8 CTA BUTTON DIFF 4 TYPES (3 POINTS)', duration:'10 min', details:['MOST IMPORTANT AFTER VALUE STACK - decides money or emails', 'Must be written with result + time + scarcity not weak "Buy Now" 0/3', 'Pre-order: "Reserve your copy for $19 - Delivery next Saturday - 7 places left of 10"', 'Deposit: "Pay $5 reservation and get $20 off when drops"', 'Waitlist: "Join first 15 and get 50% off - Answer 3 questions in 60 seconds" -> Tally form 4 strong questions filtering broke vs paying', 'Fake Door: Same as Pre-order but Buy Now -> second page "Product will be ready next Saturday leave email get 50% off" Measures intent Ethical don\'t take money only email']},
+      {id:'ch04-s10', title:'STEP 9B: WAITLIST FILTER - 4 BRUTAL QUESTIONS', duration:'5 min', details:['Q1 Biggest problem now with golden problem? Detail - filters weekly pain vocal - good answer has time/money number 4h/week bad vague want to be productive', 'Q2 What tried before to solve it? How much paid? - checks Can Pay - good Tried Trello $10/mo bought Notion $29 but missing reminders bad Didn\'t pay looking for free', 'Q3 If problem stays 30 more days how much time/money/clients lose? - checks urgency - good Lose 16h maybe 2 clients $500 bad Nothing okay', 'Q4 If solve with mechanism for $19 delivery Saturday will pay? Yes now / Yes $5 deposit / No - direct buying intent']},
+      {id:'ch04-s11', title:'STEP 10: SECTION 9 SCARCITY + DEADLINE (1 POINT) + SECTION 10 PS (1 POINT)', duration:'5 min', details:['Scarcity: "First 10 at $19 then goes back to $39 - Delivery Saturday Aug 9 at 8 PM Cairo - Will close reservation after 48 hours"', 'PS disqualifies not suitable makes suitable feel made for them: "PS: This is not 10-hour course you\'ll forget, this is system you install once saves 4h/week. If you lose revisions on WhatsApp every week this made for you. If not strong don\'t buy"']},
+      {id:'ch04-s12', title:'STEP 11: CHECK P.A.G.E SCORE + GO/NO-GO + FINAL CHECKLIST', duration:'5 min', details:['Score must be 16/20+ to look expensive ready to bring gold If less than 12 fix Hero and Value Stack', 'Hero result+time+without 3pts, Mechanism clear 2pts, 3 verbatim complaints 3pts, Value Stack 4 things $147->$19 5pts most important, Video 2min + 3 images bonus but makes expensive, 3 steps 1pt, Guarantee+FAQ+delivery 2pts, CTA per type not weak 3pts, Scarcity first10 1pt, PS 1pt', 'Progress checklist bottom right 11 items Must be 11/11', 'GO/NO-GO: Pre-order 3x$19 48h=GO build, Deposit 5x$5=GO, Waitlist 15+3 pay now=GO, Fake Door 20% clicked=GO']},
+      {id:'ch04-s13', title:'STEP 12: SAVE AND EXPORT + BUILD GUMROAD PAGE', duration:'10 min', details:['Auto-saved browser, Export JSON backup to From Idea To Cash folder', 'Copy Full Context For AI button copies Master+Ch02+Ch03 golden+top 3 complaints+page for AI audit', 'Copy Page Copy For Gumroad button copies full page ready paste into Gumroad description', 'Gumroad New Product paste copy upload video 2min Loom + 4 images Before After Mockup Mobile Form Bonus set price $19 first10 then $39 delivery Saturday 8PM publish', 'If Waitlist Tally.so New Form Create 4 filter questions copy link put in Gumroad CTA']},
+    ]
+  },
+  {
+    id: 'ch05',
+    number: '05',
+    title: '48H VALIDATION SPRINT',
+    subtitle: 'Get 3 Payments in 48h',
+    time: '48 hours',
+    color: '#C9A84C',
+    steps: [
+      {id:'ch05-s0', title:'STEP 0: OPEN EVERYTHING - DAY 1 MORNING', duration:'10 min', details:['Open Ch05 HTML Tracker: Chapter-05-Validation-Sprint-Interactive.html (auto-saves)', 'Open Ch05 Excel: Chapter-05-Validation-Sprint.xlsx Sheet 48h Sprint Tracker + Scripts', 'Open Ch04 Offer Page Link Gumroad or Tally ready to send', 'Open 3 tabs: Instagram + Facebook Groups + LinkedIn + Skool/Telegram/Discord', 'Open Google Sheet to log: saw page? clicked CTA? joined? paid? said I\'ll pay now? objections?', 'Click Pull Ch04 Offer Page Link + Golden Problem button at top', 'Goal 48h: Pre-order 3x$19 OR Deposit 5x$5 OR Waitlist 15 strong +3 say I\'ll pay now OR Fake Door 10 clicks']},
+      {id:'ch05-s1', title:'STEP 1: DECIDE YOUR SITUATION', duration:'5 min', details:['Situation A Have audience even 500 followers small = Focus IG Stories + Broadcast Channel + DMs + LinkedIn Post B2B + TikTok/X 30sec Hook strongest for Pre-order', 'Situation B Zero audience = Focus Facebook Groups 20 comments no link + Reddit 10 comments no link + LinkedIn cold 20 requests + YouTube + Quora most important section', 'Situation C Have community Telegram/WhatsApp/Discord/Skool = strongest but if mess lose trust Poll first then DM only Yes voters Skool most important Founding Members Offer post']},
+      {id:'ch05-s2', title:'STEP 2: IF HAVE AUDIENCE - INSTAGRAM 3 STORIES SEQUENCE - DAY 1', duration:'30 min', details:['Strongest platform for Pre-order Don\'t do one story do 3 in row', 'Story1 Poll "Do you lose your clients WhatsApp edits every week? Yes / No" filters audience', 'Story2 Screenshot page you built in Ch04 write "I built system solves this saves 4 hours a week Would you like me to open it to first 10 for $19 instead of $39?" Show Value Stack $147->$19', 'Story3 Close Friends only for those clicked Yes in Story1 Poll write "I opened link for first 10 only deadline next Saturday 8PM 7 spots left" + Gumroad link sticker', 'Broadcast Channel if have: "Pre-orders now open for modification tracking system $19 instead of $39 for first 10 Delivery next Saturday If interested reply Interested I\'ll send link"', 'DM script: "Alright [Name] here\'s link: [Insert Link] You\'ll get system 20 ready responses 10-min video plus I\'ll review your work It\'s $19 for first 10 only then $39 Delivery next Saturday 8PM If it doesn\'t save you 4 hours I\'ll refund Would you like to reserve?"']},
+      {id:'ch05-s3', title:'STEP 3: IF HAVE AUDIENCE B2B - LINKEDIN POST - DAY 1', duration:'20 min', details:['B2B (designers editors SaaS founders) LinkedIn works great', 'Post script: "I wasted 48 hours last month hunting down client revisions on WhatsApp I tried Trello and Notion but too complicated So I built simple spreadsheet that lets me log revision from phone in 30 seconds tested with 2 clients saved 4 hours last week I\'ve opened pre-orders for first 10 designers or video editors at $19 instead of $39 delivery next Saturday 8PM If interested comment Interested I\'ll send link to page with details and value stack"', 'Anyone writes Interested send page link in DM Gumroad or Tally', 'Post at 9AM weekday for max reach']},
+      {id:'ch05-s4', title:'STEP 4: IF SMALL AUDIENCE - TIKTOK / X / YOUTUBE SHORT 30SEC HOOK - DAY 1', duration:'20 min', details:['Same idea Instagram Make 30-sec video', 'First 3 seconds hook critical: "If you\'re video editor and you\'re losing track of client revisions on WhatsApp this is for you"', 'Then problem + solution + Value Stack + Link in bio for first 10 at $19', 'Put Gumroad link in bio Expected 1 video 30sec = 1000 views =20 clicks=1-2 payments if problem burning']},
+      {id:'ch05-s5', title:'STEP 5: IF ZERO AUDIENCE - FACEBOOK GROUPS - METHOD THAT DOESN\'T GET YOU BANNED - DAY 1-2', duration:'60 min', details:['MOST IMPORTANT - Will not make post selling will make smart comments where audience gathers', 'Enter 3 Facebook groups 10k+ where audience gathers e.g., Video Editors Hub 45k', 'Search inside group for word revisions - revision chaos - clients', 'Find post someone complaining 3 days ago Don\'t make new post selling comment on their complaint', 'Comment script NO LINK: "I had exact same problem I used to waste 4 hours every week For past 2 weeks I\'ve been testing simple spreadsheet that lets me log updates from phone in 30 seconds and I haven\'t forgotten a thing since I\'m opening waitlist for first 15 people to get it for $9 instead of $19 starting next Saturday Let me know if you\'d like me to add you DM"', 'CRITICAL Don\'t put link in comment you\'ll get kicked/banned Let them send you DM then you send Tally link', 'Goal 20 comments in 48 hours = 15 waitlist joins']},
+      {id:'ch05-s6', title:'STEP 6: ZERO AUDIENCE - REDDIT SAME IDEA - DAY 1-2', duration:'30 min', details:['Enter Subreddit of niche r/videography r/graphic_design r/editors r/SaaS etc', 'Search word struggling with revisions WhatsApp clients revision tracking', 'Comment English version no link: "Same issue here lost 4h/week Built simple sheet logs any revision in 30s from phone Opening waitlist for first 15 for $9 instead of $19 delivery Saturday DM me if you want link"', 'No link in comment -> They DM you -> You send Tally link']},
+      {id:'ch05-s7', title:'STEP 7: ZERO AUDIENCE - YOUTUBE COMMENTS + QUORA - DAY 1-2', duration:'20 min', details:['Enter 3 videos in niche with many comments 10k+ views make same Facebook comment', 'Quora answer question related to problem and put at end "I built simple system for this waitlist here [Tally link]" Quora allows link in answer']},
+      {id:'ch05-s8', title:'STEP 8: ZERO AUDIENCE - LINKEDIN COLD SEARCH WITHOUT SPAM - DAY 1-2', duration:'30 min', details:['Open LinkedIn search "Video Editor" or your audience filter People', 'Enter profile 20 people send Connection Request with Note: "I noticed you\'re a video editor I\'m building small system that solves problem of losing client edits sent via WhatsApp and saves 4 hours a week Let me know if you\'d like me to add you to list of first 15 users it\'s $9 instead of $19"', '20 requests per day =5-7 accept=2-3 join']},
+      {id:'ch05-s9', title:'STEP 9: IF HAVE COMMUNITY - TELEGRAM / WHATSAPP / DISCORD / SKOOL - DAY 1', duration:'30 min', details:['STRONGEST CASE BUT IF MESS LOSE TRUST so special method Don\'t Enter drop link and say buy', 'Telegram/WhatsApp: Send Poll first "Quick question Who here loses track of client edits on WhatsApp every week and wastes time? 1-Yes every week 2-No" For those select 1 send private message about system first 10 for $9 instead $19 delivery next Saturday', 'Discord: #general channel post "Hey everyone does anyone here lose track of client edits on WhatsApp? I\'ve been testing Sheet-based solution past 2 weeks solved saved 4 hours Thinking of offering to first 10 here at $9 instead $19 delivery this Saturday If interested react with ✅ and I\'ll DM details" For those react ✅ -> DM Tally', 'Skool with monthly subscription Most important: community paid money ready to pay more but trust high don\'t trick Make post inside Skool named "Founding Members Offer": I\'m building [Product Name] solves [Key Problem] saves [Time] I\'ve decided to open access to first 10 members as Founding Members You\'ll get it for $19 instead of $39 lifetime access We\'ll have 30-min call where I\'ll set it up Your name featured on Thank You page Delivery next Saturday 8PM If interested comment Founding and I\'ll send payment link Only 10 spots']},
+      {id:'ch05-s10', title:'STEP 10: LOG EVERYONE IN SHEET - EVERY 12 HOURS', duration:'10 min', details:['Open Google Sheet or HTML tracker and log: How many saw page? Clicked link? How many clicked CTA? Joined waitlist? Said I\'ll pay now? Paid $19/$5? Objections?', 'Don\'t ask opinion "What do you think about idea?" Ask action "Want to reserve place $5?" Must talk to 50 at least not 5 and say no one interested']},
+      {id:'ch05-s11', title:'STEP 11: DECISION AFTER 48 HOURS - GO / PIVOT / NO-GO - DAY 3 MORNING', duration:'10 min', details:['Open sheet and count: How many saw page? How many clicked button? How many paid or joined?', 'GO: Got 3 payments Pre-order $19 or 5 reservations $5 or 15 strong waitlist +3 say I\'ll pay now or 10 clicks Fake Door 20% = build product', 'PIVOT: Some interest but not paying = change audience angle not whole market same problem different wallet', 'NO-GO: 0 after 100 visits = idea dead go back to Ch03 pick another golden problem don\'t waste 90 days building']},
+    ]
+  }
+];
+
+let state = {};
+function load(){
+  try{
+    const saved = JSON.parse(localStorage.getItem(STORAGE_KEY) || '{}');
+    state = saved;
+  }catch(e){ state = {} }
+}
+
+function save(){
+  localStorage.setItem(STORAGE_KEY, JSON.stringify(state));
+}
+
+function toggleStep(id){
+  state[id] = !state[id];
+  save();
+  render();
+}
+
+function render(){
+  const container = document.getElementById('chaptersContainer');
+  let totalSteps = 0;
+  let completedSteps = 0;
+  chaptersData.forEach(ch => {
+    ch.steps.forEach(s => {
+      totalSteps++;
+      if(state[s.id]) completedSteps++;
+    });
+  });
+
+  const percent = totalSteps ? Math.round((completedSteps/totalSteps)*100) : 0;
+  document.getElementById('overallPercent').textContent = percent;
+  document.getElementById('overallCount').textContent = `${completedSteps}/${totalSteps}`;
+  document.getElementById('overallBar').style.width = percent + '%';
+  
+  if(completedSteps === totalSteps && totalSteps>0){
+    document.getElementById('celebration').classList.remove('hidden');
+  } else {
+    document.getElementById('celebration').classList.add('hidden');
+  }
+
+  container.innerHTML = chaptersData.map((ch, idx) => {
+    const chCompleted = ch.steps.filter(s=>state[s.id]).length;
+    const chPercent = Math.round((chCompleted / ch.steps.length)*100);
+    const isOpen = state[`open_${ch.id}`] !== false; // default open for first, closed for others? Let's default open first 2
+    
+    return `
+    <div class="bg-white rounded-[20px] border border-zinc-200 shadow-[0_4px_24px_rgba(0,0,0,0.04)] overflow-hidden">
+      <button onclick="toggleChapter('${ch.id}')" class="w-full flex items-center gap-4 p-5 md:p-6 text-left hover:bg-zinc-50/50 transition">
+        <div class="w-10 h-10 rounded-full bg-zinc-900 text-white flex items-center justify-center font-black text-[14px]">${ch.number}</div>
+        <div class="flex-1 min-w-0">
+          <div class="flex items-center gap-3">
+            <h2 class="font-black text-[16px] md:text-[18px] tracking-tight">${ch.title}</h2>
+            <span class="hidden md:inline text-[10px] px-2.5 py-1 rounded-full bg-[#FFF8E7] text-[#8a6d2b] font-bold border border-[#C9A84C]/30">${ch.time}</span>
+            <span class="text-[11px] text-zinc-500 font-medium">${ch.subtitle}</span>
+          </div>
+          <div class="mt-2 flex items-center gap-3">
+            <div class="flex-1 max-w-[240px] h-1.5 bg-zinc-100 rounded-full overflow-hidden">
+              <div class="h-full bg-[#C9A84C] rounded-full transition-all" style="width:${chPercent}%"></div>
+            </div>
+            <span class="text-[11px] font-bold text-zinc-500">${chCompleted}/${ch.steps.length} • ${chPercent}%</span>
+          </div>
+        </div>
+        <div class="flex items-center gap-2">
+          <span class="text-[11px] font-bold px-3 py-1.5 rounded-full ${chCompleted===ch.steps.length ? 'bg-zinc-900 text-white' : 'bg-zinc-100 text-zinc-600'}">${chCompleted===ch.steps.length ? '✓ Done' : isOpen ? '− Collapse' : '+ Expand'}</span>
+        </div>
+      </button>
+      
+      <div id="body_${ch.id}" class="${isOpen ? '' : 'hidden'} border-t border-zinc-100">
+        <div class="p-3 md:p-4 bg-[#faf9f6] space-y-3">
+          ${ch.steps.map(s => {
+            const checked = !!state[s.id];
+            return `
+            <div class="check-card bg-white border ${checked ? 'border-[#C9A84C]/30 bg-[#FFF8E7]/50' : 'border-zinc-200'} rounded-[14px] p-4 flex gap-3 ${checked ? 'checked' : ''}">
+              <input type="checkbox" class="custom-checkbox mt-0.5" ${checked ? 'checked' : ''} onchange="toggleStep('${s.id}')" id="cb_${s.id}">
+              <div class="flex-1 min-w-0">
+                <div class="flex flex-wrap items-center gap-2">
+                  <label for="cb_${s.id}" class="step-title font-bold text-[13px] md:text-[14px] leading-tight cursor-pointer">${s.title}</label>
+                  <span class="text-[10px] px-2 py-0.5 rounded-full bg-zinc-100 border border-zinc-200 font-bold text-zinc-600">${s.duration}</span>
+                  ${checked ? '<span class="text-[10px] px-2 py-0.5 rounded-full bg-[#C9A84C] text-zinc-900 font-black">✓ DONE</span>' : ''}
+                </div>
+                <ul class="mt-2 space-y-1.5">
+                  ${s.details.map(d => `<li class="text-[12px] text-zinc-600 leading-relaxed flex gap-2"><span class="text-zinc-300 mt-1">•</span><span>${d}</span></li>`).join('')}
+                </ul>
+              </div>
+            </div>
+            `;
+          }).join('')}
+        </div>
+      </div>
+    </div>
+    `;
+  }).join('');
+}
+
+function toggleChapter(id){
+  const key = `open_${id}`;
+  state[key] = state[key] === false ? true : false;
+  if(state[key] === undefined) state[key] = false; // first toggle closes
+  // Actually invert: if currently true or undefined, close
+  // Let's handle: default open = true if not set, so toggle to false
+  // Simpler: if key not set, set to false (close), else toggle
+  if(localStorage.getItem(STORAGE_KEY)){
+    // already handled above
+  }
+  // Fix logic
+  const current = JSON.parse(localStorage.getItem(STORAGE_KEY) || '{}')[key];
+  const newVal = current === undefined ? false : !current;
+  state[key] = newVal;
+  save();
+  render();
+}
+
+// Initial open state
+function initOpenState(){
+  chaptersData.forEach((ch, idx) => {
+    const key = `open_${ch.id}`;
+    if(state[key] === undefined){
+      state[key] = idx < 2; // open first 2 chapters by default
+    }
+  });
+}
+
+document.getElementById('exportBtn').addEventListener('click', ()=>{
+  const data = localStorage.getItem(STORAGE_KEY) || '{}';
+  const payload = {
+    app: 'From Idea To Cash',
+    type: 'Master Checklist',
+    version: 1,
+    exportedAt: new Date().toISOString(),
+    totalSteps: document.getElementById('overallCount').textContent,
+    data: JSON.parse(data)
+  };
+  const blob = new Blob([JSON.stringify(payload, null, 2)], {type:'application/json'});
+  const url = URL.createObjectURL(blob);
+  const a = document.createElement('a');
+  a.href = url;
+  a.download = 'FITC-Master-Checklist-Progress.json';
+  a.click();
+  URL.revokeObjectURL(url);
+});
+
+document.getElementById('clearBtn').addEventListener('click', ()=>{
+  if(confirm('Clear all checked progress? This cannot be undone.')){
+    // keep open states? clear all
+    const openStates = {};
+    Object.keys(state).forEach(k => { if(k.startsWith('open_')) openStates[k]=state[k]; });
+    state = {...openStates};
+    save();
+    render();
+  }
+});
+
+document.getElementById('expandAllBtn').addEventListener('click', ()=>{
+  chaptersData.forEach(ch => state[`open_${ch.id}`]=true);
+  save(); render();
+});
+document.getElementById('collapseAllBtn').addEventListener('click', ()=>{
+  chaptersData.forEach(ch => state[`open_${ch.id}`]=false);
+  save(); render();
+});
+
+document.getElementById('copyCompletionBtn')?.addEventListener('click', ()=>{
+  const text = `I completed the entire From Idea To Cash Master Checklist - ${document.getElementById('overallCount').textContent} steps! Ready for Go/No Go decision.`;
+  navigator.clipboard.writeText(text).then(()=>{
+    const b = document.getElementById('copyCompletionBtn');
+    const old = b.textContent;
+    b.textContent = '✅ Copied!';
+    setTimeout(()=>b.textContent=old, 1500);
+  });
+});
+
+// Load and render
+load();
+initOpenState();
+save();
+render();
+</script>
+</body>
+</html>

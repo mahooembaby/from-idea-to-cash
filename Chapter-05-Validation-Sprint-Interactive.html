@@ -1,0 +1,455 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Chapter 05 - 48h Validation Sprint - Get 3 Payments</title>
+<script src="https://cdn.tailwindcss.com"></script>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
+<style>body{font-family:'Inter',sans-serif}</style>
+</head>
+<body class="bg-[#faf9f6] text-zinc-900">
+<div class="max-w-[1400px] mx-auto px-4 py-6">
+
+  <!-- Workspace Navigation -->
+  <div class="bg-white border rounded-[16px] px-4 py-3 mb-5 flex flex-wrap items-center gap-2 text-[11px]">
+    <a href="index.html" class="font-bold hover:text-[#9a7a28]">Dashboard</a>
+    <span class="text-zinc-300">/</span>
+    <span class="bg-[#FFF8E7] border border-[#C9A84C]/30 rounded-full px-3 py-1 font-black">05 • VALIDATION</span>
+    <a href="Chapter-04-Offer-Builder-Interactive.html" class="ml-auto text-zinc-600 hover:text-zinc-900">← Offer</a>
+    <a href="index.html" class="text-zinc-600 hover:text-zinc-900">Workspace ↗</a>
+    <button id="workspaceBackupBtn" class="bg-zinc-900 text-white px-3 py-1.5 rounded-full font-bold">Backup / Restore</button>
+  </div>
+  <div id="workspaceBackupPanel" class="hidden bg-white border rounded-[16px] p-4 mb-5">
+    <div class="flex flex-wrap items-center gap-2">
+      <button id="backupBtn" class="bg-zinc-900 text-white px-4 py-2 rounded-full text-[11px] font-bold">⬇️ Backup Chapter 05</button>
+      <label class="bg-[#FFF8E7] border border-[#C9A84C]/40 px-4 py-2 rounded-full text-[11px] font-bold cursor-pointer">
+        ⬆️ Restore Chapter 05
+        <input id="restoreInput" type="file" accept=".json,application/json" class="hidden">
+      </label>
+      <span class="text-[10px] text-zinc-500">Backup stays on your device. Restore replaces only Chapter 05 data.</span>
+    </div>
+  </div>
+
+  <div class="bg-zinc-900 text-white rounded-[24px] p-6 mb-6 relative overflow-hidden">
+    <div class="absolute -top-20 -right-20 w-[600px] h-[600px] bg-[#C9A84C]/20 blur-[80px] rounded-full"></div>
+    <div class="relative">
+      <div class="flex items-center gap-3"><div class="w-9 h-9 rounded-full bg-[#C9A84C] text-zinc-900 flex items-center justify-center font-black">5</div><span class="text-[11px] tracking-widest opacity-60 font-bold">CHAPTER 05 • 48H SPRINT • GET 3 PAYMENTS IN 48H • HAVE AUDIENCE OR ZERO</span><span class="ml-auto text-[11px] bg-white/10 border border-white/10 rounded-full px-3 py-1">💾 Auto-saves • 50 outreach target</span></div>
+      <h1 class="text-[28px] md:text-[40px] font-black leading-[1.05] mt-3">48h Sprint: Get <span class="text-[#C9A84C]">3 Payments $19</span> or Know It's NO-GO and Save 90 Days</h1>
+      <p class="text-white/60 text-[13px] mt-2 max-w-3xl">Take link from Ch04 offer page and send to 50 targeted people in 48h. Goal: Pre-order 3x $19 OR Deposit 5x $5 OR Waitlist 15 strong +3 say I'll pay now OR Fake Door 10 clicks Buy Now. If you get it = GO build product. If not = NO-GO back to Ch01 you saved 90 days building product no one wants. Why 48h only? If idea burning people pay same day. If you wait 2 weeks no payment = not burning enough.</p>
+      <div class="mt-4 flex gap-2 flex-wrap">
+        <button id="pullBtn" class="bg-[#C9A84C] text-zinc-900 font-bold text-[11px] px-4 py-2 rounded-full">🔗 Pull Ch04 Offer Page Link + Golden Problem</button>
+        <button id="exportBtn" class="bg-white/10 border border-white/20 text-[11px] px-4 py-2 rounded-full">⬇️ Export JSON</button>
+        <button id="clearBtn" class="text-[11px] text-white/50 underline">Clear</button>
+        <span id="progressBadge" class="ml-auto bg-white/10 border rounded-full px-4 py-2 text-[11px] font-bold">0/50 contacted • 0 paid</span>
+      </div>
+      <div id="contextBox" class="mt-3 bg-white/10 border border-white/20 rounded-[12px] p-3 text-[12px] hidden"></div>
+    </div>
+
+  
+
+</div>
+
+  <div class="grid lg:grid-cols-[0.8fr_1.2fr] gap-6 mb-6">
+    <div class="bg-white border rounded-[20px] p-5">
+      <div class="text-[11px] font-black tracking-widest">GO / PIVOT / NO-GO DECISION AFTER 48H</div>
+      <div class="mt-3 space-y-2 text-[11px]">
+        <div class="p-3 rounded-[12px] border-2 border-emerald-500 bg-emerald-50"><b>GO = Build Product Now:</b> 3 payments $19 OR 5 reservations $5 OR 15 strong waitlist +3 said I'll pay now (filter Qs paid before) OR Fake Door 10 clicks Buy Now (20% of 50 saw)</div>
+        <div class="p-3 rounded-[12px] border border-amber-300 bg-amber-50"><b>PIVOT = Fix Offer/Angle:</b> Got 15 waitlist but all said expensive or not understand - Problem right but offer or price wrong, change angle price $9 or Stack and go back to Ch04</div>
+        <div class="p-3 rounded-[12px] border border-red-300 bg-red-50"><b>NO-GO = Back to Ch02 Pick New Audience - Save 90 Days:</b> 48h sent 50 DMs + 20 comments no join no payment = Problem not burning enough or audience wrong, go Ch02 pick new audience you saved 90 days building</div>
+      </div>
+      <div class="mt-4 grid grid-cols-4 gap-2 text-[10px] text-center">
+        <div class="bg-[#faf9f6] border rounded-[10px] p-2"><div class="font-black text-[16px]" id="statSaw">0</div><div>Saw Page</div></div>
+        <div class="bg-[#faf9f6] border rounded-[10px] p-2"><div class="font-black text-[16px]" id="statClicked">0</div><div>Clicked CTA</div></div>
+        <div class="bg-[#faf9f6] border rounded-[10px] p-2"><div class="font-black text-[16px]" id="statJoined">0</div><div>Joined Waitlist</div></div>
+        <div class="bg-[#C9A84C]/20 border border-[#C9A84C]/40 rounded-[10px] p-2"><div class="font-black text-[16px]" id="statPaid">0</div><div>Paid $19/$5</div></div>
+      </div>
+      <div class="mt-3 p-2 bg-zinc-900 text-white rounded-[10px] text-[11px] font-bold text-center" id="decisionText">Send 50 outreach in 48h to know GO / PIVOT / NO-GO</div>
+    </div>
+    <div class="bg-white border rounded-[20px] p-5">
+      <div class="text-[11px] font-black tracking-widest">SCRIPTS BY PLATFORM - COPY-PASTE - HAVE AUDIENCE vs ZERO vs COMMUNITY</div>
+      <div class="mt-3 grid md:grid-cols-2 gap-3 text-[11px]" id="scriptsBox"></div>
+    </div>
+  </div>
+
+  <div class="bg-white border rounded-[20px] p-5">
+    <div class="flex items-center justify-between"><div class="text-[11px] font-black tracking-widest">48H SPRINT TRACKER - 50 OUTREACH TARGET - LOG EVERYONE</div><button id="addRowBtn" class="bg-zinc-900 text-white text-[11px] font-bold px-4 py-1.5 rounded-full">+ Add Row</button></div>
+    <div class="mt-4 overflow-x-auto">
+      <table class="w-full text-[11px] border-collapse">
+        <thead><tr class="bg-zinc-900 text-white"><th class="p-2 text-left">#</th><th class="p-2">Platform</th><th class="p-2">Person/Group</th><th class="p-2">Script Used</th><th class="p-2">Saw?</th><th class="p-2">Clicked?</th><th class="p-2">Joined?</th><th class="p-2">Paid $?</th><th class="p-2">Said Pay Now?</th><th class="p-2">Objection</th><th class="p-2">Next Action</th><th class="p-2">Status</th><th class="p-2"></th></tr></thead>
+        <tbody id="trackerBody"></tbody>
+      </table>
+    </div>
+    <div class="mt-3 text-[10px] text-zinc-500">Target 50 in 48h. Don't ask "What do you think about idea?" Ask "Do you want to reserve place $5?" - Action not opinion. Must talk to 50 at least, not 5 and say no one interested.</div>
+  </div>
+
+
+  <!-- Chapter Navigation -->
+  <div class="mt-8 bg-zinc-900 text-white rounded-[20px] p-4 flex flex-wrap items-center gap-2">
+    <a href="index.html" class="bg-white/10 border border-white/10 px-4 py-2 rounded-full text-[11px]">← Dashboard</a>
+    <a href="Chapter-04-Offer-Builder-Interactive.html" class="bg-white/10 border border-white/10 px-4 py-2 rounded-full text-[11px]">Offer Builder</a>
+    <a href="index.html" class="ml-auto bg-[#C9A84C] text-zinc-900 font-black px-4 py-2 rounded-full text-[11px]">Back to Workspace →</a>
+  </div>
+
+</div>
+
+<script>
+const KEY='fitc_ch05_sprint_v1';
+const CH04_KEY='fitc_ch04_offer_v2';
+const CH02_KEY='fitc_ch02_audience_v1';
+const CH03_KEY='fitc_ch03_problem_bank_v1';
+let data={rows:[]};
+
+const SCRIPTS=[
+  {platform:'Instagram Story 3x Sequence', situation:'Audience of 500+ (even small)', script:'Story 1 (Poll): Do you lose track of client edits on WhatsApp every week? Yes / No\nStory 2: Screenshot of offer page + I built a system that solves this and saves 4 hours a week. Would you like me to open access for the first 10 people at $19 instead of $39?\nStory 3 (Close Friends only for those who said Yes): Link is open for the first 10 people only; delivery is next Saturday at 8 PM; 7 spots left + Gumroad link', link:'Story 3 link sticker + Broadcast Channel', tip:'Don\'t put the link in Story 1 or 2; place it only in the Story 3 Close Friends post', result:'3 stories + 20 DMs = 3 payments of $19 in 24 hours = GO'},
+{platform:'Instagram DM After Interested', situation:'Have Audience', script:'Alright [Name], here is the link: [Insert Link]. You’ll get the system + 20 ready-made responses + a 10-minute video + a review of your work. It’s $19 for the first 10 people only, then the price goes up to $39. Delivery is next Saturday at 8 PM. If it doesn’t save you 4 hours of work, I’ll refund your money. Would you like to reserve your spot?', link:'DM Gumroad link', tip:'Personalize name', result:'50% clicked, 30% paid'},
+{platform:'Facebook Groups (No Link)', situation:'Zero Audience - Most Important', script:'I had the exact same problem! I used to waste 4 hours every week for the same reason. For the past two weeks, I’ve been testing a simple spreadsheet that logs revisions in 30 seconds via mobile—now I never forget anything. I’m opening a waitlist for the first 15 people to get it for $9 instead of $19, starting next Saturday. If you’d like me to add you, send me a DM.', link:'NO LINK in comment -> They DM you -> Tally link', tip:'CRITICAL: Don\'t put the link in the comment; you’ll get banned. Search the group for keywords like "revisions" or "WhatsApp," find a post from 3 days ago where someone is complaining, and comment there.', result:'20 comments across 3 groups (10k+ members) = 15 waitlist signups = GO'},
+  {platform:'Skool Founding Members', situation:'Paid Community – High Intent', script:'I’m building [Product Name], which solves [Core Problem] and saves [Time]. I’ve decided to open access to the first 10 members of the Skool community as "Founding Members": You get it for $19 instead of $39 (lifetime access), a 30-minute setup call with me, your name on the "Thank You" page, and delivery is next Saturday at 8 PM. If you’re interested, comment "Founding" and I’ll send the payment link. Only 10 spots available.', link:'Post inside Skool -> Comments: Founding -> DM Gumroad link', tip:'Paid community; high trust and willingness to pay—don\'t scam. The term "Founding Members" works great on Skool.', result:'1 post, 500 members = 10 "Founding" comments = 3 payments of $19 = GO'},
+{platform:'LinkedIn Cold Connection Note', situation:'Cold outreach to a new audience', script:'I noticed you’re a video editor. I’m building a small system that solves the problem of losing client edits on WhatsApp and saves 4 hours a week. Let me know if you’d like me to add you to the list of the first 15 users—it’s $9 instead of $19.', link:'Connection Note -> DM via Tally after acceptance', tip:'20 requests/day = 5–7 acceptances = 2–3 sign-ups', result:'20 cold contacts = 2–3 waitlist sign-ups'},
+];
+
+function defaults(){ return {rows: Array.from({length:10},(_,i)=>({id:i+1, platform:'', person:'', script:'', saw:'', clicked:'', joined:'', paid:'', payNow:'', objection:'', next:'', status:'Contacted'}))}; }
+
+function load(){
+  try{
+    const saved=JSON.parse(localStorage.getItem(KEY)||'null');
+    data = saved && saved.rows ? saved : defaults();
+  }catch(e){ data=defaults(); }
+  const box=document.getElementById('contextBox');
+  try{
+    const ch04=JSON.parse(localStorage.getItem(CH04_KEY)||'null');
+    const ch03=JSON.parse(localStorage.getItem(CH03_KEY)||'null');
+    if(ch04||ch03){ box.classList.remove('hidden'); box.innerHTML=`<b>Pulled:</b> Ch04 Type: ${ch04?.pageType||''} | Hero: ${(ch04?.sections?.hero||'').substring(0,60)} | Ch03 Golden: ${ch03?.finalGoldenProblem||''}`; }
+  }catch(e){}
+}
+
+function save(){ localStorage.setItem(KEY, JSON.stringify(data)); updateStats(); }
+
+function renderScripts(){
+  const box=document.getElementById('scriptsBox'); box.innerHTML='';
+  SCRIPTS.forEach(s=>{
+    const div=document.createElement('div'); div.className='bg-[#faf9f6] border rounded-[12px] p-3';
+    div.innerHTML=`<div class="font-bold text-[11px]">${s.platform} • ${s.situation}</div><div class="mt-1 text-[10px] leading-relaxed whitespace-pre-wrap">${s.script}</div><div class="mt-2 text-[9px]"><b>Link:</b> ${s.link} | <b>Tip:</b> ${s.tip}</div><div class="mt-1 text-[9px] bg-[#C9A84C]/20 rounded-full px-2 py-0.5 inline-block">${s.result}</div>`;
+    box.appendChild(div);
+  });
+}
+
+function renderTracker(){
+  const tbody=document.getElementById('trackerBody'); tbody.innerHTML='';
+  data.rows.forEach((row, idx)=>{
+    const tr=document.createElement('tr'); tr.className='border-b hover:bg-[#faf9f6]';
+    tr.innerHTML=`
+      <td class="p-1">${row.id}</td>
+      <td class="p-1"><select data-field="platform" data-idx="${idx}" class="w-full bg-white border rounded px-1 py-1 text-[10px]"><option value="">Platform</option><option ${row.platform==='IG Story'?'selected':''}>IG Story</option><option ${row.platform==='IG DM'?'selected':''}>IG DM</option><option ${row.platform==='FB Group'?'selected':''}>FB Group</option><option ${row.platform==='Reddit'?'selected':''}>Reddit</option><option ${row.platform==='LinkedIn Post'?'selected':''}>LinkedIn Post</option><option ${row.platform==='LinkedIn Cold'?'selected':''}>LinkedIn Cold</option><option ${row.platform==='Telegram Poll'?'selected':''}>Telegram Poll</option><option ${row.platform==='Discord'?'selected':''}>Discord</option><option ${row.platform==='Skool'?'selected':''}>Skool</option><option ${row.platform==='TikTok/X'?'selected':''}>TikTok/X</option></select></td>
+      <td class="p-1"><input data-field="person" data-idx="${idx}" value="${row.person||''}" placeholder="Name/Group" class="w-full border rounded px-1 py-1 text-[10px]"></td>
+      <td class="p-1"><select data-field="script" data-idx="${idx}" class="w-full border rounded px-1 py-1 text-[10px]"><option value="">Script</option><option ${row.script==='Story Poll'?'selected':''}>Story Poll</option><option ${row.script==='Story Screenshot'?'selected':''}>Story Screenshot</option><option ${row.script==='DM Interested'?'selected':''}>DM Interested</option><option ${row.script==='FB No Link'?'selected':''}>FB No Link</option><option ${row.script==='Reddit No Link'?'selected':''}>Reddit No Link</option><option ${row.script==='LinkedIn Note'?'selected':''}>LinkedIn Note</option><option ${row.script==='Poll DM'?'selected':''}>Poll DM</option><option ${row.script==='Skool Founding'?'selected':''}>Skool Founding</option></select></td>
+      <td class="p-1"><select data-field="saw" data-idx="${idx}" class="border rounded px-1 py-1 text-[10px]"><option value=""></option><option ${row.saw==='Yes'?'selected':''}>Yes</option><option ${row.saw==='No'?'selected':''}>No</option></select></td>
+      <td class="p-1"><select data-field="clicked" data-idx="${idx}" class="border rounded px-1 py-1 text-[10px]"><option value=""></option><option ${row.clicked==='Yes'?'selected':''}>Yes</option><option ${row.clicked==='No'?'selected':''}>No</option></select></td>
+      <td class="p-1"><select data-field="joined" data-idx="${idx}" class="border rounded px-1 py-1 text-[10px]"><option value=""></option><option ${row.joined==='Yes'?'selected':''}>Yes</option><option ${row.joined==='No'?'selected':''}>No</option></select></td>
+      <td class="p-1"><select data-field="paid" data-idx="${idx}" class="border rounded px-1 py-1 text-[10px]"><option value=""></option><option ${row.paid==='$19'?'selected':''}>$19</option><option ${row.paid==='$5'?'selected':''}>$5</option><option ${row.paid==='No'?'selected':''}>No</option></select></td>
+      <td class="p-1"><select data-field="payNow" data-idx="${idx}" class="border rounded px-1 py-1 text-[10px]"><option value=""></option><option ${row.payNow==='Yes'?'selected':''}>Yes</option><option ${row.payNow==='No'?'selected':''}>No</option></select></td>
+      <td class="p-1"><input data-field="objection" data-idx="${idx}" value="${row.objection||''}" placeholder="Expensive/Not understand/Free" class="w-full border rounded px-1 py-1 text-[10px]"></td>
+      <td class="p-1"><input data-field="next" data-idx="${idx}" value="${row.next||''}" placeholder="Follow up/Pivot/No Go" class="w-full border rounded px-1 py-1 text-[10px]"></td>
+      <td class="p-1"><select data-field="status" data-idx="${idx}" class="border rounded px-1 py-1 text-[10px]"><option>Contacted</option><option ${row.status==='Replied'?'selected':''}>Replied</option><option ${row.status==='Saw Page'?'selected':''}>Saw Page</option><option ${row.status==='Clicked'?'selected':''}>Clicked</option><option ${row.status==='Paid'?'selected':''}>Paid</option><option ${row.status==='No Reply'?'selected':''}>No Reply</option></select></td>
+      <td class="p-1"><button data-del="${idx}" class="text-red-500 text-[10px]">✕</button></td>
+    `;
+    tbody.appendChild(tr);
+  });
+}
+
+function updateStats(){
+  const saw=data.rows.filter(r=>r.saw==='Yes').length;
+  const clicked=data.rows.filter(r=>r.clicked==='Yes').length;
+  const joined=data.rows.filter(r=>r.joined==='Yes').length;
+  const paid=data.rows.filter(r=>r.paid==='$19'||r.paid==='$5').length;
+  document.getElementById('statSaw').textContent=saw;
+  document.getElementById('statClicked').textContent=clicked;
+  document.getElementById('statJoined').textContent=joined;
+  document.getElementById('statPaid').textContent=paid;
+  document.getElementById('progressBadge').textContent=`${data.rows.filter(r=>r.platform).length}/50 contacted • ${paid} paid • ${joined} joined`;
+  let decision='';
+  if(paid>=3) decision='🟢 GO = Build Product Now - You got 3 payments $19 - Delivery Saturday 8PM - You are validated';
+  else if(paid>=1 || joined>=5) decision='🟡 PIVOT? Got some interest but not 3 payments - Check objections: Expensive? Not understand? Fix offer angle price $9 or Stack and retry 24h';
+  else if(data.rows.filter(r=>r.platform).length>=20 && paid===0 && joined===0) decision='🔴 NO-GO so far - 20 outreach 0 join 0 pay - Problem not burning enough or audience wrong - After 50 if still 0 = Back to Ch02 pick new audience you saved 90 days';
+  else decision='Send 50 outreach in 48h to know GO / PIVOT / NO-GO - Don\'t ask opinion ask action Do you want reserve $5?';
+  document.getElementById('decisionText').textContent=decision;
+}
+
+
+function workspaceBackup(){
+  const payload = {
+    version: 1,
+    chapter: 5,
+    exportedAt: new Date().toISOString(),
+    storageKey: KEY,
+    data: data
+  };
+  const blob = new Blob([JSON.stringify(payload, null, 2)], {type:'application/json'});
+  const url = URL.createObjectURL(blob);
+  const a = document.createElement('a');
+  a.href = url;
+  a.download = 'FITC-Chapter05-Validation-Workspace-Backup.json';
+  a.click();
+  URL.revokeObjectURL(url);
+}
+
+function workspaceRestore(file){
+  const reader = new FileReader();
+  reader.onload = () => {
+    try{
+      const payload = JSON.parse(reader.result);
+      const restored = payload?.data || payload;
+      if(!restored || typeof restored !== 'object' || !Array.isArray(restored.rows)){
+        throw new Error('Invalid backup');
+      }
+      if(!confirm('Restore Chapter 05 from this backup? Your current Chapter 05 data will be replaced.')) return;
+      data = {rows: restored.rows};
+      data.rows.forEach((r,i)=>{ r.id=i+1; });
+      save();
+      renderTracker();
+      updateStats();
+      alert('Chapter 05 restored successfully.');
+    }catch(e){
+      alert('Could not restore this Chapter 05 backup.');
+    }
+  };
+  reader.readAsText(file);
+}
+
+function attach(){
+  document.getElementById('workspaceBackupBtn').addEventListener('click', ()=>{
+    document.getElementById('workspaceBackupPanel').classList.toggle('hidden');
+  });
+  document.getElementById('backupBtn').addEventListener('click', workspaceBackup);
+  document.getElementById('restoreInput').addEventListener('change', (e)=>{
+    if(e.target.files?.[0]) workspaceRestore(e.target.files[0]);
+    e.target.value = '';
+  });
+  document.getElementById('addRowBtn').addEventListener('click', ()=>{
+    const id=data.rows.length+1;
+    data.rows.push({id, platform:'', person:'', script:'', saw:'', clicked:'', joined:'', paid:'', payNow:'', objection:'', next:'', status:'Contacted'});
+    save(); renderTracker();
+  });
+  document.addEventListener('change', (e)=>{
+    const idx=e.target.dataset.idx;
+    const field=e.target.dataset.field;
+    if(idx!==undefined && field){ data.rows[idx][field]=e.target.value; save(); }
+  });
+  document.addEventListener('input', (e)=>{
+    const idx=e.target.dataset.idx;
+    const field=e.target.dataset.field;
+    if(idx!==undefined && field){ data.rows[idx][field]=e.target.value; save(); }
+  });
+  document.addEventListener('click', (e)=>{
+    if(e.target.dataset.del!==undefined){
+      const idx=parseInt(e.target.dataset.del);
+      data.rows.splice(idx,1);
+      data.rows.forEach((r,i)=>r.id=i+1);
+      save(); renderTracker();
+    }
+  });
+  document.getElementById('exportBtn').addEventListener('click', ()=>{
+    const blob=new Blob([JSON.stringify(data,null,2)],{type:'application/json'});
+    const url=URL.createObjectURL(blob); const a=document.createElement('a'); a.href=url; a.download='FITC-Ch05-48h-Sprint-Backup.json'; a.click(); URL.revokeObjectURL(url);
+  });
+  document.getElementById('clearBtn').addEventListener('click', ()=>{
+    if(confirm('Clear all sprint data?')){ data={rows:[]}; localStorage.removeItem(KEY); data=defaults(); save(); renderTracker(); }
+  });
+  document.getElementById('pullBtn').addEventListener('click', ()=>{
+    try{
+      const ch04=JSON.parse(localStorage.getItem(CH04_KEY)||'{}');
+      const ch03=JSON.parse(localStorage.getItem(CH03_KEY)||'{}');
+      const box=document.getElementById('contextBox');
+      box.classList.remove('hidden');
+      box.innerHTML=`<b>Workspace Context:</b><br>
+      Ch04 Page Type: ${ch04?.pageType||'—'}<br>
+      Offer Hero: ${(ch04?.sections?.hero||'—').substring(0,120)}<br>
+      CTA: ${(ch04?.sections?.cta||'—').substring(0,120)}<br>
+      Golden Problem from Ch03: ${ch03?.finalGoldenProblem||ch03?.finalGolden||'—'}<br>
+      <span class="text-white/60">Use the Offer page link above when contacting your 50 targeted prospects.</span>`;
+      setTimeout(()=>box.classList.add('hidden'),5000);
+    }catch(e){}
+  });
+}
+
+load(); renderScripts(); renderTracker(); updateStats(); attach();
+</script>
+
+  <!-- CHAPTER 05 RESOURCES - COLLAPSIBLE AT END (NO MASTER LINK) - FIXED -->
+  <div class="mt-12 space-y-4" id="endResources05">
+    <div class="h-px bg-zinc-200"></div>
+    <div class="flex items-center gap-2">
+      <span class="text-[11px] font-black tracking-widest">CHAPTER 05 RESOURCES • COLLAPSIBLE</span>
+      <div class="h-px flex-1 bg-zinc-200"></div>
+      <span class="text-[10px] text-zinc-500">Click to expand - saves space</span>
+    </div>
+
+    <div class="bg-white rounded-[20px] border border-zinc-200 shadow-[0_4px_24px_rgba(0,0,0,0.04)] overflow-hidden">
+      <button onclick="toggleCollapse('quickAccessBody05', 'quickIcon05')" class="w-full flex items-center gap-3 p-5 text-left hover:bg-zinc-50 transition">
+        <div class="w-9 h-9 rounded-full bg-zinc-900 text-white flex items-center justify-center font-black text-[12px]">🔗</div>
+        <div class="flex-1">
+          <h3 class="font-black text-[14px]">Quick Access for Chapter 05</h3>
+          <p class="text-[11px] text-zinc-500 mt-0.5">Checklist for this chapter + Full Prompts Library reference • No Master link here</p>
+        </div>
+        <span id="quickIcon05" class="w-8 h-8 rounded-full border border-zinc-200 flex items-center justify-center text-[12px]">▼</span>
+      </button>
+      <div id="quickAccessBody05" class="hidden border-t border-zinc-100 p-4 bg-[#faf9f6]">
+        <div class="flex flex-wrap gap-2">
+          <a href="From-Idea-To-Cash-Master-Checklist.html" class="text-[11px] font-bold px-4 py-2 rounded-full bg-zinc-900 text-white hover:bg-black">✓ Open Master Checklist • Ch05 steps</a>
+          <a href="From-Idea-To-Cash-Prompts.html" class="text-[11px] font-bold px-4 py-2 rounded-full bg-[#FFF8E7] border border-[#C9A84C]/40 text-[#8a6d2b] hover:bg-[#FFF0C0]">📋 Full Prompts Library • 50 prompts</a>
+        </div>
+        <p class="mt-3 text-[11px] text-zinc-600 leading-relaxed">This chapter has 10 prompts inside the collapsible below. Full library contains all 50 prompts across 5 chapters. Checklist contains 54 steps filtered by chapter. LocalStorage auto-saves - all files share same domain on GitHub Pages.</p>
+      </div>
+    </div>
+
+    <div class="bg-white rounded-[20px] border border-zinc-200 shadow-[0_4px_24px_rgba(0,0,0,0.04)] overflow-hidden">
+      <button onclick="toggleCollapse('promptsBody05', 'promptsIcon05')" class="w-full flex items-center gap-3 p-5 text-left hover:bg-zinc-50 transition">
+        <div class="w-9 h-9 rounded-full bg-[#C9A84C] text-zinc-900 flex items-center justify-center font-black text-[12px]">P</div>
+        <div class="flex-1">
+          <h3 class="font-black text-[14px]">Prompts for Chapter 05 • 48H VALIDATION SPRINT • 10 prompts</h3>
+          <p class="text-[11px] text-zinc-500 mt-0.5">Version A = Paste Master once (practical) • Version B = Fill [BRACKETS] • One-click copy • LocalStorage supported</p>
+        </div>
+        <span class="hidden md:inline text-[10px] px-2.5 py-1 rounded-full bg-zinc-900 text-white font-bold mr-2">10 prompts</span>
+        <span id="promptsIcon05" class="w-8 h-8 rounded-full border border-zinc-200 flex items-center justify-center text-[12px]">▼</span>
+      </button>
+      <div id="promptsBody05" class="hidden border-t border-zinc-100">
+        <div class="p-4 bg-zinc-50/70 border-b border-zinc-100">
+          <div class="flex gap-2 flex-wrap">
+            <button onclick="switchTab('05','A')" id="tabA05" class="text-[11px] font-bold px-5 py-2.5 rounded-full border bg-zinc-900 text-white border-zinc-900">VERSION A • SMART CONTEXT • 5 prompts</button>
+            <button onclick="switchTab('05','B')" id="tabB05" class="text-[11px] font-bold px-5 py-2.5 rounded-full border bg-white text-zinc-500 border-zinc-200">VERSION B • FILL-IN-THE-BLANKS • 5 prompts</button>
+          </div>
+          <p class="mt-3 text-[11px] text-zinc-500 leading-relaxed">
+            <b>Version A practical:</b> Paste Master Context ONCE at start of AI chat, then use any prompt in SAME chat. <b>Version B:</b> Standalone. Full 50 prompts: <a href="From-Idea-To-Cash-Prompts.html" class="underline font-bold text-zinc-900">From-Idea-To-Cash-Prompts.html</a> • Checklist: <a href="From-Idea-To-Cash-Master-Checklist.html" class="underline font-bold text-zinc-900">Master Checklist</a>
+          </p>
+        </div>
+        <div class="p-4 bg-[#faf9f6] space-y-4">
+          <div id="contentA05" class="space-y-4">
+              <div class="bg-white border border-zinc-200 rounded-[14px] overflow-hidden">
+                <div class="p-4">
+                  <h4 class="font-bold text-[12px]">PROMPT A1 - 48h Sprint Plan</h4>
+                  <div class="mt-3 bg-zinc-900 rounded-[12px] p-4 relative">
+                    <pre class="text-[11px] text-zinc-100 leading-relaxed whitespace-pre-wrap pr-[70px]" style="font-family:monospace">You have Master Context Ch02 Audience Ch03 Golden Ch04 Offer Page. Audience size [0/100/1000/5000] trust [none/med/high] Have community [Telegram/Discord/Skool/None] Give 48h sprint plan to get 3 payments $19 or 5 reservations $5 or 15 strong waitlist+3 pay now. Have audience IG stories Zero audience FB groups no ban 20 comments=15 waitlist Community Poll then DM.</pre>
+                    <button onclick="copyPrompt(this)" class="absolute top-3 right-3 bg-white text-zinc-900 font-bold text-[11px] px-3 py-1.5 rounded-full hover:bg-[#C9A84C]">📋 Copy</button>
+                  </div>
+                </div>
+              </div>
+              <div class="bg-white border border-zinc-200 rounded-[14px] overflow-hidden">
+                <div class="p-4">
+                  <h4 class="font-bold text-[12px]">PROMPT A2 - Scripts By Platform</h4>
+                  <div class="mt-3 bg-zinc-900 rounded-[12px] p-4 relative">
+                    <pre class="text-[11px] text-zinc-100 leading-relaxed whitespace-pre-wrap pr-[70px]" style="font-family:monospace">You have Master Context Ch02 Ch03 Golden Ch04 Offer Page. Need 3 scripts copy-paste: Script1 Instagram 3 stories+DM Script2 Facebook group comment without ban + Reddit comment Script3 Skool Founding Members Offer.</pre>
+                    <button onclick="copyPrompt(this)" class="absolute top-3 right-3 bg-white text-zinc-900 font-bold text-[11px] px-3 py-1.5 rounded-full hover:bg-[#C9A84C]">📋 Copy</button>
+                  </div>
+                </div>
+              </div>
+              <div class="bg-white border border-zinc-200 rounded-[14px] overflow-hidden">
+                <div class="p-4">
+                  <h4 class="font-bold text-[12px]">PROMPT A3 - GO/PIVOT/NO-GO Decision</h4>
+                  <div class="mt-3 bg-zinc-900 rounded-[12px] p-4 relative">
+                    <pre class="text-[11px] text-zinc-100 leading-relaxed whitespace-pre-wrap pr-[70px]" style="font-family:monospace">You have Master Ch02 Ch03 Ch04. My 48h results: Saw[ ], Clicked[ ], Joined[ ], Said pay now[ ], Paid $19/$5[ ], Objections[Expensive/Not understand/Free], Page type[Pre-order/Deposit/Waitlist/Fake Door] Tell decision GO=Build now if 3x$19 OR 5x$5 OR 15 strong+3 pay now OR Fake Door 10 clicks 20% PIVOT=Fix offer/angle NO-GO=Back to Part2</pre>
+                    <button onclick="copyPrompt(this)" class="absolute top-3 right-3 bg-white text-zinc-900 font-bold text-[11px] px-3 py-1.5 rounded-full hover:bg-[#C9A84C]">📋 Copy</button>
+                  </div>
+                </div>
+              </div>
+              <div class="bg-white border border-zinc-200 rounded-[14px] overflow-hidden">
+                <div class="p-4">
+                  <h4 class="font-bold text-[12px]">PROMPT A4 - Objection Handling</h4>
+                  <div class="mt-3 bg-zinc-900 rounded-[12px] p-4 relative">
+                    <pre class="text-[11px] text-zinc-100 leading-relaxed whitespace-pre-wrap pr-[70px]" style="font-family:monospace">You have Ch04 Offer Page. During 48h sprint people said Expensive Don't understand Free alternative I'll think. Give 3 reply scripts each objection to convert to payment using Value Stack $147-&gt;$19 Guarantee scarcity.</pre>
+                    <button onclick="copyPrompt(this)" class="absolute top-3 right-3 bg-white text-zinc-900 font-bold text-[11px] px-3 py-1.5 rounded-full hover:bg-[#C9A84C]">📋 Copy</button>
+                  </div>
+                </div>
+              </div>
+              <div class="bg-white border border-zinc-200 rounded-[14px] overflow-hidden">
+                <div class="p-4">
+                  <h4 class="font-bold text-[12px]">PROMPT A5 - Zero Audience 20 Comments Plan</h4>
+                  <div class="mt-3 bg-zinc-900 rounded-[12px] p-4 relative">
+                    <pre class="text-[11px] text-zinc-100 leading-relaxed whitespace-pre-wrap pr-[70px]" style="font-family:monospace">You have Ch02 Audience Ch03 Golden. Zero audience Need 15 strong waitlist joins in 48h from FB groups+Reddit+LinkedIn cold without banned. Give exact 48h hour by hour: Day1 Morning Find 3 FB groups, Day1 Afternoon 10 comments without link, Day1 Evening 2 Subreddits, Day2 Morning LinkedIn 20 requests, Day2 Afternoon follow up DMs.</pre>
+                    <button onclick="copyPrompt(this)" class="absolute top-3 right-3 bg-white text-zinc-900 font-bold text-[11px] px-3 py-1.5 rounded-full hover:bg-[#C9A84C]">📋 Copy</button>
+                  </div>
+                </div>
+              </div></div>
+          <div id="contentB05" class="space-y-4 hidden">
+              <div class="bg-white border border-zinc-200 rounded-[14px] overflow-hidden">
+                <div class="p-4">
+                  <h4 class="font-bold text-[12px]">PROMPT B1 - 48h Sprint Plan</h4>
+                  <div class="mt-3 bg-zinc-900 rounded-[12px] p-4 relative">
+                    <pre class="text-[11px] text-zinc-100 leading-relaxed whitespace-pre-wrap pr-[70px]" style="font-family:monospace">Offer page [link] audience [AUD] golden problem [GOLDEN] Page type [Pre-order/Deposit/Waitlist/Fake Door] Give 48h sprint plan to get 3 payments $19 or 5 reservations $5</pre>
+                    <button onclick="copyPrompt(this)" class="absolute top-3 right-3 bg-white text-zinc-900 font-bold text-[11px] px-3 py-1.5 rounded-full hover:bg-[#C9A84C]">📋 Copy</button>
+                  </div>
+                </div>
+              </div>
+              <div class="bg-white border border-zinc-200 rounded-[14px] overflow-hidden">
+                <div class="p-4">
+                  <h4 class="font-bold text-[12px]">PROMPT B2 - Scripts Copy-Paste</h4>
+                  <div class="mt-3 bg-zinc-900 rounded-[12px] p-4 relative">
+                    <pre class="text-[11px] text-zinc-100 leading-relaxed whitespace-pre-wrap pr-[70px]" style="font-family:monospace">Offer page [desc] audience [AUD] problem [PROB] Write 3 scripts copy-paste: Instagram 3 stories+DM Facebook group comment without ban Skool Founding Members Offer</pre>
+                    <button onclick="copyPrompt(this)" class="absolute top-3 right-3 bg-white text-zinc-900 font-bold text-[11px] px-3 py-1.5 rounded-full hover:bg-[#C9A84C]">📋 Copy</button>
+                  </div>
+                </div>
+              </div>
+              <div class="bg-white border border-zinc-200 rounded-[14px] overflow-hidden">
+                <div class="p-4">
+                  <h4 class="font-bold text-[12px]">PROMPT B3 - GO/PIVOT/NO-GO</h4>
+                  <div class="mt-3 bg-zinc-900 rounded-[12px] p-4 relative">
+                    <pre class="text-[11px] text-zinc-100 leading-relaxed whitespace-pre-wrap pr-[70px]" style="font-family:monospace">My 48h results: Saw[ ] Clicked[ ] Joined[ ] Said pay now[ ] Paid[ ] Objections[Exp/Free/Free] Page type[Pre/Deposit/Waitlist/Fake] Tell decision GO/PIVOT/NO-GO</pre>
+                    <button onclick="copyPrompt(this)" class="absolute top-3 right-3 bg-white text-zinc-900 font-bold text-[11px] px-3 py-1.5 rounded-full hover:bg-[#C9A84C]">📋 Copy</button>
+                  </div>
+                </div>
+              </div>
+              <div class="bg-white border border-zinc-200 rounded-[14px] overflow-hidden">
+                <div class="p-4">
+                  <h4 class="font-bold text-[12px]">PROMPT B4 - Objection Handling</h4>
+                  <div class="mt-3 bg-zinc-900 rounded-[12px] p-4 relative">
+                    <pre class="text-[11px] text-zinc-100 leading-relaxed whitespace-pre-wrap pr-[70px]" style="font-family:monospace">During 48h sprint said Expensive/Not understand/Free/Think. Give reply scripts each using Value Stack $147-&gt;$19 +Guarantee+Scarcity</pre>
+                    <button onclick="copyPrompt(this)" class="absolute top-3 right-3 bg-white text-zinc-900 font-bold text-[11px] px-3 py-1.5 rounded-full hover:bg-[#C9A84C]">📋 Copy</button>
+                  </div>
+                </div>
+              </div>
+              <div class="bg-white border border-zinc-200 rounded-[14px] overflow-hidden">
+                <div class="p-4">
+                  <h4 class="font-bold text-[12px]">PROMPT B5 - Zero Audience 20 Comments</h4>
+                  <div class="mt-3 bg-zinc-900 rounded-[12px] p-4 relative">
+                    <pre class="text-[11px] text-zinc-100 leading-relaxed whitespace-pre-wrap pr-[70px]" style="font-family:monospace">Zero audience audience [AUD] golden [GOLDEN] Give exact 48h hour-by-hour plan to get 15 waitlist from FB+Reddit+LinkedIn cold without ban</pre>
+                    <button onclick="copyPrompt(this)" class="absolute top-3 right-3 bg-white text-zinc-900 font-bold text-[11px] px-3 py-1.5 rounded-full hover:bg-[#C9A84C]">📋 Copy</button>
+                  </div>
+                </div>
+              </div></div>
+          <div class="mt-6 p-4 bg-zinc-900 rounded-[12px] text-white flex flex-wrap items-center gap-3">
+            <span class="text-[11px]">📚 Want all 50 prompts?</span>
+            <a href="From-Idea-To-Cash-Prompts.html" class="text-[11px] font-bold bg-[#C9A84C] text-zinc-900 px-4 py-2 rounded-full">Open Full Library →</a>
+            <a href="From-Idea-To-Cash-Master-Checklist.html" class="text-[11px] font-bold bg-white/10 border border-white/20 px-4 py-2 rounded-full">Checklist →</a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <script>
+  function toggleCollapse(bodyId, iconId){
+    const body = document.getElementById(bodyId);
+    const icon = document.getElementById(iconId);
+    if(!body) return;
+    const isHidden = body.classList.contains('hidden');
+    body.classList.toggle('hidden', !isHidden);
+    if(icon) icon.style.transform = isHidden ? 'rotate(180deg)' : 'rotate(0deg)';
+  }
+  function switchTab(chNum, tab){
+    document.getElementById('contentA'+chNum).classList.toggle('hidden', tab!=='A');
+    document.getElementById('contentB'+chNum).classList.toggle('hidden', tab!=='B');
+    document.getElementById('tabA'+chNum).className = tab==='A' ? 'text-[11px] font-bold px-5 py-2.5 rounded-full border bg-zinc-900 text-white border-zinc-900' : 'text-[11px] font-bold px-5 py-2.5 rounded-full border bg-white text-zinc-500 border-zinc-200';
+    document.getElementById('tabB'+chNum).className = tab==='B' ? 'text-[11px] font-bold px-5 py-2.5 rounded-full border bg-zinc-900 text-white border-zinc-900' : 'text-[11px] font-bold px-5 py-2.5 rounded-full border bg-white text-zinc-500 border-zinc-200';
+  }
+  function copyPrompt(btn){
+    const pre = btn.parentElement.querySelector('pre');
+    if(!pre) return;
+    navigator.clipboard.writeText(pre.textContent).then(()=>{
+      const old = btn.innerHTML;
+      btn.innerHTML = '✅ Copied!';
+      setTimeout(()=>{ btn.innerHTML = old; },1500);
+    });
+  }
+  </script>
+
+</body>
+</html>

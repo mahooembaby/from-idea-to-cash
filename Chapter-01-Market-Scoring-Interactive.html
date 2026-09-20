@@ -1,0 +1,577 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Chapter 01 - Market Scoring | From Idea To Cash</title>
+<script src="https://cdn.tailwindcss.com"></script>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
+<style>body{font-family:'Inter',sans-serif} select{appearance:none}</style>
+</head>
+<body class="bg-[#faf9f6] text-zinc-900 min-h-screen">
+<div class="max-w-[1200px] mx-auto px-4 py-6">
+  <!-- Header -->
+  <div class="bg-zinc-900 text-white rounded-[24px] p-6 md:p-7 mb-6 relative overflow-hidden">
+    <div class="absolute -top-24 -right-24 w-[400px] h-[400px] bg-[#C9A84C]/20 blur-[70px] rounded-full pointer-events-none"></div>
+    <div class="relative">
+      <div class="flex flex-wrap items-center gap-3 mb-3">
+        <div class="w-9 h-9 rounded-full bg-[#C9A84C] text-zinc-900 flex items-center justify-center font-black text-[14px]">1</div>
+        <span class="text-[11px] tracking-widest opacity-60 font-bold">CHAPTER 01 • THE MARKET</span>
+        <span class="text-[11px] bg-white/10 border border-white/10 rounded-full px-3 py-1">💾 Auto-saves in browser</span>
+        <div class="ml-auto flex gap-2">
+          <button id="importMasterBtn" class="text-[11px] bg-white text-zinc-900 font-bold px-4 py-2 rounded-full hover:bg-zinc-100 transition">🔗 Pull from Master File</button>
+          <button id="exportBtn" class="text-[11px] bg-white/10 border border-white/20 px-4 py-2 rounded-full hover:bg-white/20 transition">⬇️ Export</button>
+          <button id="clearBtn" class="text-[11px] text-white/50 underline">Clear</button>
+        </div>
+      </div>
+      <h1 class="text-[26px] md:text-[34px] font-black leading-tight">Pick ONE Profitable Market<br><span class="text-[#C9A84C]">Even If You Have Zero Experience</span></h1>
+      <p class="text-white/60 mt-2 text-[13px] max-w-2xl">List 10 markets as [Audience + Problem]. Score 1-5 on 4 criteria. If Can Pay < 3, kill it. Winner = highest score where Can Pay ≥3.</p>
+    </div>
+  </div>
+
+  <!-- FITC Workspace Navigation -->
+  <div id="fitcWorkspaceNav" class="bg-white border border-zinc-200 rounded-[20px] p-3 mb-6 flex flex-wrap items-center gap-2">
+    <a href="index.html" class="text-[11px] font-bold px-4 py-2 rounded-full bg-zinc-900 text-white hover:bg-zinc-800 transition">← Dashboard</a>
+    <div class="hidden sm:block text-zinc-300">/</div>
+    <span class="text-[11px] font-black tracking-widest text-[#8a6d2b]">01 • MARKET</span>
+    <span class="text-[10px] px-3 py-1.5 rounded-full bg-[#FFF8E7] text-[#8a6d2b] font-bold">Start here</span>
+    <div class="ml-auto flex flex-wrap gap-2">
+      <button id="backupChapterBtn" class="text-[11px] font-bold px-4 py-2 rounded-full border border-zinc-200 hover:bg-zinc-50 transition">⬇️ Backup</button>
+      <label class="cursor-pointer text-[11px] font-bold px-4 py-2 rounded-full border border-zinc-200 hover:bg-zinc-50 transition">
+        ⬆️ Restore
+        <input id="restoreChapterInput" type="file" accept=".json,application/json" class="hidden">
+      </label>
+      <a href="Chapter-02-Audience-Finder-Interactive.html" class="text-[11px] font-bold px-4 py-2 rounded-full border border-zinc-200 hover:bg-zinc-50 transition">Next: Audience →</a>
+    </div>
+  </div>
+
+  
+
+<!-- Criteria Legend -->
+  <div class="grid grid-cols-1 md:grid-cols-4 gap-3 mb-6">
+    <div class="bg-white border border-zinc-200 rounded-[16px] p-4"><div class="text-[11px] font-bold tracking-wide text-zinc-500">01 • PAIN</div><div class="font-bold text-[13px] mt-1">Real painful problem?</div><div class="text-[11px] text-zinc-500 mt-1">Wastes time? Blocks goal? Loses money? Causes chaos? Search "[niche] my problem" on TikTok.</div></div>
+    <div class="bg-white border border-zinc-200 rounded-[16px] p-4"><div class="text-[11px] font-bold tracking-wide text-zinc-500">02 • GROWING</div><div class="font-bold text-[13px] mt-1">Is it growing?</div><div class="text-[11px] text-zinc-500 mt-1">Check Google Trends last 12mo + Gumroad: are new products dropping weekly?</div></div>
+    <div class="bg-white border border-zinc-200 rounded-[16px] p-4"><div class="text-[11px] font-bold tracking-wide text-zinc-500">03 • EASY TO FIND</div><div class="font-bold text-[13px] mt-1">Can you reach them?</div><div class="text-[11px] text-zinc-500 mt-1">Do they hang in FB Groups, LinkedIn, Reddit? If not, you'll burn cash on ads.</div></div>
+    <div class="bg-[#FFF8E7] border border-[#C9A84C]/40 rounded-[16px] p-4"><div class="text-[11px] font-bold tracking-wide text-[#8a6d2b]">04 • CAN PAY ★ KILLER</div><div class="font-black text-[13px] mt-1">Can they PAY?</div><div class="text-[11px] text-zinc-700 mt-1">Most important. HR job seekers = 1/5, hiring companies = 5/5. Same market, different wallet.</div></div>
+  </div>
+
+  <!-- Table -->
+  <div class="bg-white rounded-[20px] border border-zinc-200 shadow-[0_4px_24px_rgba(0,0,0,0.04)] overflow-hidden">
+    <div class="overflow-x-auto">
+      <table class="w-full min-w-[950px]">
+        <thead class="bg-zinc-50 border-b border-zinc-200">
+          <tr class="text-[11px] font-bold tracking-wide text-zinc-500 text-left">
+            <th class="py-3 px-3 w-[40px]">#</th>
+            <th class="py-3 px-3 w-[280px]">Market (Audience + Problem)</th>
+            <th class="py-3 px-2 w-[110px] text-center">Pain 1-5</th>
+            <th class="py-3 px-2 w-[110px] text-center">Growing 1-5</th>
+            <th class="py-3 px-2 w-[110px] text-center">Easy 1-5</th>
+            <th class="py-3 px-2 w-[110px] text-center">Can Pay 1-5</th>
+            <th class="py-3 px-2 w-[80px] text-center">Total /20</th>
+            <th class="py-3 px-2 w-[120px] text-center">Verdict</th>
+            <th class="py-3 px-2 w-[40px]"></th>
+          </tr>
+        </thead>
+        <tbody id="tbody"></tbody>
+      </table>
+    </div>
+    <div class="px-4 py-3 bg-amber-50 border-t border-amber-200 text-[11px] text-amber-800 flex items-center gap-2 md:hidden">↔️ Swipe table left/right to see all columns</div>
+    <div class="p-4 border-t border-zinc-100 flex gap-2">
+      <button id="addRowBtn" class="bg-zinc-900 text-white text-[13px] font-bold px-4 py-2 rounded-full hover:bg-black transition">+ Add Market</button>
+      <span class="text-[11px] text-zinc-500 self-center ml-2">Tip: Use format "Online teachers wasting 10h/week on lesson prep"</span>
+    </div>
+  </div>
+
+  <!-- Bottom Grid -->
+  <div class="grid grid-cols-1 lg:grid-cols-[1.2fr_0.8fr] gap-5 mt-6">
+    <!-- Winner -->
+    <div class="bg-zinc-900 text-white rounded-[20px] p-6 relative overflow-hidden">
+      <div class="absolute -bottom-20 -left-20 w-[300px] h-[300px] bg-[#C9A84C]/15 blur-[60px] rounded-full"></div>
+      <div class="relative">
+        <div class="flex items-center gap-2 mb-4"><div class="w-8 h-8 rounded-full bg-[#C9A84C] text-zinc-900 flex items-center justify-center">👑</div><span class="font-bold text-[13px] tracking-wide">WINNING MARKET</span><span class="ml-auto text-[10px] bg-white/10 border border-white/10 rounded-full px-2.5 py-1">Auto-updates</span></div>
+        <div id="winnerBox" class="py-6 text-center text-white/50 text-[14px]">Fill at least 2-3 markets with scores to see winner...</div>
+        <div id="finalSentenceBox" class="mt-4 hidden">
+          <label class="text-[11px] text-white/60 font-bold tracking-wide">FINAL ONE-LINER (Copy this):</label>
+          <div class="mt-2 bg-white/10 border border-white/20 rounded-[12px] p-4 flex gap-3">
+            <input id="finalSentence" class="flex-1 bg-transparent text-[14px] font-semibold focus:outline-none" placeholder="I help [specific audience] solve [specific recurring problem]">
+            <button id="copyFinalBtn" class="bg-[#C9A84C] text-zinc-900 font-bold px-4 py-1.5 rounded-full text-[12px]">Copy</button>
+          </div>
+          <p class="text-[11px] text-white/40 mt-2">Example: I help online teachers who waste 10h/week on lesson prep create systems in 2h</p>
+        </div>
+      </div>
+    </div>
+
+    <!-- Right Side -->
+    <div class="space-y-5">
+      <div class="bg-white rounded-[20px] border border-zinc-200 p-5">
+        <div class="flex items-center justify-between mb-3">
+          <span class="text-[12px] font-bold tracking-wide">TOP 3 MARKETS</span>
+          <span id="countMarkets" class="text-[11px] bg-zinc-100 rounded-full px-2.5 py-1 font-bold text-zinc-600">0 markets</span>
+        </div>
+        <div id="top3Box" class="space-y-2"><div class="py-8 text-center text-[13px] text-zinc-400">Fill table above...</div></div>
+      </div>
+      <div class="bg-white rounded-[20px] border border-zinc-200 p-5">
+        <div class="text-[12px] font-bold tracking-wide mb-2">🔍 RESEARCH NOTES</div>
+        <textarea id="researchNotes" class="w-full h-[110px] bg-zinc-50 border border-zinc-200 rounded-[12px] p-3 text-[13px] focus:outline-none focus:border-zinc-900 resize-none" placeholder="Paste TikTok comments, Google Trends screenshots, Reddit threads..."></textarea>
+        <p class="text-[11px] text-zinc-400 mt-2">Private - saved locally only</p>
+      </div>
+    </div>
+  </div>
+  <div id="fitcBottomNav" class="mt-8 bg-white border border-zinc-200 rounded-[20px] p-4 flex flex-wrap items-center justify-between gap-3">
+    <a href="index.html" class="text-[11px] font-bold text-zinc-600 hover:text-zinc-900">← Back to Dashboard</a>
+    <a href="Chapter-02-Audience-Finder-Interactive.html" class="text-[11px] font-black px-4 py-2 rounded-full bg-zinc-900 text-white hover:bg-zinc-800 transition">Next: Audience Finder →</a>
+  </div>
+
+</div>
+
+<script>
+const STORAGE_KEY = 'FITC-Ch01-MarketScoring';
+const MASTER_KEY = 'FITC-MasterContext';
+
+let markets = [];
+
+function defaultMarkets(){
+  return Array.from({length:10}, (_,i)=>({id: Date.now()+i+Math.floor(Math.random()*1000), name:'', pain:'', growing:'', easy:'', canpay:''}));
+}
+function calcTotal(m){
+  return (parseInt(m.pain)||0)+(parseInt(m.growing)||0)+(parseInt(m.easy)||0)+(parseInt(m.canpay)||0);
+}
+function getVerdict(m,total){
+  const cp = parseInt(m.canpay);
+  if(!m.name && total===0) return {text:'—', cls:'bg-zinc-50 border-zinc-200 text-zinc-400'};
+  if(cp && cp < 3) return {text:'💀 KILL', cls:'bg-red-50 border-red-300 text-red-700'};
+  if(total>=16) return {text:'🔥 WINNER', cls:'bg-[#C9A84C] border-[#C9A84C] text-zinc-900'};
+  if(total>=12) return {text:'⚡ POTENTIAL', cls:'bg-amber-50 border-amber-200 text-amber-800'};
+  if(total>0) return {text:'🤔 WEAK', cls:'bg-white border-zinc-200 text-zinc-500'};
+  return {text:'—', cls:'bg-zinc-50 border-zinc-200 text-zinc-400'};
+}
+
+function load(){
+  try{
+    const raw = localStorage.getItem(STORAGE_KEY);
+    if(raw){
+      const data = JSON.parse(raw);
+      markets = data.markets || defaultMarkets();
+      if(document.getElementById('researchNotes')) document.getElementById('researchNotes').value = data.researchNotes||'';
+      if(document.getElementById('finalSentence')) document.getElementById('finalSentence').value = data.finalSentence||'';
+    } else {
+      markets = defaultMarkets();
+    }
+  }catch(e){
+    markets = defaultMarkets();
+  }
+}
+
+// === FIXED PART - فصل الحفظ عن الريندر ===
+function saveData(){
+  // يحفظ فقط بدون ما يبني الجدول من جديد
+  const researchNotesEl = document.getElementById('researchNotes');
+  const finalSentenceEl = document.getElementById('finalSentence');
+  localStorage.setItem(STORAGE_KEY, JSON.stringify({
+    markets,
+    researchNotes: researchNotesEl ? researchNotesEl.value : '',
+    finalSentence: finalSentenceEl ? finalSentenceEl.value : ''
+  }));
+}
+
+function save(){
+  saveData();
+  render();
+}
+
+function renderTable(){
+  const tbody = document.getElementById('tbody');
+  tbody.innerHTML='';
+  markets.forEach((m,idx)=>{
+    const total = calcTotal(m);
+    const v = getVerdict(m,total);
+    const tr = document.createElement('tr');
+    tr.className = 'border-b border-zinc-100 last:border-0 hover:bg-zinc-50/50';
+    tr.innerHTML = `
+      <td class="py-2 px-3 text-[12px] font-bold text-zinc-400">${idx+1}</td>
+      <td class="py-2 px-3"><input data-id="${m.id}" data-field="name" value="${(m.name||'').replace(/"/g,'&quot;')}" placeholder="e.g. Online teachers wasting 10h/week..." class="w-full bg-zinc-50 border border-zinc-200 rounded-[10px] px-3 py-2 text-[13px] font-medium focus:outline-none focus:border-zinc-900 focus:bg-white transition"></td>
+      ${['pain','growing','easy','canpay'].map(field=>`
+        <td class="py-2 px-2 text-center">
+          <select data-id="${m.id}" data-field="${field}" class="w-[64px] h-[36px] bg-zinc-50 border border-zinc-200 rounded-[10px] text-[13px] font-bold text-center focus:outline-none focus:border-zinc-900 focus:bg-white cursor-pointer">
+            <option value="">—</option>
+            ${[1,2,3,4,5].map(n=>`<option value="${n}" ${String(m[field])===String(n)?'selected':''}>${n}</option>`).join('')}
+          </select>
+        </td>
+      `).join('')}
+      <td class="py-2 px-2 text-center"><div class="w-[64px] h-[36px] mx-auto rounded-[10px] flex items-center justify-center text-[14px] font-black border ${total===0?'bg-zinc-50 border-zinc-200 text-zinc-400': total>=16?'bg-[#C9A84C] border-[#C9A84C] text-zinc-900': total>=12?'bg-amber-100 border-amber-300 text-amber-900':'bg-white border-zinc-200'}">${total===0?'—':total}<span class="text-[10px] opacity-60 ml-0.5">/20</span></div></td>
+      <td class="py-2 px-2 text-center"><div class="w-[90px] mx-auto h-[36px] rounded-[10px] border text-[11px] font-bold flex items-center justify-center ${v.cls}">${v.text}</div></td>
+      <td class="py-2 px-1 text-center"><button data-remove="${m.id}" class="w-8 h-8 rounded-full hover:bg-zinc-100 text-zinc-400 hover:text-red-600">✕</button></td>
+    `;
+    tbody.appendChild(tr);
+  });
+}
+
+function renderWinner(){
+  const valid = markets.map(m=>({...m, total:calcTotal(m)})).filter(m=>m.name && m.total>0);
+  const countEl=document.getElementById('countMarkets'); if(countEl) countEl.textContent = `${valid.length} markets`;
+  const sorted = [...valid].filter(m=> (parseInt(m.canpay)||0) >=3 ).sort((a,b)=>b.total-a.total);
+  const fallback = [...valid].sort((a,b)=>b.total-a.total);
+  const winnerList = sorted.length? sorted : fallback;
+  const winner = winnerList[0];
+  const winnerBox=document.getElementById('winnerBox');
+  const top3Box=document.getElementById('top3Box');
+  if(!winner){ 
+    if(winnerBox) winnerBox.innerHTML='<div class="py-6 text-center text-white/50 text-[14px]">Fill at least 2-3 markets with scores to see winner...</div>'; 
+    if(top3Box) top3Box.innerHTML='<div class="py-8 text-center text-[13px] text-zinc-400">Fill table above...</div>'; 
+    document.getElementById('finalSentenceBox').classList.add('hidden'); return; 
+  }
+  const canpayFail = (parseInt(winner.canpay)||0)<3;
+  if(winnerBox) winnerBox.innerHTML=`
+    <div class="text-[11px] text-white/50 mb-1">YOUR WINNING MARKET IS:</div>
+    <div class="text-[22px] md:text-[26px] font-black leading-tight">${winner.name}</div>
+    <div class="mt-3 flex flex-wrap items-center gap-3">
+      <div class="inline-flex items-center gap-2 bg-[#C9A84C] text-zinc-900 rounded-full px-4 py-1.5 text-[13px] font-black">Score ${winner.total} / 20 • Can Pay ${winner.canpay}/5</div>
+      <div class="text-[12px] text-white/60">${canpayFail?'⚠️ Can Pay <3 = DEAD even if high score': winner.total>=16?'🔥 Amazing - start now':'⚡ Good - test deeper'}</div>
+    </div>
+  `;
+  document.getElementById('finalSentenceBox').classList.remove('hidden');
+  const finalInp = document.getElementById('finalSentence');
+  if(finalInp && !finalInp.value){
+    finalInp.placeholder = `I help ${winner.name}...`;
+  }
+  if(top3Box) top3Box.innerHTML = winnerList.slice(0,3).map((m,i)=>`
+    <div class="flex items-center gap-3 rounded-[12px] border px-3 py-2.5 ${i===0?'bg-amber-50 border-amber-200':'bg-zinc-50 border-zinc-200'}">
+      <div class="w-6 h-6 rounded-full flex items-center justify-center text-[11px] font-black ${i===0?'bg-[#C9A84C] text-zinc-900': i===1?'bg-zinc-900 text-white':'bg-zinc-200 text-zinc-700'}">${i+1}</div>
+      <div class="flex-1 min-w-0"><div class="text-[13px] font-semibold truncate">${m.name}</div><div class="text-[11px] text-zinc-500">${m.pain}/${m.growing}/${m.easy}/${m.canpay} • Can Pay ${m.canpay}</div></div>
+      <div class="w-[56px] h-[32px] rounded-[8px] flex items-center justify-center text-[13px] font-black border ${m.total>=16?'bg-[#C9A84C] border-[#C9A84C] text-zinc-900': m.total>=12?'bg-amber-100 border-amber-300 text-amber-900':'bg-white border-zinc-200'}">${m.total}</div>
+    </div>
+  `).join('');
+}
+
+function render(){
+  // === FIXED PART 2 - الحفاظ على التركيز لو حصل render ===
+  const active = document.activeElement;
+  const activeId = active?.dataset?.id;
+  const activeField = active?.dataset?.field;
+  const selStart = active?.selectionStart;
+  const selEnd = active?.selectionEnd;
+
+  renderTable();
+  renderWinner();
+
+  // رجع التركيز تاني لنفس الـ input لو كان موجود
+  if(activeId && activeField){
+    const newEl = document.querySelector(`[data-id="${activeId}"][data-field="${activeField}"]`);
+    if(newEl){
+      newEl.focus();
+      try{
+        if(typeof selStart === 'number' && newEl.setSelectionRange){
+          newEl.setSelectionRange(selStart, selEnd);
+        }
+      }catch(e){}
+    }
+  }
+}
+
+// === FIXED EVENTS ===
+document.addEventListener('input', (e)=>{
+  const id=e.target.dataset.id; 
+  const field=e.target.dataset.field;
+  if(id && field){ 
+    const m=markets.find(x=>x.id==id); 
+    if(m){ 
+      m[field]=e.target.value; 
+      if(field === 'name'){
+        // أهم إصلاح: لما تكتب في اسم الماركت، احفظ بس وحدث الـ Winner بدون ما تهد الجدول
+        saveData();
+        renderWinner();
+      } else {
+        // لو حقل تاني (مش متوقع يبقى input) اعمل save كامل
+        save();
+      }
+    } 
+    return;
+  }
+});
+
+// التغيير في الـ Selects لازم يعمل render عشان يحدث الـ Total
+document.addEventListener('change', (e)=>{
+  const id=e.target.dataset.id; 
+  const field=e.target.dataset.field;
+  if(id && field){ 
+    const m=markets.find(x=>x.id==id); 
+    if(m){ 
+      m[field]=e.target.value; 
+      save(); 
+    } 
+  }
+});
+
+document.addEventListener('click', (e)=>{
+  const rem=e.target.dataset.remove || e.target.closest('[data-remove]')?.dataset.remove;
+  if(rem){ markets=markets.filter(m=>m.id!=rem); save(); }
+});
+
+document.getElementById('addRowBtn').addEventListener('click', ()=>{ markets.push({id:Date.now()+Math.floor(Math.random()*1000), name:'', pain:'', growing:'', easy:'', canpay:''}); save(); });
+
+// FIXED: دول برا الجدول فمش محتاجين render للجدول
+document.getElementById('researchNotes').addEventListener('input', ()=>{
+  saveData();
+});
+document.getElementById('finalSentence').addEventListener('input', ()=>{
+  saveData();
+});
+
+document.getElementById('exportBtn').addEventListener('click', ()=>{
+  const data=localStorage.getItem(STORAGE_KEY)||'{}'; const blob=new Blob([data],{type:'application/json'}); const url=URL.createObjectURL(blob); const a=document.createElement('a'); a.href=url; a.download='FITC-Chapter01-Market-Scoring-Backup.json'; a.click(); URL.revokeObjectURL(url);
+});
+document.getElementById('clearBtn').addEventListener('click', ()=>{ if(confirm('Clear all markets?')){ localStorage.removeItem(STORAGE_KEY); markets=defaultMarkets(); document.getElementById('researchNotes').value=''; document.getElementById('finalSentence').value=''; save(); } });
+document.getElementById('importMasterBtn').addEventListener('click', ()=>{
+  try{
+    const master=JSON.parse(localStorage.getItem(MASTER_KEY)||'{}');
+    if(!master.niche){ alert('Master Context File is empty. Fill Chapter 0 first!'); return; }
+    const suggested = master.audience_who ? `${master.audience_who} struggling with ${master.prob1||'recurring problem'}` : master.niche;
+    if(markets.length>0){ markets[0].name = suggested; save(); alert('Pulled from Master File into first row!'); }
+  }catch(e){ alert('No Master File found'); }
+});
+document.getElementById('copyFinalBtn').addEventListener('click', ()=>{
+  const txt=document.getElementById('finalSentence').value; if(!txt){ alert('Write your final sentence first'); return; } navigator.clipboard.writeText(txt).then(()=>{ const b=document.getElementById('copyFinalBtn'); const old=b.textContent; b.textContent='✅ Copied!'; setTimeout(()=>b.textContent=old,1500); });
+});
+
+load(); render();
+
+// FITC workspace backup helpers
+(function(){
+  const KEY = 'FITC-Ch01-MarketScoring';
+  const backupBtn = document.getElementById('backupChapterBtn');
+  const restoreInput = document.getElementById('restoreChapterInput');
+
+  if (backupBtn) backupBtn.addEventListener('click', function(){
+    let data = {};
+    try { data = JSON.parse(localStorage.getItem(KEY) || '{}'); } catch(e) {}
+    const payload = {
+      app: 'From Idea To Cash',
+      chapter: '01',
+      name: 'Market Scoring',
+      version: 1,
+      exportedAt: new Date().toISOString(),
+      data: data
+    };
+    const blob = new Blob([JSON.stringify(payload, null, 2)], {type:'application/json'});
+    const url = URL.createObjectURL(blob);
+    const a = document.createElement('a');
+    a.href = url;
+    a.download = 'FITC-Chapter01-Market-Scoring-Backup.json';
+    document.body.appendChild(a);
+    a.click();
+    a.remove();
+    URL.revokeObjectURL(url);
+  });
+
+  if (restoreInput) restoreInput.addEventListener('change', function(e){
+    const file = e.target.files && e.target.files[0];
+    if (!file) return;
+    const reader = new FileReader();
+    reader.onload = function(){
+      try {
+        const payload = JSON.parse(reader.result);
+        const data = payload && payload.data ? payload.data : payload;
+        if (!data || typeof data !== 'object') throw new Error('Invalid backup');
+        if (!confirm('Restore Chapter 01 from this backup? Current Chapter 01 data will be replaced.')) return;
+        localStorage.setItem(KEY, JSON.stringify(data));
+        location.reload();
+      } catch(err) {
+        alert('Restore failed. Please choose a valid Chapter 01 backup file.');
+      }
+    };
+    reader.readAsText(file);
+    e.target.value = '';
+  });
+})();
+
+</script>
+
+  <!-- CHAPTER 01 RESOURCES - COLLAPSIBLE AT END (NO MASTER LINK) - FIXED -->
+  <div class="mt-12 space-y-4" id="endResources01">
+    <div class="h-px bg-zinc-200"></div>
+    <div class="flex items-center gap-2">
+      <span class="text-[11px] font-black tracking-widest">CHAPTER 01 RESOURCES • COLLAPSIBLE</span>
+      <div class="h-px flex-1 bg-zinc-200"></div>
+      <span class="text-[10px] text-zinc-500">Click to expand - saves space</span>
+    </div>
+
+    <div class="bg-white rounded-[20px] border border-zinc-200 shadow-[0_4px_24px_rgba(0,0,0,0.04)] overflow-hidden">
+      <button onclick="toggleCollapse('quickAccessBody01', 'quickIcon01')" class="w-full flex items-center gap-3 p-5 text-left hover:bg-zinc-50 transition">
+        <div class="w-9 h-9 rounded-full bg-zinc-900 text-white flex items-center justify-center font-black text-[12px]">🔗</div>
+        <div class="flex-1">
+          <h3 class="font-black text-[14px]">Quick Access for Chapter 01</h3>
+          <p class="text-[11px] text-zinc-500 mt-0.5">Checklist for this chapter + Full Prompts Library reference • No Master link here</p>
+        </div>
+        <span id="quickIcon01" class="w-8 h-8 rounded-full border border-zinc-200 flex items-center justify-center text-[12px]">▼</span>
+      </button>
+      <div id="quickAccessBody01" class="hidden border-t border-zinc-100 p-4 bg-[#faf9f6]">
+        <div class="flex flex-wrap gap-2">
+          <a href="From-Idea-To-Cash-Master-Checklist.html" class="text-[11px] font-bold px-4 py-2 rounded-full bg-zinc-900 text-white hover:bg-black">✓ Open Master Checklist • Ch01 steps</a>
+          <a href="From-Idea-To-Cash-Prompts.html" class="text-[11px] font-bold px-4 py-2 rounded-full bg-[#FFF8E7] border border-[#C9A84C]/40 text-[#8a6d2b] hover:bg-[#FFF0C0]">📋 Full Prompts Library • 50 prompts</a>
+        </div>
+        <p class="mt-3 text-[11px] text-zinc-600 leading-relaxed">This chapter has 10 prompts inside the collapsible below. Full library contains all 50 prompts across 5 chapters. Checklist contains 54 steps filtered by chapter. LocalStorage auto-saves - all files share same domain on GitHub Pages.</p>
+      </div>
+    </div>
+
+    <div class="bg-white rounded-[20px] border border-zinc-200 shadow-[0_4px_24px_rgba(0,0,0,0.04)] overflow-hidden">
+      <button onclick="toggleCollapse('promptsBody01', 'promptsIcon01')" class="w-full flex items-center gap-3 p-5 text-left hover:bg-zinc-50 transition">
+        <div class="w-9 h-9 rounded-full bg-[#C9A84C] text-zinc-900 flex items-center justify-center font-black text-[12px]">P</div>
+        <div class="flex-1">
+          <h3 class="font-black text-[14px]">Prompts for Chapter 01 • THE MARKET • 10 prompts</h3>
+          <p class="text-[11px] text-zinc-500 mt-0.5">Version A = Paste Master once (practical) • Version B = Fill [BRACKETS] • One-click copy • LocalStorage supported</p>
+        </div>
+        <span class="hidden md:inline text-[10px] px-2.5 py-1 rounded-full bg-zinc-900 text-white font-bold mr-2">10 prompts</span>
+        <span id="promptsIcon01" class="w-8 h-8 rounded-full border border-zinc-200 flex items-center justify-center text-[12px]">▼</span>
+      </button>
+      <div id="promptsBody01" class="hidden border-t border-zinc-100">
+        <div class="p-4 bg-zinc-50/70 border-b border-zinc-100">
+          <div class="flex gap-2 flex-wrap">
+            <button onclick="switchTab('01','A')" id="tabA01" class="text-[11px] font-bold px-5 py-2.5 rounded-full border bg-zinc-900 text-white border-zinc-900">VERSION A • SMART CONTEXT • 5 prompts</button>
+            <button onclick="switchTab('01','B')" id="tabB01" class="text-[11px] font-bold px-5 py-2.5 rounded-full border bg-white text-zinc-500 border-zinc-200">VERSION B • FILL-IN-THE-BLANKS • 5 prompts</button>
+          </div>
+          <p class="mt-3 text-[11px] text-zinc-500 leading-relaxed">
+            <b>Version A practical:</b> Paste Master Context ONCE at start of AI chat, then use any prompt in SAME chat. <b>Version B:</b> Standalone. Full 50 prompts: <a href="From-Idea-To-Cash-Prompts.html" class="underline font-bold text-zinc-900">From-Idea-To-Cash-Prompts.html</a> • Checklist: <a href="From-Idea-To-Cash-Master-Checklist.html" class="underline font-bold text-zinc-900">Master Checklist</a>
+          </p>
+        </div>
+        <div class="p-4 bg-[#faf9f6] space-y-4">
+          <div id="contentA01" class="space-y-4">
+              <div class="bg-white border border-zinc-200 rounded-[14px] overflow-hidden">
+                <div class="p-4">
+                  <h4 class="font-bold text-[12px]">PROMPT A1 - Score My Market Brutally</h4>
+                  <div class="mt-3 bg-zinc-900 rounded-[12px] p-4 relative">
+                    <pre class="text-[11px] text-zinc-100 leading-relaxed whitespace-pre-wrap pr-[70px]" style="font-family:monospace">You are a market validation expert... You already have my Master Context from the beginning of this chat - use it.
+
+Now, score THIS market for me: [Take your market from Row 1]
+
+Score 1-5 on: Pain, Growing, Easy, Can Pay. Total /20, verdict KILL/TEST/WINNER, if Can Pay &lt;3 suggest pivot to richer audience.</pre>
+                    <button onclick="copyPrompt(this)" class="absolute top-3 right-3 bg-white text-zinc-900 font-bold text-[11px] px-3 py-1.5 rounded-full hover:bg-[#C9A84C]">📋 Copy</button>
+                  </div>
+                </div>
+              </div>
+              <div class="bg-white border border-zinc-200 rounded-[14px] overflow-hidden">
+                <div class="p-4">
+                  <h4 class="font-bold text-[12px]">PROMPT A2 - Find 10 Hidden Markets</h4>
+                  <div class="mt-3 bg-zinc-900 rounded-[12px] p-4 relative">
+                    <pre class="text-[11px] text-zinc-100 leading-relaxed whitespace-pre-wrap pr-[70px]" style="font-family:monospace">You already have my Master Context from start of chat - use my skills &amp; goal.
+Give me 10 hyper-specific sub-markets as [Specific Paying Audience] struggling with [Specific Weekly Problem]. Avoid students/broke. Score each 1-5 Pain/Growing/Easy/CanPay total /20. Rank top 3.</pre>
+                    <button onclick="copyPrompt(this)" class="absolute top-3 right-3 bg-white text-zinc-900 font-bold text-[11px] px-3 py-1.5 rounded-full hover:bg-[#C9A84C]">📋 Copy</button>
+                  </div>
+                </div>
+              </div>
+              <div class="bg-white border border-zinc-200 rounded-[14px] overflow-hidden">
+                <div class="p-4">
+                  <h4 class="font-bold text-[12px]">PROMPT A3 - Trends + Gumroad Validator</h4>
+                  <div class="mt-3 bg-zinc-900 rounded-[12px] p-4 relative">
+                    <pre class="text-[11px] text-zinc-100 leading-relaxed whitespace-pre-wrap pr-[70px]" style="font-family:monospace">You already have my Master Context.
+Top 3 markets: [Market1], [Market2], [Market3]
+For each: what to type into Google Trends (3 variations) + Gumroad/Etsy/LinkedIn to check growth, red flags shrinking, green flags growing. Table to fill.</pre>
+                    <button onclick="copyPrompt(this)" class="absolute top-3 right-3 bg-white text-zinc-900 font-bold text-[11px] px-3 py-1.5 rounded-full hover:bg-[#C9A84C]">📋 Copy</button>
+                  </div>
+                </div>
+              </div>
+              <div class="bg-white border border-zinc-200 rounded-[14px] overflow-hidden">
+                <div class="p-4">
+                  <h4 class="font-bold text-[12px]">PROMPT A4 - Can Pay Detective</h4>
+                  <div class="mt-3 bg-zinc-900 rounded-[12px] p-4 relative">
+                    <pre class="text-[11px] text-zinc-100 leading-relaxed whitespace-pre-wrap pr-[70px]" style="font-family:monospace">You already have my Master Context.
+Market: [paste market]
+Who HAS money vs BROKE? What already paying for? Average income? Would pay $49 template or $29/mo community? If broke, give 2 pivots to richer audience same problem.</pre>
+                    <button onclick="copyPrompt(this)" class="absolute top-3 right-3 bg-white text-zinc-900 font-bold text-[11px] px-3 py-1.5 rounded-full hover:bg-[#C9A84C]">📋 Copy</button>
+                  </div>
+                </div>
+              </div>
+              <div class="bg-white border border-zinc-200 rounded-[14px] overflow-hidden">
+                <div class="p-4">
+                  <h4 class="font-bold text-[12px]">PROMPT A5 - Final One-Liner Crafter</h4>
+                  <div class="mt-3 bg-zinc-900 rounded-[12px] p-4 relative">
+                    <pre class="text-[11px] text-zinc-100 leading-relaxed whitespace-pre-wrap pr-[70px]" style="font-family:monospace">You already have my Master Context.
+Winning market: [winner + scores]
+Write final one-liner: I help [specific audience] solve [specific problem] without [objection]. 5 variations: super niche, broader, money, time, status. Pick best.</pre>
+                    <button onclick="copyPrompt(this)" class="absolute top-3 right-3 bg-white text-zinc-900 font-bold text-[11px] px-3 py-1.5 rounded-full hover:bg-[#C9A84C]">📋 Copy</button>
+                  </div>
+                </div>
+              </div></div>
+          <div id="contentB01" class="space-y-4 hidden">
+              <div class="bg-white border border-zinc-200 rounded-[14px] overflow-hidden">
+                <div class="p-4">
+                  <h4 class="font-bold text-[12px]">PROMPT B1 - Experienced Path</h4>
+                  <div class="mt-3 bg-zinc-900 rounded-[12px] p-4 relative">
+                    <pre class="text-[11px] text-zinc-100 leading-relaxed whitespace-pre-wrap pr-[70px]" style="font-family:monospace">I'm expert in [FIELD] with [X YEARS]. Score market [AUDIENCE+PROBLEM] 1-5 Pain/Growing/Easy/CanPay total /20 verdict KILL/TEST/WINNER, if CanPay&lt;3 suggest pivot.</pre>
+                    <button onclick="copyPrompt(this)" class="absolute top-3 right-3 bg-white text-zinc-900 font-bold text-[11px] px-3 py-1.5 rounded-full hover:bg-[#C9A84C]">📋 Copy</button>
+                  </div>
+                </div>
+              </div>
+              <div class="bg-white border border-zinc-200 rounded-[14px] overflow-hidden">
+                <div class="p-4">
+                  <h4 class="font-bold text-[12px]">PROMPT B2 - Zero Experience</h4>
+                  <div class="mt-3 bg-zinc-900 rounded-[12px] p-4 relative">
+                    <pre class="text-[11px] text-zinc-100 leading-relaxed whitespace-pre-wrap pr-[70px]" style="font-family:monospace">Zero experience, skills [SKILLS], goal [INCOME]. Suggest 10 sub-markets as [Paying Audience] struggling with [Weekly Problem]. Avoid students/broke. Score 1-5 each total /20 rank top3.</pre>
+                    <button onclick="copyPrompt(this)" class="absolute top-3 right-3 bg-white text-zinc-900 font-bold text-[11px] px-3 py-1.5 rounded-full hover:bg-[#C9A84C]">📋 Copy</button>
+                  </div>
+                </div>
+              </div>
+              <div class="bg-white border border-zinc-200 rounded-[14px] overflow-hidden">
+                <div class="p-4">
+                  <h4 class="font-bold text-[12px]">PROMPT B3 - Validator</h4>
+                  <div class="mt-3 bg-zinc-900 rounded-[12px] p-4 relative">
+                    <pre class="text-[11px] text-zinc-100 leading-relaxed whitespace-pre-wrap pr-[70px]" style="font-family:monospace">Top3: [M1] [M2] [M3]. For each what to type into Google Trends (3 keywords) + Gumroad to validate growth, red/green flags. Table.</pre>
+                    <button onclick="copyPrompt(this)" class="absolute top-3 right-3 bg-white text-zinc-900 font-bold text-[11px] px-3 py-1.5 rounded-full hover:bg-[#C9A84C]">📋 Copy</button>
+                  </div>
+                </div>
+              </div>
+              <div class="bg-white border border-zinc-200 rounded-[14px] overflow-hidden">
+                <div class="p-4">
+                  <h4 class="font-bold text-[12px]">PROMPT B4 - Can Pay Detective</h4>
+                  <div class="mt-3 bg-zinc-900 rounded-[12px] p-4 relative">
+                    <pre class="text-[11px] text-zinc-100 leading-relaxed whitespace-pre-wrap pr-[70px]" style="font-family:monospace">Market [YOUR MARKET] Split HAS MONEY vs BROKE. What already paying? Avg income? Pay $49/$29/mo? If broke 2 pivots.</pre>
+                    <button onclick="copyPrompt(this)" class="absolute top-3 right-3 bg-white text-zinc-900 font-bold text-[11px] px-3 py-1.5 rounded-full hover:bg-[#C9A84C]">📋 Copy</button>
+                  </div>
+                </div>
+              </div>
+              <div class="bg-white border border-zinc-200 rounded-[14px] overflow-hidden">
+                <div class="p-4">
+                  <h4 class="font-bold text-[12px]">PROMPT B5 - One-Liner</h4>
+                  <div class="mt-3 bg-zinc-900 rounded-[12px] p-4 relative">
+                    <pre class="text-[11px] text-zinc-100 leading-relaxed whitespace-pre-wrap pr-[70px]" style="font-family:monospace">Winning market [WINNER+SCORES] Write 5 one-liners I help [audience] solve [problem] without [objection] - variations niche/broader/money/time/status. Pick best.</pre>
+                    <button onclick="copyPrompt(this)" class="absolute top-3 right-3 bg-white text-zinc-900 font-bold text-[11px] px-3 py-1.5 rounded-full hover:bg-[#C9A84C]">📋 Copy</button>
+                  </div>
+                </div>
+              </div></div>
+          <div class="mt-6 p-4 bg-zinc-900 rounded-[12px] text-white flex flex-wrap items-center gap-3">
+            <span class="text-[11px]">📚 Want all 50 prompts?</span>
+            <a href="From-Idea-To-Cash-Prompts.html" class="text-[11px] font-bold bg-[#C9A84C] text-zinc-900 px-4 py-2 rounded-full">Open Full Library →</a>
+            <a href="From-Idea-To-Cash-Master-Checklist.html" class="text-[11px] font-bold bg-white/10 border border-white/20 px-4 py-2 rounded-full">Checklist →</a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <script>
+  function toggleCollapse(bodyId, iconId){
+    const body = document.getElementById(bodyId);
+    const icon = document.getElementById(iconId);
+    if(!body) return;
+    const isHidden = body.classList.contains('hidden');
+    body.classList.toggle('hidden', !isHidden);
+    if(icon) icon.style.transform = isHidden ? 'rotate(180deg)' : 'rotate(0deg)';
+  }
+  function switchTab(chNum, tab){
+    document.getElementById('contentA'+chNum).classList.toggle('hidden', tab!=='A');
+    document.getElementById('contentB'+chNum).classList.toggle('hidden', tab!=='B');
+    document.getElementById('tabA'+chNum).className = tab==='A' ? 'text-[11px] font-bold px-5 py-2.5 rounded-full border bg-zinc-900 text-white border-zinc-900' : 'text-[11px] font-bold px-5 py-2.5 rounded-full border bg-white text-zinc-500 border-zinc-200';
+    document.getElementById('tabB'+chNum).className = tab==='B' ? 'text-[11px] font-bold px-5 py-2.5 rounded-full border bg-zinc-900 text-white border-zinc-900' : 'text-[11px] font-bold px-5 py-2.5 rounded-full border bg-white text-zinc-500 border-zinc-200';
+  }
+  function copyPrompt(btn){
+    const pre = btn.parentElement.querySelector('pre');
+    if(!pre) return;
+    navigator.clipboard.writeText(pre.textContent).then(()=>{
+      const old = btn.innerHTML;
+      btn.innerHTML = '✅ Copied!';
+      setTimeout(()=>{ btn.innerHTML = old; },1500);
+    });
+  }
+  </script>
+
+</body>
+</html>
