@@ -1,0 +1,782 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Chapter 02 - Audience Finder | From Idea To Cash</title>
+<script src="https://cdn.tailwindcss.com"></script>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
+<style>body{font-family:'Inter',sans-serif} select{appearance:none}</style>
+</head>
+<body class="bg-[#faf9f6] text-zinc-900 min-h-screen">
+<div class="max-w-[1200px] mx-auto px-4 py-6">
+
+  <!-- Workspace Navigation -->
+  <div class="bg-white border border-zinc-200 rounded-[16px] px-4 py-3 mb-6 flex flex-wrap items-center gap-2 text-[11px] font-bold">
+    <a href="index.html" class="px-3 py-2 rounded-full bg-zinc-900 text-white">← Dashboard</a>
+    <span class="px-3 py-2 rounded-full bg-[#FFF8E7] border border-[#C9A84C]/40 text-[#8a6d2b]">02 • AUDIENCE</span>
+    <a href="01-market-scoring.html" class="px-3 py-2 rounded-full border border-zinc-200 hover:bg-zinc-50">← Market</a>
+    <span class="text-zinc-300">→</span>
+    <a href="03-problem-bank.html" class="px-3 py-2 rounded-full border border-zinc-200 hover:bg-zinc-50">Problems →</a>
+    <div class="ml-auto flex gap-2">
+      <button id="workspaceBackupBtn" class="px-3 py-2 rounded-full bg-zinc-900 text-white">⬇️ Backup</button>
+      <button id="workspaceRestoreBtn" class="px-3 py-2 rounded-full border border-zinc-300 bg-white">⬆️ Restore</button>
+      <input id="workspaceRestoreInput" type="file" accept=".json,application/json" class="hidden">
+    </div>
+  </div>
+
+  <!-- Header -->
+  <div class="bg-zinc-900 text-white rounded-[24px] p-6 md:p-7 mb-6 relative overflow-hidden">
+    <div class="absolute -top-20 -right-20 w-[400px] h-[400px] bg-[#C9A84C]/20 blur-[70px] rounded-full"></div>
+    <div class="relative">
+      <div class="flex flex-wrap items-center gap-3 mb-3">
+        <div class="w-9 h-9 rounded-full bg-[#C9A84C] text-zinc-900 flex items-center justify-center font-black">2</div>
+        <span class="text-[11px] tracking-widest opacity-60 font-bold">CHAPTER 02 • THE AUDIENCE</span>
+        <span class="text-[11px] bg-white/10 border border-white/10 rounded-full px-3 py-1">💾 Auto-saves + 90 min</span>
+        <div class="ml-auto flex gap-2">
+          <button id="pullMarketBtn" class="text-[11px] bg-[#C9A84C] text-zinc-900 font-bold px-4 py-2 rounded-full">🔗 Pull Winning Market from Ch01</button>
+          <button id="exportBtn" class="text-[11px] bg-white/10 border border-white/20 px-4 py-2 rounded-full">⬇️ Export</button>
+          <button id="clearBtn" class="text-[11px] text-white/50 underline">Clear</button>
+        </div>
+      </div>
+      <h1 class="text-[26px] md:text-[34px] font-black leading-tight">Find The Audience That Actually <span class="text-[#C9A84C]">PAYS</span></h1>
+      <p class="text-white/60 mt-2 text-[13px] max-w-3xl">Your market has 10 audiences inside. Your job: pick ONE that has weekly pain, talks loud in ONE place, and already buys. If they say "any free alternative?" RUN.</p>
+      <div id="marketContext" class="mt-4 bg-white/10 border border-white/20 rounded-[12px] p-3 text-[13px] hidden"></div>
+    </div>
+  </div>
+
+  
+  
+
+<!-- 5 Signals Legend -->
+  <div class="grid grid-cols-1 md:grid-cols-5 gap-3 mb-6">
+    <div class="bg-[#FFF8E7] border border-[#C9A84C]/40 rounded-[16px] p-4"><div class="text-[10px] font-black tracking-wide text-[#8a6d2b]">SIGNAL 1 • CAN PAY ★</div><div class="font-bold text-[12px] mt-1">They say "worth every penny" or buy $19/$39/$99 on Gumroad. If "free alternative?" = RUN</div></div>
+    <div class="bg-white border rounded-[16px] p-4"><div class="text-[10px] font-bold text-zinc-500">SIGNAL 2 • CONCENTRATED</div><div class="font-bold text-[12px] mt-1">3 places: FB 20k + Reddit 50k + LinkedIn. If scattered, you'll burn ads.</div></div>
+    <div class="bg-white border rounded-[16px] p-4"><div class="text-[10px] font-bold text-zinc-500">SIGNAL 3 • VOCAL</div><div class="font-bold text-[12px] mt-1">Complain DAILY with long posts. Silent audience = no sales.</div></div>
+    <div class="bg-white border rounded-[16px] p-4"><div class="text-[10px] font-bold text-zinc-500">SIGNAL 4 • JOB</div><div class="font-bold text-[12px] mt-1">Check profiles: employees? freelancers $$$? Not students/job seekers.</div></div>
+    <div class="bg-white border rounded-[16px] p-4"><div class="text-[10px] font-bold text-zinc-500">SIGNAL 5 • RECOMMENDATION</div><div class="font-bold text-[12px] mt-1">"What tool do you recommend?" = strongest buying intent.</div></div>
+  </div>
+
+  <!-- Audience Comparison -->
+  <div class="bg-white rounded-[20px] border border-zinc-200 shadow-[0_4px_24px_rgba(0,0,0,0.04)] overflow-hidden mb-6">
+    <div class="p-5 border-b border-zinc-100 flex items-center gap-2"><h2 class="font-bold text-[14px]">Audience Comparison - Inside Same Market</h2><span class="text-[11px] text-zinc-500 ml-2">Example: HR market = A) Job seekers (broke) vs B) Hiring managers (rich)</span></div>
+    <div class="overflow-x-auto">
+      <table class="w-full min-w-[1100px]">
+        <thead class="bg-zinc-50 border-b text-[11px] font-bold tracking-wide text-zinc-500 text-left">
+          <tr><th class="py-3 px-3 w-[40px]">#</th><th class="py-3 px-3 w-[260px]">Audience Inside Market (Be specific with money info)</th><th class="py-3 px-2 w-[80px] text-center">Pain</th><th class="py-3 px-2 w-[80px] text-center">Grow</th><th class="py-3 px-2 w-[80px] text-center">Easy</th><th class="py-3 px-2 w-[80px] text-center">Can Pay</th><th class="py-3 px-2 w-[70px] text-center">Total</th><th class="py-3 px-2 w-[100px] text-center">Verdict</th><th class="py-3 px-3 w-[220px]">Job / Paying Signal</th></tr>
+        </thead>
+        <tbody id="audienceBody"></tbody>
+      </table>
+    </div>
+    <div class="p-3 border-t flex gap-2"><button id="addAudienceBtn" class="bg-zinc-900 text-white text-[12px] font-bold px-4 py-2 rounded-full">+ Add Audience Type</button><span class="text-[11px] text-zinc-500 self-center">Compare at least 2 audiences: one broke, one rich, same problem.</span></div>
+  </div>
+
+  <!-- 3 Mines -->
+  <div class="grid grid-cols-1 lg:grid-cols-3 gap-5 mb-6">
+    <!-- Mine 1 Amazon -->
+    <div class="bg-white rounded-[20px] border border-zinc-200 p-5">
+      <h3 class="font-bold text-[13px] flex items-center gap-2">⛏️ MINE 1: Amazon Reviews <span class="text-[10px] bg-zinc-100 rounded-full px-2 py-1">Can Pay Proof</span></h3>
+      <p class="text-[11px] text-zinc-500 mt-2">Search book/product related to niche → Best Sellers → 200+ reviews → Read 5★ (what they love & pay for: "worth every penny") + 3★/2★ (gap = your product)</p>
+      <div class="mt-4 space-y-3">
+        <input data-mine="amazon_product" class="w-full bg-[#faf9f6] border border-zinc-200 rounded-[10px] p-3 text-[12px]" placeholder="Product name: e.g., Freelance Client Management book">
+        <div class="grid grid-cols-2 gap-2"><input data-mine="amazon_price" class="bg-[#faf9f6] border rounded-[10px] p-3 text-[12px] border-zinc-200" placeholder="Price: $20"><input data-mine="amazon_reviews" class="bg-[#faf9f6] border rounded-[10px] p-3 text-[12px] border-zinc-200" placeholder="Reviews: 500"></div>
+        <textarea data-mine="amazon_5star" class="w-full bg-[#faf9f6] border border-zinc-200 rounded-[10px] p-3 text-[12px] min-h-[70px]" placeholder="5★ gems: copy 'worth every penny', 'finally works'..."></textarea>
+        <textarea data-mine="amazon_3star" class="w-full bg-[#FFF8E7] border border-[#C9A84C]/30 rounded-[10px] p-3 text-[12px] min-h-[70px]" placeholder="3★/2★ GOLD: copy 'I wish it had...' - this is your product gap"></textarea>
+        <select data-mine="amazon_verdict" class="w-full h-[40px] bg-white border border-zinc-200 rounded-[10px] px-3 text-[12px] font-bold"><option value="">Paying audience? —</option><option value="yes">✅ YES - They pay $20+ (500 reviews)</option><option value="no">❌ NO - They want free</option></select>
+      </div>
+    </div>
+    <!-- Mine 2 FB -->
+    <div class="bg-white rounded-[20px] border border-zinc-200 p-5">
+      <h3 class="font-bold text-[13px] flex items-center gap-2">⛏️ MINE 2: Facebook Groups <span class="text-[10px] bg-zinc-100 rounded-full px-2 py-1">Concentrated</span></h3>
+      <p class="text-[11px] text-zinc-500 mt-2">Find 3 groups where audience hangs daily. Check members + posts/day. Silent = dead.</p>
+      <div id="fbBody" class="mt-4 space-y-3"></div>
+      <button id="addFbBtn" class="mt-3 bg-zinc-900 text-white text-[11px] font-bold px-3 py-1.5 rounded-full">+ Add FB Group</button>
+      <div class="mt-4"><label class="text-[11px] font-bold">Other places they hang?</label><textarea data-mine="other_places" class="w-full mt-1 bg-[#faf9f6] border border-zinc-200 rounded-[10px] p-3 text-[12px] min-h-[60px]" placeholder="LinkedIn groups, Slack, Discord..."></textarea></div>
+    </div>
+    <!-- Mine 3 Reddit -->
+    <div class="bg-white rounded-[20px] border border-zinc-200 p-5">
+      <h3 class="font-bold text-[13px] flex items-center gap-2">⛏️ MINE 3: Reddit / Vocal <span class="text-[10px] bg-zinc-100 rounded-full px-2 py-1">Vocal</span></h3>
+      <p class="text-[11px] text-zinc-500 mt-2">Find subreddits + count vocal complaints. Look for "recommend tool?" posts.</p>
+      <div id="redditBody" class="mt-4 space-y-3"></div>
+      <button id="addRedditBtn" class="mt-3 bg-zinc-900 text-white text-[11px] font-bold px-3 py-1.5 rounded-full">+ Add Subreddit</button>
+    </div>
+  </div>
+
+  <!-- Complaints Mine -->
+  <div class="bg-white rounded-[20px] border border-zinc-200 p-5 mb-6">
+    <div class="flex items-center justify-between">
+      <h3 class="font-bold text-[14px]">💬 Complaint Mining - 20 Complaints <span id="complaintCount" class="ml-2 text-[11px] bg-zinc-100 rounded-full px-2 py-1">0/20 collected</span></h3>
+      <button id="addComplaintBtn" class="bg-zinc-900 text-white text-[11px] font-bold px-3 py-1.5 rounded-full">+ Add Complaint</button>
+    </div>
+    <p class="text-[11px] text-zinc-500 mt-1">Copy-paste real complaints from FB/Reddit/TikTok. Need 20 to see pattern.</p>
+    <div id="complaintBody" class="mt-4 grid grid-cols-1 md:grid-cols-2 gap-3"></div>
+  </div>
+
+  <!-- Bottom: Winner + Signals + Checklist -->
+  <div class="grid grid-cols-1 lg:grid-cols-[1.1fr_0.9fr] gap-5">
+    <div class="space-y-5">
+      <div class="bg-zinc-900 text-white rounded-[20px] p-6 relative overflow-hidden">
+        <div class="flex items-center gap-2 mb-3"><div class="w-8 h-8 rounded-full bg-[#C9A84C] text-zinc-900 flex items-center justify-center">👑</div><span class="font-bold text-[13px]">WINNING AUDIENCE</span></div>
+        <div id="winnerBox" class="py-4 text-white/60 text-[13px]">Add audiences with scores to see winner...</div>
+        <div class="mt-4">
+          <label class="text-[11px] text-white/60 font-bold tracking-wide">FINAL AUDIENCE ONE-LINER:</label>
+          <div class="mt-2 bg-white/10 border border-white/20 rounded-[12px] p-3 flex gap-2">
+            <input id="finalAudienceSentence" class="flex-1 bg-transparent text-[13px] font-semibold focus:outline-none" placeholder="I help [specific rich audience] who [specific daily pain]...">
+            <button id="copyFinalBtn" class="bg-[#C9A84C] text-zinc-900 font-bold px-3 py-1 rounded-full text-[11px]">Copy</button>
+          </div>
+        </div>
+      </div>
+      <div class="bg-white rounded-[20px] border border-zinc-200 p-5">
+        <div class="flex items-center justify-between mb-3"><h3 class="font-bold text-[13px]">✅ 90-Min Validation Checklist</h3><span id="progressText" class="text-[11px] bg-zinc-100 rounded-full px-2 py-1">0/8 done - 0%</span></div>
+        <div class="w-full h-2 bg-zinc-100 rounded-full mb-3"><div id="progressBar" class="h-2 bg-[#C9A84C] rounded-full transition-all" style="width:0%"></div></div>
+        <div class="space-y-2 text-[12px]">
+          <label class="flex gap-2"><input type="checkbox" data-check="amazon"> Amazon proof 200+ reviews $20+</label>
+          <label class="flex gap-2"><input type="checkbox" data-check="fb"> 3 FB groups 20k+ daily posts</label>
+          <label class="flex gap-2"><input type="checkbox" data-check="reddit"> 3 subreddits 50k+ vocal daily</label>
+          <label class="flex gap-2"><input type="checkbox" data-check="complaints"> 20 complaints collected</label>
+          <label class="flex gap-2"><input type="checkbox" data-check="paying"> Paying signal: "worth every penny"</label>
+          <label class="flex gap-2"><input type="checkbox" data-check="job"> Job check: freelancers/employees not students</label>
+          <label class="flex gap-2"><input type="checkbox" data-check="recommend"> "Recommend tool?" posts found</label>
+          <label class="flex gap-2"><input type="checkbox" data-check="sentence"> Final one-liner written</label>
+        </div>
+      </div>
+    </div>
+    <div class="space-y-5">
+      <div class="bg-white rounded-[20px] border border-zinc-200 p-5">
+        <h3 class="font-bold text-[13px] mb-3">📡 Signals Summary</h3>
+        <div id="signalsBox" class="text-[12px] text-zinc-500">Fill mines to see signals...</div>
+        <button id="copyForAI" class="mt-4 w-full bg-zinc-900 text-white text-[12px] font-bold py-2 rounded-full">📋 Copy Full Context for AI Validation</button>
+      </div>
+      <div class="bg-[#FFF8E7] border border-[#C9A84C]/30 rounded-[20px] p-5">
+        <h4 class="font-bold text-[12px] text-[#8a6d2b]">💡 TIP: Rich vs Broke Test</h4>
+        <p class="text-[11px] text-zinc-700 mt-2">Same market, different wallet: "Freelancers losing clients due to messy proposals" (can pay $49) vs "Students learning freelancing" (wants free). Always pick the one who already pays.</p>
+      </div>
+    </div>
+  </div>
+
+
+  <!-- Bottom Workspace Navigation -->
+  <div class="mt-6 bg-white border border-zinc-200 rounded-[16px] p-4 flex flex-wrap items-center justify-between gap-3">
+    <a href="index.html" class="text-[12px] font-bold px-4 py-2 rounded-full border border-zinc-200 hover:bg-zinc-50">← Back to Dashboard</a>
+    <div class="flex gap-2">
+      <a href="01-market-scoring.html" class="text-[12px] font-bold px-4 py-2 rounded-full border border-zinc-200 hover:bg-zinc-50">← Market Scoring</a>
+      <a href="03-problem-bank.html" class="text-[12px] font-bold px-4 py-2 rounded-full bg-zinc-900 text-white">Next: Problem Bank →</a>
+    </div>
+  </div>
+
+
+  <!-- CHAPTER 02 RESOURCES - MOVED TO END - RESPONSIVE - NO MASTER LINK - FIXED FROM IMAGE -->
+  <div class="mt-10 md:mt-12 space-y-4 w-full max-w-full overflow-hidden" id="endResources02">
+    <div class="h-px bg-zinc-200 w-full"></div>
+    <div class="flex items-center gap-2 w-full">
+      <span class="text-[10px] md:text-[11px] font-black tracking-widest whitespace-nowrap">CHAPTER 02 RESOURCES • AT END • COLLAPSIBLE</span>
+      <div class="h-px flex-1 bg-zinc-200"></div>
+      <span class="text-[9px] md:text-[10px] text-zinc-500 whitespace-nowrap">Click to expand ▼ saves space</span>
+    </div>
+
+    <div class="bg-white rounded-[16px] md:rounded-[20px] border border-zinc-200 shadow-[0_4px_24px_rgba(0,0,0,0.04)] overflow-hidden w-full">
+      <button onclick="toggleCollapse('quickAccessBody02', 'quickIcon02')" class="w-full flex items-center gap-2 md:gap-3 p-4 md:p-5 text-left hover:bg-zinc-50 transition">
+        <div class="w-8 h-8 md:w-9 md:h-9 rounded-full bg-zinc-900 text-white flex items-center justify-center font-black text-[11px] md:text-[12px] flex-shrink-0">🔗</div>
+        <div class="flex-1 min-w-0">
+          <h3 class="font-black text-[13px] md:text-[14px] truncate">Quick Access for Chapter 02</h3>
+          <p class="text-[10px] md:text-[11px] text-zinc-500 mt-0.5 truncate">Checklist + Full Prompts Library • No Master link • At end</p>
+        </div>
+        <span id="quickIcon02" class="w-7 h-7 md:w-8 md:h-8 rounded-full border border-zinc-200 flex items-center justify-center text-[10px] md:text-[12px] flex-shrink-0">▼</span>
+      </button>
+      <div id="quickAccessBody02" class="hidden border-t border-zinc-100 p-3 md:p-4 bg-[#faf9f6] w-full">
+        <div class="flex flex-wrap gap-2 w-full">
+          <a href="checklist.html" class="text-[10px] md:text-[11px] font-bold px-3 py-2 md:px-4 md:py-2 rounded-full bg-zinc-900 text-white hover:bg-black">✓ checklist.html • Ch02</a>
+          <a href="prompts.html" class="text-[10px] md:text-[11px] font-bold px-3 py-2 md:px-4 md:py-2 rounded-full bg-[#FFF8E7] border border-[#C9A84C]/40 text-[#8a6d2b]">📋 prompts.html • 50 prompts</a>
+        </div>
+        <p class="mt-3 text-[10px] md:text-[11px] text-zinc-600 leading-relaxed break-words">10 prompts inside next collapsible at end. Full library 50 prompts. Checklist 54 steps. All auto-save via localStorage shared domain. Short names lowercase.</p>
+      </div>
+    </div>
+
+    <div class="bg-white rounded-[16px] md:rounded-[20px] border border-zinc-200 shadow-[0_4px_24px_rgba(0,0,0,0.04)] overflow-hidden w-full">
+      <button onclick="toggleCollapse('promptsBody02', 'promptsIcon02')" class="w-full flex items-center gap-2 md:gap-3 p-4 md:p-5 text-left hover:bg-zinc-50 transition">
+        <div class="w-8 h-8 md:w-9 md:h-9 rounded-full bg-[#C9A84C] text-zinc-900 flex items-center justify-center font-black text-[11px] md:text-[12px] flex-shrink-0">P</div>
+        <div class="flex-1 min-w-0">
+          <h3 class="font-black text-[12px] md:text-[14px] truncate">Prompts for Ch02 • THE AUDIENCE • 10 prompts • AT END</h3>
+          <p class="text-[9px] md:text-[11px] text-zinc-500 mt-0.5 truncate">Version A practical • Version B fill [BRACKETS] • Copy • Responsive • End of page</p>
+        </div>
+        <span class="hidden sm:inline text-[9px] px-2 py-1 rounded-full bg-zinc-900 text-white font-bold mr-1 flex-shrink-0">10</span>
+        <span id="promptsIcon02" class="w-7 h-7 md:w-8 md:h-8 rounded-full border border-zinc-200 flex items-center justify-center text-[10px] md:text-[12px] flex-shrink-0">▼</span>
+      </button>
+      <div id="promptsBody02" class="hidden border-t border-zinc-100 w-full overflow-hidden">
+        <div class="p-3 md:p-4 bg-zinc-50/70 border-b border-zinc-100 w-full">
+          <div class="flex gap-2 flex-col sm:flex-row w-full">
+            <button onclick="switchTab('02','A')" id="tabA02" class="w-full sm:w-auto text-[10px] md:text-[11px] font-bold px-4 py-2.5 rounded-full border bg-zinc-900 text-white border-zinc-900">VERSION A • SMART • 5</button>
+            <button onclick="switchTab('02','B')" id="tabB02" class="w-full sm:w-auto text-[10px] md:text-[11px] font-bold px-4 py-2.5 rounded-full border bg-white text-zinc-500 border-zinc-200">VERSION B • FILL • 5</button>
+          </div>
+          <p class="mt-3 text-[10px] md:text-[11px] text-zinc-500 leading-relaxed break-words">
+            <b>Version A:</b> Paste Master Context ONCE at start of AI chat, then use any prompt in SAME chat. <b>Version B:</b> Standalone. Full: <a href="prompts.html" class="underline font-bold text-zinc-900">prompts.html</a> • <a href="checklist.html" class="underline font-bold text-zinc-900">checklist.html</a> • Short lowercase names.
+          </p>
+        </div>
+        <div class="p-3 md:p-4 bg-[#faf9f6] space-y-3 md:space-y-4 w-full overflow-hidden">
+          <div id="contentA02" class="space-y-3 md:space-y-4 w-full">
+              <div class="bg-white border border-zinc-200 rounded-[14px] overflow-hidden w-full">
+                <div class="p-3 md:p-4">
+                  <h4 class="font-bold text-[11px] md:text-[12px] leading-tight break-words">PROMPT A1 - Broke vs Rich Split</h4>
+                  <div class="mt-3 bg-zinc-900 rounded-[12px] p-3 md:p-4 relative w-full overflow-hidden">
+                    <pre class="text-[10px] md:text-[11px] text-zinc-100 leading-relaxed whitespace-pre-wrap break-words pr-[60px] md:pr-[80px] w-full overflow-x-auto" style="font-family:monospace; word-break:break-word; overflow-wrap:anywhere">Master Context+Ch01 Winner Inside ONE market 2 audiences BROKE vs RICH same problem different wallet Give 3 splits Score 1-5 total/20 Which ready to pay+3 places FB>10k Subreddits LinkedIn.</pre>
+                    <button onclick="copyPrompt(this)" class="absolute top-2 right-2 md:top-3 md:right-3 bg-white text-zinc-900 font-bold text-[10px] md:text-[11px] px-2.5 py-1 md:px-3 md:py-1.5 rounded-full hover:bg-[#C9A84C]">📋 Copy</button>
+                  </div>
+                </div>
+              </div>
+              <div class="bg-white border border-zinc-200 rounded-[14px] overflow-hidden w-full">
+                <div class="p-3 md:p-4">
+                  <h4 class="font-bold text-[11px] md:text-[12px] leading-tight break-words">PROMPT A2 - 3 Mines Deep Dive</h4>
+                  <div class="mt-3 bg-zinc-900 rounded-[12px] p-3 md:p-4 relative w-full overflow-hidden">
+                    <pre class="text-[10px] md:text-[11px] text-zinc-100 leading-relaxed whitespace-pre-wrap break-words pr-[60px] md:pr-[80px] w-full overflow-x-auto" style="font-family:monospace; word-break:break-word; overflow-wrap:anywhere">Master Context+Ch01 Winner Audience guess [GUESS] Give EXACT search queries Amazon Reviews FB Groups Reddit Checklist 90min.</pre>
+                    <button onclick="copyPrompt(this)" class="absolute top-2 right-2 md:top-3 md:right-3 bg-white text-zinc-900 font-bold text-[10px] md:text-[11px] px-2.5 py-1 md:px-3 md:py-1.5 rounded-full hover:bg-[#C9A84C]">📋 Copy</button>
+                  </div>
+                </div>
+              </div>
+              <div class="bg-white border border-zinc-200 rounded-[14px] overflow-hidden w-full">
+                <div class="p-3 md:p-4">
+                  <h4 class="font-bold text-[11px] md:text-[12px] leading-tight break-words">PROMPT A3 - 5 Signals Validator</h4>
+                  <div class="mt-3 bg-zinc-900 rounded-[12px] p-3 md:p-4 relative w-full overflow-hidden">
+                    <pre class="text-[10px] md:text-[11px] text-zinc-100 leading-relaxed whitespace-pre-wrap break-words pr-[60px] md:pr-[80px] w-full overflow-x-auto" style="font-family:monospace; word-break:break-word; overflow-wrap:anywhere">Master Context+Ch01 Winner Found audience [NAME] in [Places] Validate 5 signals CanPay Concentrated Vocal Job Recommendation ✅/❌ If 4/5 READY.</pre>
+                    <button onclick="copyPrompt(this)" class="absolute top-2 right-2 md:top-3 md:right-3 bg-white text-zinc-900 font-bold text-[10px] md:text-[11px] px-2.5 py-1 md:px-3 md:py-1.5 rounded-full hover:bg-[#C9A84C]">📋 Copy</button>
+                  </div>
+                </div>
+              </div>
+              <div class="bg-white border border-zinc-200 rounded-[14px] overflow-hidden w-full">
+                <div class="p-3 md:p-4">
+                  <h4 class="font-bold text-[11px] md:text-[12px] leading-tight break-words">PROMPT A4 - 20 Complaints Extractor</h4>
+                  <div class="mt-3 bg-zinc-900 rounded-[12px] p-3 md:p-4 relative w-full overflow-hidden">
+                    <pre class="text-[10px] md:text-[11px] text-zinc-100 leading-relaxed whitespace-pre-wrap break-words pr-[60px] md:pr-[80px] w-full overflow-x-auto" style="font-family:monospace; word-break:break-word; overflow-wrap:anywhere">Master Context Targeting [AUD] Give 10 English+10 Arabic keywords complaints & paying signals Table for 20 verbatim.</pre>
+                    <button onclick="copyPrompt(this)" class="absolute top-2 right-2 md:top-3 md:right-3 bg-white text-zinc-900 font-bold text-[10px] md:text-[11px] px-2.5 py-1 md:px-3 md:py-1.5 rounded-full hover:bg-[#C9A84C]">📋 Copy</button>
+                  </div>
+                </div>
+              </div>
+              <div class="bg-white border border-zinc-200 rounded-[14px] overflow-hidden w-full">
+                <div class="p-3 md:p-4">
+                  <h4 class="font-bold text-[11px] md:text-[12px] leading-tight break-words">PROMPT A5 - Final Audience One-Liner</h4>
+                  <div class="mt-3 bg-zinc-900 rounded-[12px] p-3 md:p-4 relative w-full overflow-hidden">
+                    <pre class="text-[10px] md:text-[11px] text-zinc-100 leading-relaxed whitespace-pre-wrap break-words pr-[60px] md:pr-[80px] w-full overflow-x-auto" style="font-family:monospace; word-break:break-word; overflow-wrap:anywhere">Master Context+Ch01 Winner+Validated Audience+3 Places+Paying Proof+5 Complaints Validated [NAME+SCORES] Where [3 places] Write final one-liner 5 variations Pick best.</pre>
+                    <button onclick="copyPrompt(this)" class="absolute top-2 right-2 md:top-3 md:right-3 bg-white text-zinc-900 font-bold text-[10px] md:text-[11px] px-2.5 py-1 md:px-3 md:py-1.5 rounded-full hover:bg-[#C9A84C]">📋 Copy</button>
+                  </div>
+                </div>
+              </div></div>
+          <div id="contentB02" class="space-y-3 md:space-y-4 hidden w-full">
+              <div class="bg-white border border-zinc-200 rounded-[14px] overflow-hidden w-full">
+                <div class="p-3 md:p-4">
+                  <h4 class="font-bold text-[11px] md:text-[12px] leading-tight break-words">PROMPT B1 - Broke vs Rich</h4>
+                  <div class="mt-3 bg-zinc-900 rounded-[12px] p-3 md:p-4 relative w-full overflow-hidden">
+                    <pre class="text-[10px] md:text-[11px] text-zinc-100 leading-relaxed whitespace-pre-wrap break-words pr-[60px] md:pr-[80px] w-full overflow-x-auto" style="font-family:monospace; word-break:break-word; overflow-wrap:anywhere">Market [FROM CH01] Inside 2 audiences [A][B] Score 1-5 total/20 Which ready to pay more why+3 places.</pre>
+                    <button onclick="copyPrompt(this)" class="absolute top-2 right-2 md:top-3 md:right-3 bg-white text-zinc-900 font-bold text-[10px] md:text-[11px] px-2.5 py-1 md:px-3 md:py-1.5 rounded-full hover:bg-[#C9A84C]">📋 Copy</button>
+                  </div>
+                </div>
+              </div>
+              <div class="bg-white border border-zinc-200 rounded-[14px] overflow-hidden w-full">
+                <div class="p-3 md:p-4">
+                  <h4 class="font-bold text-[11px] md:text-[12px] leading-tight break-words">PROMPT B2 - 3 Mines Checklist</h4>
+                  <div class="mt-3 bg-zinc-900 rounded-[12px] p-3 md:p-4 relative w-full overflow-hidden">
+                    <pre class="text-[10px] md:text-[11px] text-zinc-100 leading-relaxed whitespace-pre-wrap break-words pr-[60px] md:pr-[80px] w-full overflow-x-auto" style="font-family:monospace; word-break:break-word; overflow-wrap:anywhere">Audience guess [GUESS] Give exact search queries Amazon FB Groups Reddit Checklist 90min.</pre>
+                    <button onclick="copyPrompt(this)" class="absolute top-2 right-2 md:top-3 md:right-3 bg-white text-zinc-900 font-bold text-[10px] md:text-[11px] px-2.5 py-1 md:px-3 md:py-1.5 rounded-full hover:bg-[#C9A84C]">📋 Copy</button>
+                  </div>
+                </div>
+              </div>
+              <div class="bg-white border border-zinc-200 rounded-[14px] overflow-hidden w-full">
+                <div class="p-3 md:p-4">
+                  <h4 class="font-bold text-[11px] md:text-[12px] leading-tight break-words">PROMPT B3 - 5 Signals</h4>
+                  <div class="mt-3 bg-zinc-900 rounded-[12px] p-3 md:p-4 relative w-full overflow-hidden">
+                    <pre class="text-[10px] md:text-[11px] text-zinc-100 leading-relaxed whitespace-pre-wrap break-words pr-[60px] md:pr-[80px] w-full overflow-x-auto" style="font-family:monospace; word-break:break-word; overflow-wrap:anywhere">Audience [AUD] Found [Places] Complaints [2-3] Validate 5 signals ✅/❌</pre>
+                    <button onclick="copyPrompt(this)" class="absolute top-2 right-2 md:top-3 md:right-3 bg-white text-zinc-900 font-bold text-[10px] md:text-[11px] px-2.5 py-1 md:px-3 md:py-1.5 rounded-full hover:bg-[#C9A84C]">📋 Copy</button>
+                  </div>
+                </div>
+              </div>
+              <div class="bg-white border border-zinc-200 rounded-[14px] overflow-hidden w-full">
+                <div class="p-3 md:p-4">
+                  <h4 class="font-bold text-[11px] md:text-[12px] leading-tight break-words">PROMPT B4 - Keywords Table</h4>
+                  <div class="mt-3 bg-zinc-900 rounded-[12px] p-3 md:p-4 relative w-full overflow-hidden">
+                    <pre class="text-[10px] md:text-[11px] text-zinc-100 leading-relaxed whitespace-pre-wrap break-words pr-[60px] md:pr-[80px] w-full overflow-x-auto" style="font-family:monospace; word-break:break-word; overflow-wrap:anywhere">Targeting [AUD] Give 10 English keywords paying/broke/complaint + table for 20 complaints.</pre>
+                    <button onclick="copyPrompt(this)" class="absolute top-2 right-2 md:top-3 md:right-3 bg-white text-zinc-900 font-bold text-[10px] md:text-[11px] px-2.5 py-1 md:px-3 md:py-1.5 rounded-full hover:bg-[#C9A84C]">📋 Copy</button>
+                  </div>
+                </div>
+              </div>
+              <div class="bg-white border border-zinc-200 rounded-[14px] overflow-hidden w-full">
+                <div class="p-3 md:p-4">
+                  <h4 class="font-bold text-[11px] md:text-[12px] leading-tight break-words">PROMPT B5 - Final One-Liner</h4>
+                  <div class="mt-3 bg-zinc-900 rounded-[12px] p-3 md:p-4 relative w-full overflow-hidden">
+                    <pre class="text-[10px] md:text-[11px] text-zinc-100 leading-relaxed whitespace-pre-wrap break-words pr-[60px] md:pr-[80px] w-full overflow-x-auto" style="font-family:monospace; word-break:break-word; overflow-wrap:anywhere">Validated audience [NAME+SCORES] Paying proof [Product $Price] Where [3 places] Write 5 one-liners Pick best.</pre>
+                    <button onclick="copyPrompt(this)" class="absolute top-2 right-2 md:top-3 md:right-3 bg-white text-zinc-900 font-bold text-[10px] md:text-[11px] px-2.5 py-1 md:px-3 md:py-1.5 rounded-full hover:bg-[#C9A84C]">📋 Copy</button>
+                  </div>
+                </div>
+              </div></div>
+          <div class="mt-4 p-3 md:p-4 bg-zinc-900 rounded-[12px] text-white flex flex-wrap items-center gap-2 md:gap-3 w-full">
+            <span class="text-[10px] md:text-[11px]">📚 Want all 50 prompts?</span>
+            <a href="prompts.html" class="text-[10px] md:text-[11px] font-bold bg-[#C9A84C] text-zinc-900 px-3 py-1.5 md:px-4 md:py-2 rounded-full">Open prompts.html →</a>
+            <a href="checklist.html" class="text-[10px] md:text-[11px] font-bold bg-white/10 border border-white/20 px-3 py-1.5 md:px-4 md:py-2 rounded-full">checklist.html →</a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <script>
+  function toggleCollapse(bodyId, iconId){
+    const body = document.getElementById(bodyId);
+    const icon = document.getElementById(iconId);
+    if(!body) return;
+    const isHidden = body.classList.contains('hidden');
+    body.classList.toggle('hidden', !isHidden);
+    if(icon) icon.style.transform = isHidden ? 'rotate(180deg)' : 'rotate(0deg)';
+  }
+  function switchTab(chNum, tab){
+    document.getElementById('contentA'+chNum).classList.toggle('hidden', tab!=='A');
+    document.getElementById('contentB'+chNum).classList.toggle('hidden', tab!=='B');
+    document.getElementById('tabA'+chNum).className = tab==='A' ? 'w-full sm:w-auto text-[10px] md:text-[11px] font-bold px-4 py-2.5 rounded-full border bg-zinc-900 text-white border-zinc-900' : 'w-full sm:w-auto text-[10px] md:text-[11px] font-bold px-4 py-2.5 rounded-full border bg-white text-zinc-500 border-zinc-200';
+    document.getElementById('tabB'+chNum).className = tab==='B' ? 'w-full sm:w-auto text-[10px] md:text-[11px] font-bold px-4 py-2.5 rounded-full border bg-zinc-900 text-white border-zinc-900' : 'w-full sm:w-auto text-[10px] md:text-[11px] font-bold px-4 py-2.5 rounded-full border bg-white text-zinc-500 border-zinc-200';
+  }
+  function copyPrompt(btn){
+    const pre = btn.parentElement.querySelector('pre');
+    if(!pre) return;
+    navigator.clipboard.writeText(pre.textContent).then(()=>{
+      const old = btn.innerHTML;
+      btn.innerHTML = '✅ Copied!';
+      setTimeout(()=>{ btn.innerHTML = old; },1500);
+    });
+  }
+  </script>
+
+</div>
+
+<script>
+const STORAGE_KEY = 'FITC-Ch02-Audience';
+const CH01_KEY = 'FITC-Ch01-MarketScoring';
+const MASTER_KEY = 'FITC-MasterContext';
+
+let data;
+
+function defaults(){
+  return {
+    audiences: [
+      {id: Date.now(), name:'', pain:'', growing:'', easy:'', canpay:'', jobSignal:''},
+      {id: Date.now()+1, name:'', pain:'', growing:'', easy:'', canpay:'', jobSignal:''}
+    ],
+    fbGroups: [
+      {id: Date.now()+10, name:'', url:'', members:'', daily:'', notes:''}
+    ],
+    reddit: [
+      {id: Date.now()+20, name:'', url:'', members:'', daily:'', notes:''}
+    ],
+    complaints: [
+      {id: Date.now()+30, text:'', source:'', link:'', keywords:'', painType:''}
+    ],
+    amazon: {amazon_product:'', amazon_price:'', amazon_reviews:'', amazon_5star:'', amazon_3star:'', amazon_verdict:''},
+    other_places: '',
+    finalSentence: '',
+    checklist: {}
+  };
+}
+
+function calcTotal(a){
+  return (parseInt(a.pain)||0)+(parseInt(a.growing)||0)+(parseInt(a.easy)||0)+(parseInt(a.canpay)||0);
+}
+function getVerdict(a,total){
+  const cp = parseInt(a.canpay);
+  if(!a.name && total===0) return {text:'—', cls:'bg-zinc-50 border-zinc-200 text-zinc-400'};
+  if(cp && cp < 3) return {text:'💀 KILL', cls:'bg-red-50 border-red-200 text-red-700'};
+  if(total>=16) return {text:'🔥 WINNER', cls:'bg-[#C9A84C] border-[#C9A84C] text-zinc-900'};
+  if(total>=12) return {text:'⚡ POTENTIAL', cls:'bg-amber-50 border-amber-200 text-amber-800'};
+  if(total>0) return {text:'🤔 WEAK', cls:'bg-white border-zinc-200 text-zinc-500'};
+  return {text:'—', cls:'bg-zinc-50 border-zinc-200 text-zinc-400'};
+}
+
+function load(){
+  try{
+    const raw = localStorage.getItem(STORAGE_KEY);
+    if(raw){
+      const parsed = JSON.parse(raw);
+      data = {...defaults(), ...parsed};
+      // ensure nested defaults
+      data.amazon = {...defaults().amazon, ...(parsed.amazon||{})};
+      data.checklist = parsed.checklist || {};
+    } else {
+      data = defaults();
+    }
+  }catch(e){ data = defaults(); }
+}
+
+function saveData(){
+  localStorage.setItem(STORAGE_KEY, JSON.stringify(data));
+}
+function save(){
+  saveData();
+}
+
+// --- RENDER HELPERS WITH FOCUS PRESERVATION ---
+function preserveFocus(callback){
+  const active = document.activeElement;
+  const aid = active?.dataset?.aid;
+  const af = active?.dataset?.afield;
+  const fbid = active?.dataset?.fbid;
+  const ff = active?.dataset?.ffield;
+  const rid = active?.dataset?.rid;
+  const rf = active?.dataset?.rfield;
+  const cid = active?.dataset?.cid;
+  const cf = active?.dataset?.cfield;
+  const selStart = active?.selectionStart;
+  const selEnd = active?.selectionEnd;
+
+  callback();
+
+  // restore
+  let selector = null;
+  if(aid && af) selector = `[data-aid="${aid}"][data-afield="${af}"]`;
+  else if(fbid && ff) selector = `[data-fbid="${fbid}"][data-ffield="${ff}"]`;
+  else if(rid && rf) selector = `[data-rid="${rid}"][data-rfield="${rf}"]`;
+  else if(cid && cf) selector = `[data-cid="${cid}"][data-cfield="${cf}"]`;
+  
+  if(selector){
+    const newEl = document.querySelector(selector);
+    if(newEl){
+      newEl.focus();
+      try{ if(typeof selStart==='number' && newEl.setSelectionRange) newEl.setSelectionRange(selStart, selEnd); }catch(e){}
+    }
+  }
+}
+
+function renderAudiences(){
+  const tbody = document.getElementById('audienceBody');
+  if(!tbody) return;
+  tbody.innerHTML='';
+  data.audiences.forEach((a,idx)=>{
+    const total = calcTotal(a);
+    const v = getVerdict(a,total);
+    const tr = document.createElement('tr');
+    tr.className = 'border-b border-zinc-100 last:border-0 hover:bg-zinc-50/50';
+    tr.innerHTML = `
+      <td class="py-2 px-3 text-[12px] font-bold text-zinc-400">${idx+1}</td>
+      <td class="py-2 px-3"><input data-aid="${a.id}" data-afield="name" value="${(a.name||'').replace(/"/g,'&quot;')}" placeholder="e.g. Freelance designers losing clients..." class="w-full bg-zinc-50 border border-zinc-200 rounded-[10px] px-3 py-2 text-[12px] font-medium focus:outline-none focus:border-zinc-900 focus:bg-white"></td>
+      ${['pain','growing','easy','canpay'].map(f=>`
+        <td class="py-2 px-2 text-center">
+          <select data-aid="${a.id}" data-afield="${f}" class="w-[56px] h-[32px] bg-zinc-50 border border-zinc-200 rounded-[8px] text-[12px] font-bold text-center focus:outline-none focus:border-zinc-900">
+            <option value="">—</option>
+            ${[1,2,3,4,5].map(n=>`<option value="${n}" ${String(a[f])===String(n)?'selected':''}>${n}</option>`).join('')}
+          </select>
+        </td>
+      `).join('')}
+      <td class="py-2 px-2 text-center"><div class="w-[56px] h-[30px] mx-auto rounded-[8px] flex items-center justify-center text-[12px] font-black border ${total===0?'bg-zinc-50 border-zinc-200 text-zinc-400': total>=16?'bg-[#C9A84C] border-[#C9A84C] text-zinc-900':'bg-white border-zinc-200'}">${total===0?'—':total}</div></td>
+      <td class="py-2 px-2 text-center"><div class="w-[80px] mx-auto h-[30px] rounded-[8px] border text-[10px] font-bold flex items-center justify-center ${v.cls}">${v.text}</div></td>
+      <td class="py-2 px-3"><div class="flex gap-1"><input data-aid="${a.id}" data-afield="jobSignal" value="${(a.jobSignal||'').replace(/"/g,'&quot;')}" placeholder="Job: freelancer / $ / free?" class="flex-1 bg-zinc-50 border border-zinc-200 rounded-[8px] px-2 py-1.5 text-[11px] focus:outline-none focus:border-zinc-900"><button data-aremove="${a.id}" class="w-6 h-6 rounded-full hover:bg-zinc-100 text-zinc-400">✕</button></div></td>
+    `;
+    tbody.appendChild(tr);
+  });
+  // bind remove
+  tbody.querySelectorAll('[data-aremove]').forEach(btn=>{
+    btn.addEventListener('click', ()=>{
+      data.audiences = data.audiences.filter(x=>x.id!=btn.dataset.aremove);
+      save(); renderAudiences(); renderWinner();
+    });
+  });
+}
+
+function renderFb(){
+  const el = document.getElementById('fbBody');
+  if(!el) return;
+  el.innerHTML = data.fbGroups.map(g=>`
+    <div class="bg-[#faf9f6] border border-zinc-200 rounded-[12px] p-3 space-y-2 relative">
+      <button data-fbremove="${g.id}" class="absolute top-2 right-2 w-5 h-5 rounded-full bg-white border text-[10px]">✕</button>
+      <input data-fbid="${g.id}" data-ffield="name" value="${(g.name||'').replace(/"/g,'&quot;')}" placeholder="Group name" class="w-full bg-white border border-zinc-200 rounded-[8px] px-2 py-1.5 text-[11px]">
+      <div class="grid grid-cols-2 gap-2"><input data-fbid="${g.id}" data-ffield="members" value="${(g.members||'').replace(/"/g,'&quot;')}" placeholder="Members: 25k" class="bg-white border rounded-[8px] px-2 py-1.5 text-[11px] border-zinc-200"><input data-fbid="${g.id}" data-ffield="daily" value="${(g.daily||'').replace(/"/g,'&quot;')}" placeholder="Posts/day: 15" class="bg-white border rounded-[8px] px-2 py-1.5 text-[11px] border-zinc-200"></div>
+      <input data-fbid="${g.id}" data-ffield="url" value="${(g.url||'').replace(/"/g,'&quot;')}" placeholder="URL" class="w-full bg-white border border-zinc-200 rounded-[8px] px-2 py-1.5 text-[11px]">
+      <input data-fbid="${g.id}" data-ffield="notes" value="${(g.notes||'').replace(/"/g,'&quot;')}" placeholder="Notes: vocal? complaining?" class="w-full bg-white border border-zinc-200 rounded-[8px] px-2 py-1.5 text-[11px]">
+    </div>
+  `).join('');
+}
+
+function renderReddit(){
+  const el = document.getElementById('redditBody');
+  if(!el) return;
+  el.innerHTML = data.reddit.map(g=>`
+    <div class="bg-[#faf9f6] border border-zinc-200 rounded-[12px] p-3 space-y-2 relative">
+      <button data-rremove="${g.id}" class="absolute top-2 right-2 w-5 h-5 rounded-full bg-white border text-[10px]">✕</button>
+      <input data-rid="${g.id}" data-rfield="name" value="${(g.name||'').replace(/"/g,'&quot;')}" placeholder="r/Subreddit name" class="w-full bg-white border border-zinc-200 rounded-[8px] px-2 py-1.5 text-[11px]">
+      <div class="grid grid-cols-2 gap-2"><input data-rid="${g.id}" data-rfield="members" value="${(g.members||'').replace(/"/g,'&quot;')}" placeholder="Members: 80k" class="bg-white border rounded-[8px] px-2 py-1.5 text-[11px] border-zinc-200"><input data-rid="${g.id}" data-rfield="daily" value="${(g.daily||'').replace(/"/g,'&quot;')}" placeholder="Posts/day: 20" class="bg-white border rounded-[8px] px-2 py-1.5 text-[11px] border-zinc-200"></div>
+      <input data-rid="${g.id}" data-rfield="url" value="${(g.url||'').replace(/"/g,'&quot;')}" placeholder="URL" class="w-full bg-white border border-zinc-200 rounded-[8px] px-2 py-1.5 text-[11px]">
+      <input data-rid="${g.id}" data-rfield="notes" value="${(g.notes||'').replace(/"/g,'&quot;')}" placeholder="Vocal complaints? recommend posts?" class="w-full bg-white border border-zinc-200 rounded-[8px] px-2 py-1.5 text-[11px]">
+    </div>
+  `).join('');
+}
+
+function renderComplaints(){
+  const el = document.getElementById('complaintBody');
+  if(!el) return;
+  el.innerHTML = data.complaints.map(c=>`
+    <div class="bg-[#faf9f6] border border-zinc-200 rounded-[12px] p-3 space-y-2 relative">
+      <button data-cremove="${c.id}" class="absolute top-2 right-2 w-5 h-5 rounded-full bg-white border text-[10px]">✕</button>
+      <textarea data-cid="${c.id}" data-cfield="text" placeholder="Paste real complaint..." class="w-full bg-white border border-zinc-200 rounded-[8px] px-2 py-1.5 text-[11px] min-h-[60px]">${c.text||''}</textarea>
+      <div class="grid grid-cols-2 gap-2">
+        <input data-cid="${c.id}" data-cfield="source" value="${(c.source||'').replace(/"/g,'&quot;')}" placeholder="Source: FB / Reddit / TikTok" class="bg-white border rounded-[8px] px-2 py-1.5 text-[11px] border-zinc-200">
+        <input data-cid="${c.id}" data-cfield="keywords" value="${(c.keywords||'').replace(/"/g,'&quot;')}" placeholder="Keywords: recommend, worth..." class="bg-white border rounded-[8px] px-2 py-1.5 text-[11px] border-zinc-200">
+      </div>
+      <input data-cid="${c.id}" data-cfield="link" value="${(c.link||'').replace(/"/g,'&quot;')}" placeholder="Link (optional)" class="w-full bg-white border border-zinc-200 rounded-[8px] px-2 py-1.5 text-[11px]">
+    </div>
+  `).join('');
+  const countEl = document.getElementById('complaintCount');
+  if(countEl) countEl.textContent = `${data.complaints.filter(c=>c.text && c.text.trim().length>5).length}/20 collected`;
+}
+
+function renderWinner(){
+  const valid = data.audiences.map(a=>({...a, total:calcTotal(a)})).filter(a=>a.name && a.total>0);
+  const winnerBox = document.getElementById('winnerBox');
+  if(!winnerBox) return;
+  if(!valid.length){ winnerBox.innerHTML='<div class="py-4 text-white/50 text-[13px]">Add audiences with scores to see winner...</div>'; return; }
+  const sorted = [...valid].filter(a=>(parseInt(a.canpay)||0)>=3).sort((a,b)=>b.total-a.total);
+  const list = sorted.length? sorted : [...valid].sort((a,b)=>b.total-a.total);
+  const winner = list[0];
+  winnerBox.innerHTML = `
+    <div class="text-[11px] text-white/50 mb-1">YOUR WINNING AUDIENCE IS:</div>
+    <div class="text-[18px] font-black leading-tight">${winner.name}</div>
+    <div class="mt-2 flex items-center gap-2">
+      <span class="bg-[#C9A84C] text-zinc-900 rounded-full px-3 py-1 text-[12px] font-black">Score ${winner.total}/20</span>
+      <span class="text-[11px] text-white/60">${winner.jobSignal||''}</span>
+    </div>
+  `;
+}
+
+function renderSignals(){
+  const box = document.getElementById('signalsBox');
+  if(!box) return;
+  const fbTotal = data.fbGroups.reduce((s,g)=>s+(parseInt(g.members)||0),0);
+  const rdTotal = data.reddit.reduce((s,g)=>s+(parseInt(g.members)||0),0);
+  const comp = data.complaints.filter(c=>c.text).length;
+  const pay = data.amazon.amazon_verdict === 'yes' ? '✅ Paying' : data.amazon.amazon_verdict === 'no' ? '❌ Free seekers' : '—';
+  box.innerHTML = `
+    <div class="space-y-1.5">
+      <div>💰 Can Pay: <b>${pay}</b> ${data.amazon.amazon_product?`(${data.amazon.amazon_product} $${data.amazon.amazon_price})`:''}</div>
+      <div>👥 FB Concentrated: ${data.fbGroups.length} groups</div>
+      <div>🔥 Reddit Vocal: ${data.reddit.length} subs, ${comp} complaints</div>
+      <div>💼 Job Signals: ${data.audiences.map(a=>a.jobSignal).filter(Boolean).join(', ')||'—'}</div>
+      <div>📍 Other: ${data.other_places||'—'}</div>
+    </div>
+  `;
+}
+
+function renderChecklistProgress(){
+  const checks = document.querySelectorAll('[data-check]');
+  let done=0;
+  checks.forEach(ch=>{
+    const key = ch.dataset.check;
+    if(key==='amazon'){ ch.checked = !!(data.amazon.amazon_product && data.amazon.amazon_reviews); }
+    if(key==='fb'){ ch.checked = data.fbGroups.length>=1 && data.fbGroups.some(g=>g.name); }
+    if(key==='reddit'){ ch.checked = data.reddit.length>=1 && data.reddit.some(g=>g.name); }
+    if(key==='complaints'){ ch.checked = data.complaints.filter(c=>c.text && c.text.trim().length>5).length>=5; }
+    if(key==='paying'){ ch.checked = data.amazon.amazon_verdict==='yes'; }
+    if(key==='job'){ ch.checked = data.audiences.some(a=>a.jobSignal); }
+    if(key==='recommend'){ ch.checked = data.complaints.some(c=>(c.text||'').toLowerCase().includes('recommend')); }
+    if(key==='sentence'){ ch.checked = (document.getElementById('finalAudienceSentence').value||'').length>15; }
+    if(ch.checked) done++;
+    // sync to data.checklist
+    if(data.checklist) data.checklist[key]=ch.checked;
+  });
+  const total=checks.length;
+  const pct=Math.round(done/total*100);
+  const bar = document.getElementById('progressBar');
+  const txt = document.getElementById('progressText');
+  if(bar) bar.style.width=pct+'%';
+  if(txt) txt.textContent=`${done}/${total} done - ${pct}%`;
+}
+
+function attachListeners(){
+  document.addEventListener('input', (e)=>{
+    const aid=e.target.dataset.aid; const af=e.target.dataset.afield;
+    if(aid && af){ 
+      const a=data.audiences.find(x=>x.id==aid); 
+      if(a){ 
+        a[af]=e.target.value; 
+        saveData(); 
+        if(['pain','growing','easy','canpay'].includes(af)){
+          // scores affect total -> re-render with focus preservation
+          preserveFocus(()=>{ renderAudiences(); });
+          renderWinner();
+        } else {
+          renderSignals();
+          renderChecklistProgress();
+        }
+      } 
+      return;
+    }
+    const fbid=e.target.dataset.fbid; const ff=e.target.dataset.ffield;
+    if(fbid && ff){ 
+      const g=data.fbGroups.find(x=>x.id==fbid); 
+      if(g){ g[ff]=e.target.value; saveData(); renderSignals(); renderChecklistProgress(); } 
+      return;
+    }
+    const rid=e.target.dataset.rid; const rf=e.target.dataset.rfield;
+    if(rid && rf){ 
+      const g=data.reddit.find(x=>x.id==rid); 
+      if(g){ g[rf]=e.target.value; saveData(); renderSignals(); renderChecklistProgress(); } 
+      return;
+    }
+    const cid=e.target.dataset.cid; const cf=e.target.dataset.cfield;
+    if(cid && cf){ 
+      const c=data.complaints.find(x=>x.id==cid); 
+      if(c){ c[cf]=e.target.value; saveData(); 
+        if(cf==='text'){
+          const cc=document.getElementById('complaintCount');
+          if(cc) cc.textContent=`${data.complaints.filter(c=>c.text && c.text.trim().length>5).length}/20 collected`;
+        }
+        renderSignals(); renderChecklistProgress();
+      } 
+      return;
+    }
+    if(e.target.dataset.mine){ 
+      const key = e.target.dataset.mine;
+      if(key==='other_places') data.other_places=e.target.value;
+      else data.amazon[key]=e.target.value; 
+      saveData(); 
+      renderSignals(); renderChecklistProgress();
+      return;
+    }
+    if(e.target.id==='finalAudienceSentence'){ 
+      data.finalSentence = e.target.value;
+      saveData(); 
+      renderChecklistProgress(); 
+    }
+  });
+
+  document.addEventListener('change', (e)=>{
+    if(e.target.dataset.mine){ 
+      const key=e.target.dataset.mine;
+      if(key==='other_places') data.other_places=e.target.value;
+      else data.amazon[key]=e.target.value; 
+      saveData(); 
+      renderSignals(); renderChecklistProgress();
+    }
+    if(e.target.dataset.afield){
+      // select change for audiences needs total update
+      const a=data.audiences.find(x=>x.id==e.target.dataset.aid);
+      if(a){
+        a[e.target.dataset.afield]=e.target.value;
+        saveData();
+        preserveFocus(()=>{ renderAudiences(); });
+        renderWinner();
+        renderSignals();
+      }
+    }
+  });
+
+  document.addEventListener('click', (e)=>{
+    const fbrem=e.target.dataset.fbremove || e.target.closest('[data-fbremove]')?.dataset.fbremove;
+    if(fbrem){ data.fbGroups=data.fbGroups.filter(x=>x.id!=fbrem); save(); renderFb(); renderSignals(); return; }
+    const rrem=e.target.dataset.rremove || e.target.closest('[data-rremove]')?.dataset.rremove;
+    if(rrem){ data.reddit=data.reddit.filter(x=>x.id!=rrem); save(); renderReddit(); renderSignals(); return; }
+    const crem=e.target.dataset.cremove || e.target.closest('[data-cremove]')?.dataset.cremove;
+    if(crem){ data.complaints=data.complaints.filter(x=>x.id!=crem); save(); renderComplaints(); renderSignals(); renderChecklistProgress(); return; }
+  });
+
+  document.getElementById('addAudienceBtn').addEventListener('click', ()=>{ data.audiences.push({id:Date.now()+Math.floor(Math.random()*1000), name:'', pain:'', growing:'', easy:'', canpay:'', jobSignal:''}); save(); renderAudiences(); renderWinner(); });
+  document.getElementById('addFbBtn').addEventListener('click', ()=>{ data.fbGroups.push({id:Date.now()+Math.floor(Math.random()*1000), name:'', url:'', members:'', daily:'', notes:''}); save(); renderFb(); });
+  document.getElementById('addRedditBtn').addEventListener('click', ()=>{ data.reddit.push({id:Date.now()+Math.floor(Math.random()*1000), name:'', url:'', members:'', daily:'', notes:''}); save(); renderReddit(); });
+  document.getElementById('addComplaintBtn').addEventListener('click', ()=>{ data.complaints.push({id:Date.now()+Math.floor(Math.random()*1000), text:'', source:'', link:'', keywords:'', painType:''}); save(); renderComplaints(); });
+  document.getElementById('exportBtn').addEventListener('click', ()=>{ const blob=new Blob([localStorage.getItem(STORAGE_KEY)||'{}'],{type:'application/json'}); const url=URL.createObjectURL(blob); const a=document.createElement('a'); a.href=url; a.download='FITC-Chapter02-Audience-Backup.json'; a.click(); URL.revokeObjectURL(url); });
+  document.getElementById('clearBtn').addEventListener('click', ()=>{ if(confirm('Clear all Chapter 02 data?')){ localStorage.removeItem(STORAGE_KEY); data=defaults(); save(); renderAll(); } });
+  document.getElementById('pullMarketBtn').addEventListener('click', ()=>{
+    try{
+      const ch01=JSON.parse(localStorage.getItem(CH01_KEY)||'{}');
+      if(!ch01 || !ch01.markets){ alert('No Chapter 01 data found. Fill Chapter 01 first!'); return; }
+      const winner = ch01.markets.map(m=>({...m, total: (parseInt(m.pain)||0)+(parseInt(m.growing)||0)+(parseInt(m.easy)||0)+(parseInt(m.canpay)||0)})).filter(m=>m.name).sort((a,b)=>b.total-a.total)[0];
+      if(winner){ 
+        data.audiences[0].name = winner.name + ' - split rich vs broke'; 
+        save(); renderAudiences(); 
+        const ctx=document.getElementById('marketContext');
+        if(ctx){ ctx.textContent = `Pulled Winning Market: ${winner.name} (Score ${winner.total})`; ctx.classList.remove('hidden'); }
+        alert('Pulled winning market from Ch01 into first audience row! Now split it into rich vs broke.'); 
+      }
+    }catch(e){ alert('Error pulling'); }
+  });
+
+  // --- Workspace backup / restore ---
+  const workspaceBackupBtn = document.getElementById('workspaceBackupBtn');
+  const workspaceRestoreBtn = document.getElementById('workspaceRestoreBtn');
+  const workspaceRestoreInput = document.getElementById('workspaceRestoreInput');
+
+  if(workspaceBackupBtn){
+    workspaceBackupBtn.addEventListener('click', ()=>{
+      const payload = {
+        version: 1,
+        chapter: '02',
+        key: STORAGE_KEY,
+        exportedAt: new Date().toISOString(),
+        data: data
+      };
+      const blob = new Blob([JSON.stringify(payload, null, 2)], {type:'application/json'});
+      const url = URL.createObjectURL(blob);
+      const a = document.createElement('a');
+      a.href = url;
+      a.download = 'FITC-Chapter02-Audience-Workspace-Backup.json';
+      a.click();
+      URL.revokeObjectURL(url);
+    });
+  }
+
+  if(workspaceRestoreBtn && workspaceRestoreInput){
+    workspaceRestoreBtn.addEventListener('click', ()=> workspaceRestoreInput.click());
+    workspaceRestoreInput.addEventListener('change', (e)=>{
+      const file = e.target.files?.[0];
+      if(!file) return;
+      const reader = new FileReader();
+      reader.onload = ()=>{
+        try{
+          const parsed = JSON.parse(reader.result);
+          const restored = parsed?.data || parsed;
+          if(!restored || typeof restored !== 'object') throw new Error('Invalid backup');
+          if(!confirm('Restore this Chapter 02 backup? Current Chapter 02 data will be replaced.')) return;
+          data = {...defaults(), ...restored};
+          data.amazon = {...defaults().amazon, ...(restored.amazon||{})};
+          data.checklist = restored.checklist || {};
+          saveData();
+          renderAll();
+          document.querySelectorAll('[data-check]').forEach(ch=>{
+            ch.checked = !!data.checklist[ch.dataset.check];
+          });
+          alert('Chapter 02 restored successfully.');
+        }catch(err){
+          alert('Could not restore this backup. Please choose a valid Chapter 02 JSON backup.');
+        }finally{
+          workspaceRestoreInput.value = '';
+        }
+      };
+      reader.readAsText(file);
+    });
+  }
+
+  document.getElementById('copyFinalBtn').addEventListener('click', ()=>{
+    const txt=document.getElementById('finalAudienceSentence').value; if(!txt){ alert('Write final sentence first'); return; } navigator.clipboard.writeText(txt).then(()=>{ const b=document.getElementById('copyFinalBtn'); const old=b.textContent; b.textContent='✅ Copied!'; setTimeout(()=>b.textContent=old,1500); });
+  });
+  document.getElementById('copyForAI').addEventListener('click', ()=>{
+    try{
+      const master=JSON.parse(localStorage.getItem(MASTER_KEY)||'{}');
+      const complaints = data.complaints.filter(c=>c.text).slice(0,5).map(c=>`- "${c.text}" (${c.source})`).join('\n');
+      const block = `MY CONTEXT:\nNiche: ${master.niche||''}\nWinning Market from Ch01: ${(() => { try{ const ch01=JSON.parse(localStorage.getItem(CH01_KEY)||'{}'); return ch01.finalSentence||''; }catch(e){ return ''; } })()}\n\nMY AUDIENCE DISCOVERY (Ch02):\nFinal Audience: ${data.finalSentence||document.getElementById('finalAudienceSentence').value||''}\n3 Places: FB ${data.fbGroups.map(g=>g.name).join(', ')} | Reddit ${data.reddit.map(g=>g.name).join(', ')} | Other ${data.other_places||''}\nPaying Proof: Product ${data.amazon.amazon_product||''} at $${data.amazon.amazon_price||''} with ${data.amazon.amazon_reviews||''} reviews - Verdict ${data.amazon.amazon_verdict||''}\nTop 5 Complaints:\n${complaints}\n\nUse this to help me validate audience.`;
+      navigator.clipboard.writeText(block).then(()=>{ const b=document.getElementById('copyForAI'); const old=b.textContent; b.textContent='✅ Copied Full!'; setTimeout(()=>b.textContent=old,1500); });
+    }catch(e){ alert('Copy failed'); }
+  });
+  document.querySelectorAll('[data-check]').forEach(ch=> ch.addEventListener('change', ()=>{ data.checklist[ch.dataset.check]=ch.checked; saveData(); renderChecklistProgress(); }));
+}
+
+function renderAll(){
+  renderAudiences(); renderFb(); renderReddit(); renderComplaints();
+  document.querySelectorAll('[data-mine]').forEach(el=>{ const k=el.dataset.mine; if(k==='other_places'){ el.value=data.other_places||''; } else if(data.amazon[k]!==undefined) el.value=data.amazon[k]; });
+  const finalEl=document.getElementById('finalAudienceSentence');
+  if(finalEl) finalEl.value=data.finalSentence||'';
+  renderSignals(); renderChecklistProgress(); renderWinner();
+  // market context
+  try{
+    const ch01=JSON.parse(localStorage.getItem(CH01_KEY)||'{}');
+    if(ch01 && ch01.markets){
+      const ctx=document.getElementById('marketContext');
+      const winner = ch01.markets.map(m=>({...m, total: (parseInt(m.pain)||0)+(parseInt(m.growing)||0)+(parseInt(m.easy)||0)+(parseInt(m.canpay)||0)})).filter(m=>m.name).sort((a,b)=>b.total-a.total)[0];
+      if(winner && ctx){ ctx.textContent=`Current Winning Market from Ch01: ${winner.name}`; ctx.classList.remove('hidden'); }
+    }
+  }catch(e){}
+}
+
+load(); renderAll(); attachListeners();
+</script>
+</body>
+</html>

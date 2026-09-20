@@ -1,0 +1,173 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>From Idea To Cash - Master Context File (Chapter 0)</title>
+<script src="https://cdn.tailwindcss.com"></script>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<style>body{font-family:'Inter',sans-serif}</style>
+</head>
+<body class="bg-[#faf9f6] text-zinc-900 min-h-screen">
+<div class="max-w-4xl mx-auto px-4 py-8">
+
+  <div class="bg-white border border-zinc-200 rounded-[16px] px-4 py-3 mb-6 flex flex-wrap items-center gap-2 text-[11px] font-bold">
+    <a href="index.html" class="px-3 py-2 rounded-full bg-zinc-900 text-white">← Dashboard</a>
+    <span class="px-3 py-2 rounded-full bg-[#FFF8E7] border border-[#C9A84C]/40 text-[#8a6d2b]">00 • MASTER CONTEXT</span>
+    <a href="checklist.html" class="px-3 py-2 rounded-full border border-zinc-200 hover:bg-zinc-50">Checklist →</a>
+    <a href="prompts.html" class="px-3 py-2 rounded-full border border-zinc-200 hover:bg-zinc-50">Prompts →</a>
+    <span class="ml-auto text-[10px] text-zinc-500">💾 Auto-saves via localStorage • Key: fitc_master_context_v1</span>
+  </div>
+
+  <!-- Header -->
+  <div class="bg-zinc-900 text-white rounded-[24px] p-6 md:p-8 mb-6 relative overflow-hidden">
+    <div class="absolute -top-20 -right-20 w-[300px] h-[300px] bg-[#C9A84C]/20 blur-[60px] rounded-full"></div>
+    <div class="relative">
+      <div class="flex items-center gap-3 mb-3">
+        <div class="w-10 h-10 rounded-full bg-[#C9A84C] text-zinc-900 flex items-center justify-center font-black">0</div>
+        <span class="text-[12px] tracking-widest opacity-60 font-bold">CHAPTER 0 • FOUNDATION</span>
+        <span class="ml-auto text-[11px] bg-white/10 border border-white/10 rounded-full px-3 py-1">Auto-saves on your browser</span>
+      </div>
+      <h1 class="text-[28px] md:text-[36px] font-extrabold leading-tight">Master Context File</h1>
+      <p class="text-white/70 mt-2 text-[14px] md:text-[15px]">Fill this ONCE. Every other sheet, prompt, and AI chat will use this. This stays saved in your browser forever.</p>
+      <div class="mt-5 flex flex-wrap gap-2">
+        <button id="copyAllBtn" class="bg-[#C9A84C] text-zinc-900 font-bold px-5 py-2.5 rounded-full text-[13px] hover:bg-[#b8983f] transition">📋 Copy Full Context For AI</button>
+        <button id="exportBtn" class="bg-white/10 border border-white/20 text-white font-semibold px-5 py-2.5 rounded-full text-[13px] hover:bg-white/20 transition">⬇️ Export Backup</button>
+        <label class="bg-white/10 border border-white/20 text-white font-semibold px-5 py-2.5 rounded-full text-[13px] hover:bg-white/20 transition cursor-pointer">⬆️ Import Backup<input id="importFile" type="file" accept=".json" class="hidden"></label>
+        <button id="clearBtn" class="text-white/50 text-[12px] underline ml-2">Clear All</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Form -->
+  <div class="space-y-5" id="formContainer">
+    <!-- Niche -->
+    <div class="bg-white rounded-[20px] border border-zinc-200 p-5 md:p-6 shadow-[0_4px_24px_rgba(0,0,0,0.04)]">
+      <h2 class="font-bold text-[16px] flex items-center gap-2"><span class="w-7 h-7 rounded-full bg-zinc-900 text-white flex items-center justify-center text-[12px]">1</span> Niche / Industry</h2>
+      <p class="text-[12px] text-zinc-500 mt-2 mb-3">Not "business" or "education". Be specific like "Notion systems for online teachers losing time on lesson prep"</p>
+      <textarea data-key="niche" class="w-full bg-[#faf9f6] border border-zinc-200 rounded-[12px] p-4 text-[14px] focus:outline-none focus:ring-2 focus:ring-zinc-900/10 focus:border-zinc-900 min-h-[90px]" placeholder="Example: I want to help freelance designers who..."></textarea>
+    </div>
+
+    <!-- Audience -->
+    <div class="bg-white rounded-[20px] border border-zinc-200 p-5 md:p-6 shadow-[0_4px_24px_rgba(0,0,0,0.04)]">
+      <h2 class="font-bold text-[16px] flex items-center gap-2"><span class="w-7 h-7 rounded-full bg-zinc-900 text-white flex items-center justify-center text-[12px]">2</span> Target Audience (Who has money?)</h2>
+      <div class="grid gap-4 mt-4">
+        <div><label class="text-[12px] font-bold text-zinc-700">Who exactly? Age, job, income?</label><input data-key="audience_who" class="mt-1 w-full bg-[#faf9f6] border border-zinc-200 rounded-[12px] p-3.5 text-[14px] focus:outline-none focus:ring-2 focus:ring-zinc-900/10" placeholder="e.g., HR managers at tech startups, 28-40, $3k+/mo"></div>
+        <div><label class="text-[12px] font-bold text-zinc-700">Where do they hang out?</label><input data-key="audience_where" class="mt-1 w-full bg-[#faf9f6] border border-zinc-200 rounded-[12px] p-3.5 text-[14px] focus:outline-none focus:ring-2 focus:ring-zinc-900/10" placeholder="e.g., LinkedIn groups, r/freelance, FB group 'HR Geeks'"></div>
+        <div><label class="text-[12px] font-bold text-zinc-700">What do they dream about?</label><textarea data-key="audience_dream" class="mt-1 w-full bg-[#faf9f6] border border-zinc-200 rounded-[12px] p-3.5 text-[14px] min-h-[70px] focus:outline-none focus:ring-2 focus:ring-zinc-900/10" placeholder="e.g., Get clients without Upwork"></textarea></div>
+      </div>
+    </div>
+
+    <!-- Problems -->
+    <div class="bg-white rounded-[20px] border border-zinc-200 p-5 md:p-6 shadow-[0_4px_24px_rgba(0,0,0,0.04)]">
+      <h2 class="font-bold text-[16px] flex items-center gap-2"><span class="w-7 h-7 rounded-full bg-zinc-900 text-white flex items-center justify-center text-[12px]">3</span> Top 3-5 Painful Problems (Real ones)</h2>
+      <p class="text-[12px] text-zinc-500 mt-2 mb-3">Must be one of: wastes time, blocks goal, loses money/clients, causes chaos</p>
+      <div class="space-y-3">
+        <input data-key="prob1" class="w-full bg-[#faf9f6] border border-zinc-200 rounded-[12px] p-3.5 text-[14px] focus:outline-none focus:ring-2 focus:ring-zinc-900/10" placeholder="Problem 1: e.g., Wasting 10h/week on...">
+        <input data-key="prob2" class="w-full bg-[#faf9f6] border border-zinc-200 rounded-[12px] p-3.5 text-[14px] focus:outline-none focus:ring-2 focus:ring-zinc-900/10" placeholder="Problem 2:">
+        <input data-key="prob3" class="w-full bg-[#faf9f6] border border-zinc-200 rounded-[12px] p-3.5 text-[14px] focus:outline-none focus:ring-2 focus:ring-zinc-900/10" placeholder="Problem 3:">
+        <input data-key="prob4" class="w-full bg-[#faf9f6] border border-zinc-200 rounded-[12px] p-3.5 text-[14px] focus:outline-none focus:ring-2 focus:ring-zinc-900/10" placeholder="Problem 4 (optional):">
+        <input data-key="prob5" class="w-full bg-[#faf9f6] border border-zinc-200 rounded-[12px] p-3.5 text-[14px] focus:outline-none focus:ring-2 focus:ring-zinc-900/10" placeholder="Problem 5 (optional):">
+      </div>
+    </div>
+
+    <!-- Skills -->
+    <div class="bg-white rounded-[20px] border border-zinc-200 p-5 md:p-6 shadow-[0_4px_24px_rgba(0,0,0,0.04)]">
+      <h2 class="font-bold text-[16px] flex items-center gap-2"><span class="w-7 h-7 rounded-full bg-zinc-900 text-white flex items-center justify-center text-[12px]">4</span> Your Skills & Experience</h2>
+      <textarea data-key="skills" class="mt-3 w-full bg-[#faf9f6] border border-zinc-200 rounded-[12px] p-4 text-[14px] min-h-[100px] focus:outline-none focus:ring-2 focus:ring-zinc-900/10" placeholder="I have 4 years doing... I helped X get Y result..."></textarea>
+    </div>
+
+    <!-- Goal & Tone -->
+    <div class="grid md:grid-cols-2 gap-5">
+      <div class="bg-white rounded-[20px] border border-zinc-200 p-5 md:p-6 shadow-[0_4px_24px_rgba(0,0,0,0.04)]">
+        <h2 class="font-bold text-[14px]">Your Goal</h2>
+        <textarea data-key="goal" class="mt-3 w-full bg-[#faf9f6] border border-zinc-200 rounded-[12px] p-4 text-[14px] min-h-[100px] focus:outline-none focus:ring-2 focus:ring-zinc-900/10" placeholder="e.g., Make $3k/mo with templates, impact: help 100 teachers..."></textarea>
+      </div>
+      <div class="bg-white rounded-[20px] border border-zinc-200 p-5 md:p-6 shadow-[0_4px_24px_rgba(0,0,0,0.04)]">
+        <h2 class="font-bold text-[14px]">Tone of Voice</h2>
+        <input data-key="tone" class="mt-3 w-full bg-[#faf9f6] border border-zinc-200 rounded-[12px] p-3.5 text-[14px] focus:outline-none focus:ring-2 focus:ring-zinc-900/10" placeholder="e.g., Friendly, direct, like homie, no fluff">
+        <div class="mt-4"><label class="text-[12px] font-bold">Language / Market</label><input data-key="language" class="mt-1 w-full bg-[#faf9f6] border border-zinc-200 rounded-[12px] p-3.5 text-[14px] focus:outline-none focus:ring-2 focus:ring-zinc-900/10" placeholder="e.g., English - US market"></div>
+      </div>
+    </div>
+
+    <!-- AI Preview -->
+    <div class="bg-[#FFF8E7] rounded-[20px] border border-[#C9A84C]/30 p-5 md:p-6">
+      <h3 class="font-bold text-[13px] tracking-wide">🤖 AI-READY CONTEXT BLOCK (auto-updates)</h3>
+      <p class="text-[11px] text-zinc-600 mt-1">This is what gets pasted into every prompt. Copy it with one click.</p>
+      <pre id="aiPreview" class="mt-3 bg-zinc-900 text-white/90 p-4 rounded-[12px] text-[12px] leading-relaxed whitespace-pre-wrap overflow-auto max-h-[400px]">Fill the form above...</pre>
+    </div>
+  </div>
+
+  <div class="mt-8 text-center text-[11px] text-zinc-400">From Idea To Cash • Master Context • All data stays in YOUR browser (localStorage) • No server</div>
+</div>
+
+<script>
+const STORAGE_KEY = 'fitc_master_context_v1';
+const els = document.querySelectorAll('[data-key]');
+
+function load(){
+  try{
+    const data = JSON.parse(localStorage.getItem(STORAGE_KEY) || '{}');
+    els.forEach(el=>{
+      const k = el.dataset.key;
+      if(data[k]!==undefined) el.value = data[k];
+    });
+    updatePreview();
+  }catch(e){}
+}
+function save(){
+  const data = {};
+  els.forEach(el=> data[el.dataset.key]=el.value);
+  localStorage.setItem(STORAGE_KEY, JSON.stringify(data));
+  updatePreview();
+}
+function updatePreview(){
+  const d = {};
+  els.forEach(el=> d[el.dataset.key]=el.value);
+  const block = `MY CONTEXT FOR "FROM IDEA TO CASH":
+
+Niche: ${d.niche||'[not filled]'}
+Target Audience: ${d.audience_who||'[not filled]'} 
+They hang out: ${d.audience_where||'[not filled]'}
+Their dream: ${d.audience_dream||'[not filled]'}
+
+Top Problems:
+1. ${d.prob1||''}
+2. ${d.prob2||''}
+3. ${d.prob3||''}
+4. ${d.prob4||''}
+5. ${d.prob5||''}
+
+My Skills: ${d.skills||'[not filled]'}
+My Goal: ${d.goal||'[not filled]'}
+Tone: ${d.tone||'Friendly, direct, like talking to a homie, American English'}
+Language: ${d.language||'English - US market'}
+
+Use this context to give me specific, actionable answers. No generic fluff.`;
+  document.getElementById('aiPreview').textContent = block;
+}
+els.forEach(el=> el.addEventListener('input', save));
+
+document.getElementById('copyAllBtn').addEventListener('click', ()=>{
+  const txt = document.getElementById('aiPreview').textContent;
+  navigator.clipboard.writeText(txt).then(()=>{ const b=document.getElementById('copyAllBtn'); const old=b.textContent; b.textContent='✅ Copied!'; setTimeout(()=>b.textContent=old,1500); });
+});
+document.getElementById('exportBtn').addEventListener('click', ()=>{
+  const data = localStorage.getItem(STORAGE_KEY) || '{}';
+  const blob = new Blob([data], {type:'application/json'});
+  const url = URL.createObjectURL(blob);
+  const a = document.createElement('a'); a.href=url; a.download='FITC-Master-Context-Backup.json'; a.click(); URL.revokeObjectURL(url);
+});
+document.getElementById('importFile').addEventListener('change', (e)=>{
+  const file = e.target.files[0]; if(!file) return;
+  const reader = new FileReader(); reader.onload = (ev)=>{
+    try{ localStorage.setItem(STORAGE_KEY, ev.target.result); load(); alert('Imported!'); }catch(err){ alert('Invalid file'); }
+  }; reader.readAsText(file);
+});
+document.getElementById('clearBtn').addEventListener('click', ()=>{
+  if(confirm('Clear all Master Context?')){ localStorage.removeItem(STORAGE_KEY); els.forEach(el=> el.value=''); updatePreview(); }
+});
+load();
+</script>
+</body>
+</html>

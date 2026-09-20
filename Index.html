@@ -1,0 +1,238 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>From Idea To Cash | Interactive Workspace</title>
+<script src="https://cdn.tailwindcss.com"></script>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
+<style>
+  body{font-family:'Inter',sans-serif}
+  .card-hover{transition: all 0.2s ease}
+  .card-hover:hover{transform: translateY(-2px); box-shadow: 0 8px 30px rgba(0,0,0,0.06)}
+</style>
+</head>
+<body class="bg-[#faf9f6] text-zinc-900 min-h-screen">
+<div class="max-w-[1200px] mx-auto px-4 py-6">
+
+  <!-- Header -->
+  <div class="bg-zinc-900 text-white rounded-[24px] p-6 md:p-8 mb-6 relative overflow-hidden">
+    <div class="absolute -top-24 -right-24 w-[500px] h-[500px] bg-[#C9A84C]/20 blur-[80px] rounded-full pointer-events-none"></div>
+    <div class="absolute -bottom-20 -left-20 w-[300px] h-[300px] bg-white/[0.04] blur-[60px] rounded-full pointer-events-none"></div>
+    <div class="relative">
+      <div class="flex items-center gap-3 mb-6">
+        <div class="w-10 h-10 rounded-full bg-[#C9A84C] text-zinc-900 flex items-center justify-center font-black">✓</div>
+        <span class="text-[11px] tracking-[0.2em] opacity-60 font-bold">FROM IDEA TO CASH • WORKSPACE</span>
+        <span class="ml-auto text-[11px] bg-white/10 border border-white/10 rounded-full px-3 py-1.5">💾 Auto-saves • GitHub Pages Ready</span>
+      </div>
+      <div class="flex flex-col md:flex-row md:items-end justify-between gap-6">
+        <div>
+          <h1 class="text-[32px] md:text-[42px] font-black leading-[0.9] tracking-tight">Interactive<br><span class="text-[#C9A84C]">Workspace</span></h1>
+          <p class="text-white/50 mt-3 text-[13px] max-w-xl leading-relaxed">Pick a chapter, execute, check progress. Everything auto-saves in browser. Each chapter has collapsible prompts + checklist links at the end.</p>
+        </div>
+        <div class="bg-white/5 border border-white/10 rounded-[16px] p-4 min-w-[240px]">
+          <div class="flex justify-between items-center mb-2">
+            <span class="text-[10px] font-bold tracking-widest opacity-50">WORKSPACE PROGRESS</span>
+            <span class="text-[11px] font-bold" id="progressText">0 of 5 completed</span>
+          </div>
+          <div class="h-2 bg-white/10 rounded-full overflow-hidden">
+            <div id="progressBar" class="h-full bg-[#C9A84C] transition-all duration-500" style="width:0%"></div>
+          </div>
+          <div class="mt-2 text-[10px] text-white/40"><span id="progressPercent">0%</span> • All files share localStorage • Same domain</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Chapters first - SHORT NAMES -->
+  <div class="mb-3 flex items-center gap-2">
+    <span class="text-[11px] font-black tracking-widest">EXECUTION • 5 CHAPTERS</span>
+    <div class="h-px flex-1 bg-zinc-200"></div>
+    <span class="text-[10px] text-zinc-500">Short names • collapsible at end</span>
+  </div>
+
+  <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 mb-10">
+
+    <a href="01-market-scoring.html" class="card-hover bg-white rounded-[20px] border border-zinc-200 p-5 block">
+      <div class="flex items-start justify-between mb-3">
+        <div class="w-10 h-10 rounded-full bg-zinc-900 text-white flex items-center justify-center font-black text-[14px]">1</div>
+        <span class="text-[10px] px-2.5 py-1 rounded-full bg-[#FFF8E7] border border-[#C9A84C]/30 text-[#8a6d2b] font-bold">60 min • 10 markets</span>
+      </div>
+      <h3 class="font-black text-[15px] leading-tight">01 • Market Scoring</h3>
+      <p class="text-[11px] text-zinc-500 mt-1">Pick ONE Profitable Market</p>
+      <p class="text-[11px] text-zinc-600 mt-3 leading-relaxed">List 10 markets [Audience + Problem]. Score 1-5. If Can Pay &lt;3 kill it.</p>
+      <div class="mt-4 flex items-center gap-2 text-[10px]">
+        <span class="bg-zinc-100 border px-2.5 py-1 rounded-full font-bold">Interactive Table</span>
+        <span class="bg-[#C9A84C]/10 border px-2.5 py-1 rounded-full font-bold text-[#8a6d2b]">+ Prompts ▼</span>
+      </div>
+      <div class="mt-4 h-1.5 bg-zinc-100 rounded-full overflow-hidden"><div class="h-full bg-zinc-900" id="ch01Bar" style="width:0%"></div></div>
+    </a>
+
+    <a href="02-audience-finder.html" class="card-hover bg-white rounded-[20px] border border-zinc-200 p-5 block">
+      <div class="flex items-start justify-between mb-3">
+        <div class="w-10 h-10 rounded-full bg-zinc-900 text-white flex items-center justify-center font-black text-[14px]">2</div>
+        <span class="text-[10px] px-2.5 py-1 rounded-full bg-[#FFF8E7] border border-[#C9A84C]/30 text-[#8a6d2b] font-bold">90 min • 5 signals</span>
+      </div>
+      <h3 class="font-black text-[15px] leading-tight">02 • Audience Finder</h3>
+      <p class="text-[11px] text-zinc-500 mt-1">Find Audience That PAYS</p>
+      <p class="text-[11px] text-zinc-600 mt-3 leading-relaxed">Split market broke vs rich. 3 mines Amazon, FB Groups, Reddit.</p>
+      <div class="mt-4 flex items-center gap-2 text-[10px]">
+        <span class="bg-zinc-100 border px-2.5 py-1 rounded-full font-bold">Comparison + Mines</span>
+        <span class="bg-[#C9A84C]/10 border px-2.5 py-1 rounded-full font-bold text-[#8a6d2b]">+ Prompts ▼</span>
+      </div>
+      <div class="mt-4 h-1.5 bg-zinc-100 rounded-full overflow-hidden"><div class="h-full bg-zinc-900" id="ch02Bar" style="width:0%"></div></div>
+    </a>
+
+    <a href="03-problem-bank.html" class="card-hover bg-white rounded-[20px] border border-zinc-200 p-5 block">
+      <div class="flex items-start justify-between mb-3">
+        <div class="w-10 h-10 rounded-full bg-zinc-900 text-white flex items-center justify-center font-black text-[14px]">3</div>
+        <span class="text-[10px] px-2.5 py-1 rounded-full bg-zinc-900 text-white font-bold">Gold • 30 complaints</span>
+      </div>
+      <h3 class="font-black text-[15px] leading-tight">03 • Problem Bank</h3>
+      <p class="text-[11px] text-zinc-500 mt-1">30 Complaints = 30 Product Ideas</p>
+      <p class="text-[11px] text-zinc-600 mt-3 leading-relaxed">Collect 30 verbatim complaints from 6 mines. Find Golden repeating 5+.</p>
+      <div class="mt-4 flex items-center gap-2 text-[10px]">
+        <span class="bg-zinc-100 border px-2.5 py-1 rounded-full font-bold">6 Mines • 30 rows</span>
+        <span class="bg-[#C9A84C]/10 border px-2.5 py-1 rounded-full font-bold text-[#8a6d2b]">+ Prompts ▼</span>
+      </div>
+      <div class="mt-4 h-1.5 bg-zinc-100 rounded-full overflow-hidden"><div class="h-full bg-zinc-900" id="ch03Bar" style="width:0%"></div></div>
+    </a>
+
+    <a href="04-offer-builder.html" class="card-hover bg-white rounded-[20px] border border-zinc-200 p-5 block">
+      <div class="flex items-start justify-between mb-3">
+        <div class="w-10 h-10 rounded-full bg-zinc-900 text-white flex items-center justify-center font-black text-[14px]">4</div>
+        <span class="text-[10px] px-2.5 py-1 rounded-full bg-zinc-900 text-white font-bold">P.A.G.E /20</span>
+      </div>
+      <h3 class="font-black text-[15px] leading-tight">04 • Offer Builder</h3>
+      <p class="text-[11px] text-zinc-500 mt-1">Build Page That Sells Promise Before Product</p>
+      <p class="text-[11px] text-zinc-600 mt-3 leading-relaxed">10 sections 4 layers: Hook + Proof + Value + Action. 4 types.</p>
+      <div class="mt-4 flex items-center gap-2 text-[10px]">
+        <span class="bg-zinc-100 border px-2.5 py-1 rounded-full font-bold">10 Sections + Score</span>
+        <span class="bg-[#C9A84C]/10 border px-2.5 py-1 rounded-full font-bold text-[#8a6d2b]">+ Prompts ▼</span>
+      </div>
+      <div class="mt-4 h-1.5 bg-zinc-100 rounded-full overflow-hidden"><div class="h-full bg-zinc-900" id="ch04Bar" style="width:0%"></div></div>
+    </a>
+
+    <a href="05-validation-sprint.html" class="card-hover bg-white rounded-[20px] border border-zinc-200 p-5 block">
+      <div class="flex items-start justify-between mb-3">
+        <div class="w-10 h-10 rounded-full bg-[#C9A84C] text-zinc-900 flex items-center justify-center font-black text-[14px]">5</div>
+        <span class="text-[10px] px-2.5 py-1 rounded-full bg-[#C9A84C] text-zinc-900 font-bold">48h • 3 payments</span>
+      </div>
+      <h3 class="font-black text-[15px] leading-tight">05 • Validation Sprint</h3>
+      <p class="text-[11px] text-zinc-500 mt-1">Get 3 Payments $19 in 48h</p>
+      <p class="text-[11px] text-zinc-600 mt-3 leading-relaxed">50 outreach target. Scripts IG stories, FB no-ban, Reddit, Skool.</p>
+      <div class="mt-4 flex items-center gap-2 text-[10px]">
+        <span class="bg-zinc-100 border px-2.5 py-1 rounded-full font-bold">Tracker 50 rows</span>
+        <span class="bg-[#C9A84C]/10 border px-2.5 py-1 rounded-full font-bold text-[#8a6d2b]">+ Prompts ▼</span>
+      </div>
+      <div class="mt-4 h-1.5 bg-zinc-100 rounded-full overflow-hidden"><div class="h-full bg-[#C9A84C]" id="ch05Bar" style="width:0%"></div></div>
+    </a>
+
+    <div class="bg-zinc-900 rounded-[20px] p-5 text-white flex flex-col justify-between">
+      <div>
+        <div class="w-10 h-10 rounded-full bg-[#C9A84C] text-zinc-900 flex items-center justify-center font-black mb-3">→</div>
+        <div class="font-black text-[14px]">Short Names • All Lowercase</div>
+        <div class="text-[11px] text-white/60 mt-2 leading-relaxed">All files now use short lowercase names to prevent navigation issues on GitHub Pages. Each chapter has collapsible resources at end, responsive, no master link inside.</div>
+      </div>
+      <div class="mt-4 text-[10px] text-white/30">index.html • master-context.html • checklist.html • prompts.html • 01- to 05-</div>
+    </div>
+
+  </div>
+
+  <!-- Core tools after chapters - SHORT NAMES -->
+  <div class="mb-3 flex items-center gap-2">
+    <span class="text-[11px] font-black tracking-widest">CORE TOOLS • SHORT NAMES</span>
+    <div class="h-px flex-1 bg-zinc-200"></div>
+    <span class="text-[10px] text-zinc-500">Lowercase • No spaces • GitHub safe</span>
+  </div>
+
+  <div class="grid grid-cols-1 md:grid-cols-3 gap-4 mb-8">
+
+    <a href="master-context.html" class="card-hover bg-white rounded-[20px] border border-zinc-200 p-5 block">
+      <div class="flex items-start justify-between mb-3">
+        <div class="w-10 h-10 rounded-full bg-zinc-900 text-white flex items-center justify-center font-black text-[13px]">0</div>
+        <span class="text-[10px] px-2.5 py-1 rounded-full bg-zinc-100 border font-bold text-zinc-600">Foundation • Once</span>
+      </div>
+      <h3 class="font-black text-[14px]">master-context.html</h3>
+      <p class="text-[11px] text-zinc-500 mt-1">Fill ONCE. Generates AI-ready block</p>
+      <p class="text-[11px] text-zinc-600 mt-3 leading-relaxed">Niche, audience, 5 problems, skills, goal, tone. Copy block ONCE at start of AI chat. Auto-saves forever via localStorage.</p>
+      <div class="mt-4 flex gap-2">
+        <span class="text-[10px] bg-zinc-900 text-white px-3 py-1.5 rounded-full font-bold">Open →</span>
+        <span class="text-[10px] text-zinc-500" id="masterMini">Checking...</span>
+      </div>
+    </a>
+
+    <a href="checklist.html" class="card-hover bg-white rounded-[20px] border border-zinc-200 p-5 block">
+      <div class="flex items-start justify-between mb-3">
+        <div class="w-10 h-10 rounded-full bg-[#C9A84C] text-zinc-900 flex items-center justify-center font-black text-[13px]">✓</div>
+        <span class="text-[10px] px-2.5 py-1 rounded-full bg-[#FFF8E7] border border-[#C9A84C]/30 text-[#8a6d2b] font-bold">54 steps • 7h total</span>
+      </div>
+      <h3 class="font-black text-[14px]">checklist.html</h3>
+      <p class="text-[11px] text-zinc-500 mt-1">All 5 chapters • Interactive • Auto-saves</p>
+      <p class="text-[11px] text-zinc-600 mt-3 leading-relaxed">Check steps, they dim and save. Progress bars per chapter + overall. Each chapter links here. Export progress.</p>
+      <div class="mt-3 h-1.5 bg-zinc-100 rounded-full overflow-hidden"><div id="checklistBar" class="h-full bg-zinc-900" style="width:0%"></div></div>
+      <div class="mt-2 flex gap-2">
+        <span class="text-[10px] bg-zinc-900 text-white px-3 py-1.5 rounded-full font-bold">Open →</span>
+        <span class="text-[10px] text-zinc-500" id="checklistMini">0/54</span>
+      </div>
+    </a>
+
+    <a href="prompts.html" class="card-hover bg-zinc-900 rounded-[20px] border border-zinc-800 p-5 block">
+      <div class="relative">
+        <div class="flex items-start justify-between mb-3">
+          <div class="w-10 h-10 rounded-full bg-[#C9A84C] text-zinc-900 flex items-center justify-center font-black text-[13px]">P</div>
+          <span class="text-[10px] px-2.5 py-1 rounded-full bg-white/10 border border-white/10 text-white/70 font-bold">50 prompts • Practical</span>
+        </div>
+        <h3 class="font-black text-[14px] text-white">prompts.html</h3>
+        <p class="text-[11px] text-white/50 mt-1">Version A practical + Version B standalone</p>
+        <p class="text-[11px] text-white/60 mt-3 leading-relaxed">Version A: Paste Master once at start of chat, then use any prompt in SAME chat. Version B: Fill [BRACKETS] anywhere. Collapsible, search, one-click copy.</p>
+        <div class="mt-4 flex gap-2">
+          <span class="text-[10px] bg-[#C9A84C] text-zinc-900 px-3 py-1.5 rounded-full font-black">Open →</span>
+          <span class="text-[10px] text-white/40">Short name • small</span>
+        </div>
+      </div>
+    </a>
+
+  </div>
+
+  <div class="text-center text-[11px] text-zinc-400 pb-8">
+    From Idea To Cash • 9 files • All lowercase short names • GitHub Pages safe • Responsive • Dashboard links everywhere
+  </div>
+</div>
+
+<script>
+function updateProgress(){
+  try{
+    const keys = ['FITC-Ch01-MarketScoring','FITC-Ch02-Audience','FITC-Ch03-ProblemBank','FITC-Ch04-OfferBuilder','FITC-Ch05-Validation'];
+    let done = 0;
+    keys.forEach((k,i)=>{
+      const data = localStorage.getItem(k);
+      if(data && data.length > 50) done++;
+      const bar = document.getElementById('ch0'+(i+1)+'Bar');
+      if(bar) bar.style.width = (data && data.length>50) ? '100%' : '0%';
+    });
+    document.getElementById('progressText').textContent = done + ' of 5 completed';
+    document.getElementById('progressBar').style.width = (done/5*100)+'%';
+    document.getElementById('progressPercent').textContent = Math.round(done/5*100)+'%';
+
+    const masterData = JSON.parse(localStorage.getItem('fitc_master_context_v1')||'{}');
+    const masterKeys = ['niche','audience_who','audience_where','audience_dream','prob1','skills','goal'];
+    let filled = 0;
+    masterKeys.forEach(k=>{ if(masterData[k] && masterData[k].trim().length>5) filled++; });
+    const mm = document.getElementById('masterMini');
+    if(mm) mm.textContent = filled ? filled+'/'+masterKeys.length+' filled' : 'Not started';
+
+    const checklistData = JSON.parse(localStorage.getItem('FITC-Master-Checklist')||'{}');
+    const checklistKeys = Object.keys(checklistData).filter(k=>!k.startsWith('open_'));
+    const completed = checklistKeys.filter(k=>checklistData[k]).length;
+    const cb = document.getElementById('checklistBar');
+    const cm = document.getElementById('checklistMini');
+    if(cb) cb.style.width = Math.round(completed/54*100)+'%';
+    if(cm) cm.textContent = completed+'/54 steps';
+  }catch(e){}
+}
+updateProgress();
+setInterval(updateProgress, 2000);
+</script>
+</body>
+</html>
