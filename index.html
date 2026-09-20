@@ -3,251 +3,946 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>From Idea To Cash | Interactive Workspace</title>
+<title>From Idea To Cash - Prompts Library</title>
 <script src="https://cdn.tailwindcss.com"></script>
-<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
 <style>
   body{font-family:'Inter',sans-serif}
-  .card-hover{transition: all 0.2s ease}
-  .card-hover:hover{transform: translateY(-2px); box-shadow: 0 8px 30px rgba(0,0,0,0.06)}
+  .mono{font-family:'JetBrains Mono', monospace}
+  .prompt-block{white-space: pre-wrap; word-break: break-word}
+  .copy-btn{transition: all 0.2s}
+  .tab-active{background:#18181b; color:white; border-color:#18181b}
+  .tab-inactive{background:white; color:#71717a; border-color:#e4e4e7}
+  .tab-inactive:hover{background:#fafafa; color:#18181b}
 </style>
 </head>
 <body class="bg-[#faf9f6] text-zinc-900 min-h-screen">
-<div class="max-w-[1200px] mx-auto px-4 py-6">
+<div class="max-w-[1120px] mx-auto px-4 py-6">
 
-  <!-- Header - matching original link design -->
+  <!-- Header -->
   <div class="bg-zinc-900 text-white rounded-[24px] p-6 md:p-8 mb-6 relative overflow-hidden">
-    <div class="absolute -top-24 -right-24 w-[500px] h-[500px] bg-[#C9A84C]/20 blur-[80px] rounded-full pointer-events-none"></div>
+    <div class="absolute -top-24 -right-24 w-[400px] h-[400px] bg-[#C9A84C]/20 blur-[70px] rounded-full pointer-events-none"></div>
     <div class="absolute -bottom-20 -left-20 w-[300px] h-[300px] bg-white/[0.04] blur-[60px] rounded-full pointer-events-none"></div>
     <div class="relative">
-      <div class="flex items-center gap-3 mb-6">
-        <div class="w-10 h-10 rounded-full bg-[#C9A84C] text-zinc-900 flex items-center justify-center font-black">✓</div>
-        <span class="text-[11px] tracking-[0.2em] opacity-60 font-bold">FROM IDEA TO CASH • WORKSPACE</span>
-        <span class="ml-auto text-[11px] bg-white/10 border border-white/10 rounded-full px-3 py-1.5">💾 Auto-saves • GitHub Pages Ready</span>
+      <div class="flex flex-wrap items-center gap-3 mb-4">
+        <div class="w-9 h-9 rounded-full bg-[#C9A84C] text-zinc-900 flex items-center justify-center font-black text-[14px]">P</div>
+        <span class="text-[11px] tracking-[0.18em] opacity-60 font-bold">FROM IDEA TO CASH • PROMPTS LIBRARY</span>
+        <span class="text-[11px] bg-white/10 border border-white/10 rounded-full px-3 py-1">📋 One-click copy • GitHub ready</span>
+        <div class="ml-auto flex gap-2">
+          <span class="text-[11px] bg-white/10 border border-white/20 px-4 py-2 rounded-full">50 prompts • 5 chapters</span>
+        </div>
       </div>
+      <h1 class="text-[28px] md:text-[40px] font-black leading-[0.95] tracking-tight">All Prompts<br><span class="text-[#C9A84C]">Version A + Version B</span></h1>
+      <p class="text-white/60 mt-3 text-[13px] md:text-[14px] max-w-2xl leading-relaxed">Version A is now practical: fill Master Context File once, paste it once at the start of any AI chat, then use any prompt. No need to paste context again. Version B is standalone fill-in-the-blanks.</p>
       
-      <div class="flex flex-col md:flex-row md:items-end justify-between gap-6">
-        <div>
-          <h1 class="text-[32px] md:text-[42px] font-black leading-[0.9] tracking-tight">Interactive<br><span class="text-[#C9A84C]">Workspace</span></h1>
-          <p class="text-white/50 mt-3 text-[13px] max-w-xl leading-relaxed">Pick a chapter, execute, check progress. Everything auto-saves in browser. New: Each chapter now has collapsible prompts + checklist links at the end.</p>
+      <!-- How to use banner - NEW -->
+      <div class="mt-6 grid grid-cols-1 md:grid-cols-2 gap-3">
+        <div class="bg-white/5 border border-[#C9A84C]/30 rounded-[14px] p-4">
+          <div class="flex items-center gap-2 mb-2">
+            <span class="w-6 h-6 rounded-full bg-[#C9A84C] text-zinc-900 flex items-center justify-center font-black text-[11px]">A</span>
+            <span class="font-bold text-[12px] text-[#C9A84C] tracking-wide">VERSION A - RECOMMENDED • SMART CONTEXT</span>
+          </div>
+          <ol class="text-[11px] text-white/70 leading-relaxed space-y-1 list-decimal list-inside">
+            <li>Fill <span class="text-white font-bold">00-Master-Context-File.html</span> (generates your personal block)</li>
+            <li>Copy the block and <span class="text-white font-bold">paste it ONCE at the very start</span> of a new ChatGPT / Meta AI / Claude chat</li>
+            <li>Then copy any Version A prompt from below and paste it <span class="text-white font-bold">in the same chat</span> - AI already knows your context</li>
+            <li>No need to paste Master Context again for other prompts in same chat</li>
+          </ol>
         </div>
-        <div class="bg-white/5 border border-white/10 rounded-[16px] p-4 min-w-[240px]">
-          <div class="flex justify-between items-center mb-2">
-            <span class="text-[10px] font-bold tracking-widest opacity-50">WORKSPACE PROGRESS</span>
-            <span class="text-[11px] font-bold" id="progressText">0 of 5 completed</span>
+        <div class="bg-white/5 border border-white/10 rounded-[14px] p-4">
+          <div class="flex items-center gap-2 mb-2">
+            <span class="w-6 h-6 rounded-full bg-white text-zinc-900 flex items-center justify-center font-black text-[11px]">B</span>
+            <span class="font-bold text-[12px] tracking-wide">VERSION B - STANDALONE • FILL-IN-THE-BLANKS</span>
           </div>
-          <div class="h-2 bg-white/10 rounded-full overflow-hidden">
-            <div id="progressBar" class="h-full bg-[#C9A84C] transition-all duration-500" style="width:0%"></div>
-          </div>
-          <div class="mt-2 text-[10px] text-white/40"><span id="progressPercent">0%</span> • All files share localStorage • Same domain</div>
+          <ol class="text-[11px] text-white/70 leading-relaxed space-y-1 list-decimal list-inside">
+            <li>No Master File needed</li>
+            <li>Copy any Version B prompt</li>
+            <li>Fill the <span class="text-white font-bold">[BRACKETS]</span> with your data</li>
+            <li>Paste directly into AI - works anywhere</li>
+          </ol>
         </div>
       </div>
     </div>
   </div>
 
-  <!-- Chapters first -->
-  <div class="mb-3 flex items-center gap-2">
-    <span class="text-[11px] font-black tracking-widest">EXECUTION • 5 CHAPTERS</span>
-    <div class="h-px flex-1 bg-zinc-200"></div>
-    <span class="text-[10px] text-zinc-500">Each has collapsible prompts at the end</span>
-  </div>
-
-  <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 mb-10">
-
-    <a href="Chapter-01-Market-Scoring-Interactive.html" class="card-hover bg-white rounded-[20px] border border-zinc-200 p-5 block">
-      <div class="flex items-start justify-between mb-3">
-        <div class="w-10 h-10 rounded-full bg-zinc-900 text-white flex items-center justify-center font-black text-[14px]">1</div>
-        <span class="text-[10px] px-2.5 py-1 rounded-full bg-[#FFF8E7] border border-[#C9A84C]/30 text-[#8a6d2b] font-bold">60 min • 10 markets</span>
-      </div>
-      <h3 class="font-black text-[15px] leading-tight">Chapter 01 • THE MARKET</h3>
-      <p class="text-[11px] text-zinc-500 mt-1">Pick ONE Profitable Market Even With Zero Experience</p>
-      <p class="text-[11px] text-zinc-600 mt-3 leading-relaxed">List 10 markets as [Audience + Problem]. Score 1-5 on 4 criteria. If Can Pay &lt;3, kill it. Winner = highest where Can Pay ≥3.</p>
-      <div class="mt-4 flex items-center gap-2 text-[10px]">
-        <span class="bg-zinc-100 border border-zinc-200 px-2.5 py-1 rounded-full font-bold">Interactive Table</span>
-        <span class="bg-[#C9A84C]/10 border border-[#C9A84C]/20 px-2.5 py-1 rounded-full font-bold text-[#8a6d2b]">+ Prompts at end ▼</span>
-      </div>
-      <div class="mt-4 h-1.5 bg-zinc-100 rounded-full overflow-hidden">
-        <div class="h-full bg-zinc-900 transition-all" id="ch01Bar" style="width:0%"></div>
-      </div>
-    </a>
-
-    <a href="Chapter-02-Audience-Finder-Interactive.html" class="card-hover bg-white rounded-[20px] border border-zinc-200 p-5 block">
-      <div class="flex items-start justify-between mb-3">
-        <div class="w-10 h-10 rounded-full bg-zinc-900 text-white flex items-center justify-center font-black text-[14px]">2</div>
-        <span class="text-[10px] px-2.5 py-1 rounded-full bg-[#FFF8E7] border border-[#C9A84C]/30 text-[#8a6d2b] font-bold">90 min • 5 signals</span>
-      </div>
-      <h3 class="font-black text-[15px] leading-tight">Chapter 02 • THE AUDIENCE</h3>
-      <p class="text-[11px] text-zinc-500 mt-1">Find The Audience That Actually PAYS</p>
-      <p class="text-[11px] text-zinc-600 mt-3 leading-relaxed">Split market into broke vs rich audiences. 3 mines: Amazon (Can Pay), FB Groups, Reddit. Validate with 5 signals.</p>
-      <div class="mt-4 flex items-center gap-2 text-[10px]">
-        <span class="bg-zinc-100 border border-zinc-200 px-2.5 py-1 rounded-full font-bold">Comparison + Mines</span>
-        <span class="bg-[#C9A84C]/10 border border-[#C9A84C]/20 px-2.5 py-1 rounded-full font-bold text-[#8a6d2b]">+ Prompts at end ▼</span>
-      </div>
-      <div class="mt-4 h-1.5 bg-zinc-100 rounded-full overflow-hidden">
-        <div class="h-full bg-zinc-900 transition-all" id="ch02Bar" style="width:0%"></div>
-      </div>
-    </a>
-
-    <a href="Chapter-03-Problem-Bank-Interactive.html" class="card-hover bg-white rounded-[20px] border border-zinc-200 p-5 block">
-      <div class="flex items-start justify-between mb-3">
-        <div class="w-10 h-10 rounded-full bg-zinc-900 text-white flex items-center justify-center font-black text-[14px]">3</div>
-        <span class="text-[10px] px-2.5 py-1 rounded-full bg-zinc-900 text-white font-bold">Gold mine • 30 complaints</span>
-      </div>
-      <h3 class="font-black text-[15px] leading-tight">Chapter 03 • PROBLEM BANK</h3>
-      <p class="text-[11px] text-zinc-500 mt-1">30 Complaints = 30 Validated Product Ideas</p>
-      <p class="text-[11px] text-zinc-600 mt-3 leading-relaxed">Collect 30 verbatim complaints from 6 mines (5 each). Auto-find Golden Problem repeating 5+ times + 5 paying signals.</p>
-      <div class="mt-4 flex items-center gap-2 text-[10px]">
-        <span class="bg-zinc-100 border border-zinc-200 px-2.5 py-1 rounded-full font-bold">6 Mines • 30 rows</span>
-        <span class="bg-[#C9A84C]/10 border border-[#C9A84C]/20 px-2.5 py-1 rounded-full font-bold text-[#8a6d2b]">+ Prompts at end ▼</span>
-      </div>
-      <div class="mt-4 h-1.5 bg-zinc-100 rounded-full overflow-hidden">
-        <div class="h-full bg-zinc-900 transition-all" id="ch03Bar" style="width:0%"></div>
-      </div>
-    </a>
-
-    <a href="Chapter-04-Offer-Builder-Interactive.html" class="card-hover bg-white rounded-[20px] border border-zinc-200 p-5 block">
-      <div class="flex items-start justify-between mb-3">
-        <div class="w-10 h-10 rounded-full bg-zinc-900 text-white flex items-center justify-center font-black text-[14px]">4</div>
-        <span class="text-[10px] px-2.5 py-1 rounded-full bg-zinc-900 text-white font-bold">P.A.G.E /20 • 10 sections</span>
-      </div>
-      <h3 class="font-black text-[15px] leading-tight">Chapter 04 • OFFER BUILDER</h3>
-      <p class="text-[11px] text-zinc-500 mt-1">Build ONE Page That Sells Promise Before Product</p>
-      <p class="text-[11px] text-zinc-600 mt-3 leading-relaxed">10 sections in 4 layers: Hook + Proof + Value + Action. 4 page types: Pre-order $19, Deposit $5, Waitlist, Fake Door. P.A.G.E Score /20.</p>
-      <div class="mt-4 flex items-center gap-2 text-[10px]">
-        <span class="bg-zinc-100 border border-zinc-200 px-2.5 py-1 rounded-full font-bold">10 Sections + Score</span>
-        <span class="bg-[#C9A84C]/10 border border-[#C9A84C]/20 px-2.5 py-1 rounded-full font-bold text-[#8a6d2b]">+ Prompts at end ▼</span>
-      </div>
-      <div class="mt-4 h-1.5 bg-zinc-100 rounded-full overflow-hidden">
-        <div class="h-full bg-zinc-900 transition-all" id="ch04Bar" style="width:0%"></div>
-      </div>
-    </a>
-
-    <a href="Chapter-05-Validation-Sprint-Interactive.html" class="card-hover bg-white rounded-[20px] border border-zinc-200 p-5 block">
-      <div class="flex items-start justify-between mb-3">
-        <div class="w-10 h-10 rounded-full bg-[#C9A84C] text-zinc-900 flex items-center justify-center font-black text-[14px]">5</div>
-        <span class="text-[10px] px-2.5 py-1 rounded-full bg-[#C9A84C] text-zinc-900 font-bold">48h • 3 payments</span>
-      </div>
-      <h3 class="font-black text-[15px] leading-tight">Chapter 05 • VALIDATION SPRINT</h3>
-      <p class="text-[11px] text-zinc-500 mt-1">Get 3 Payments $19 in 48h - Have Audience or Zero</p>
-      <p class="text-[11px] text-zinc-600 mt-3 leading-relaxed">50 outreach target. Scripts: IG stories, FB no-ban comments, Reddit, Skool. GO if 3x $19, PIVOT if objections, NO-GO if 0 after 50.</p>
-      <div class="mt-4 flex items-center gap-2 text-[10px]">
-        <span class="bg-zinc-100 border border-zinc-200 px-2.5 py-1 rounded-full font-bold">Tracker 50 rows</span>
-        <span class="bg-[#C9A84C]/10 border border-[#C9A84C]/20 px-2.5 py-1 rounded-full font-bold text-[#8a6d2b]">+ Prompts at end ▼</span>
-      </div>
-      <div class="mt-4 h-1.5 bg-zinc-100 rounded-full overflow-hidden">
-        <div class="h-full bg-[#C9A84C] transition-all" id="ch05Bar" style="width:0%"></div>
-      </div>
-    </a>
-
-    <div class="bg-zinc-900 rounded-[20px] p-5 text-white flex flex-col justify-between">
-      <div>
-        <div class="w-10 h-10 rounded-full bg-[#C9A84C] text-zinc-900 flex items-center justify-center font-black mb-3">→</div>
-        <div class="font-black text-[14px]">New: Collapsible Resources</div>
-        <div class="text-[11px] text-white/60 mt-2 leading-relaxed">Each chapter now has at the END a collapsible section (click to expand) with: Quick Access (Checklist + Full Prompts Library) + 10 Prompts Tabs (Version A practical + Version B). No Master link inside chapters - stays clean.</div>
-      </div>
-      <div class="mt-4 text-[10px] text-white/30">Click any chapter → scroll to bottom → expand resources</div>
+  <!-- Nav - Fixed with Dashboard Link -->
+  <div class="bg-white border border-zinc-200 rounded-[20px] p-3 mb-6 flex flex-wrap items-center gap-2">
+    <a href="index.html" class="text-[11px] font-bold px-4 py-2 rounded-full bg-zinc-900 text-white hover:bg-black transition">← Dashboard</a>
+    <div class="hidden sm:block text-zinc-300">/</div>
+    <span class="text-[11px] font-bold px-4 py-2 rounded-full bg-[#FFF8E7] border border-[#C9A84C]/30 text-[#8a6d2b]">📋 Prompts Library</span>
+    <span class="text-[11px] font-bold tracking-widest text-zinc-500 hidden md:inline">5 CHAPTERS • COLLAPSIBLE • 2 VERSIONS</span>
+    <span class="text-[10px] px-3 py-1.5 rounded-full bg-[#FFF8E7] text-[#8a6d2b] font-bold border border-[#C9A84C]/30">One-click copy</span>
+    <div class="ml-auto flex flex-wrap gap-2 w-full md:w-auto mt-2 md:mt-0">
+      <a href="00-Master-Context-File.html" class="text-[11px] font-bold px-3 py-2 rounded-full border border-zinc-200 hover:bg-zinc-50">Master →</a>
+      <a href="From-Idea-To-Cash-Master-Checklist.html" class="text-[11px] font-bold px-3 py-2 rounded-full border border-zinc-200 hover:bg-zinc-50">Checklist →</a>
+      <input id="searchInput" placeholder="Search..." class="text-[12px] border border-zinc-200 rounded-full px-4 py-2 w-full md:w-[240px] focus:outline-none focus:border-zinc-900">
     </div>
-
   </div>
 
-  <!-- 3 core files AFTER chapters -->
-  <div class="mb-3 flex items-center gap-2">
-    <span class="text-[11px] font-black tracking-widest">CORE TOOLS • AFTER CHAPTERS</span>
-    <div class="h-px flex-1 bg-zinc-200"></div>
-    <span class="text-[10px] text-zinc-500">Master + Checklist + Prompts Library</span>
-  </div>
+  <div id="chaptersContainer" class="space-y-5"></div>
 
-  <div class="grid grid-cols-1 md:grid-cols-3 gap-4 mb-8">
-
-    <a href="00-Master-Context-File.html" class="card-hover bg-white rounded-[20px] border border-zinc-200 p-5 block">
-      <div class="flex items-start justify-between mb-3">
-        <div class="w-10 h-10 rounded-full bg-zinc-900 text-white flex items-center justify-center font-black text-[13px]">0</div>
-        <span class="text-[10px] px-2.5 py-1 rounded-full bg-zinc-100 border border-zinc-200 font-bold text-zinc-600">Foundation • Once</span>
-      </div>
-      <h3 class="font-black text-[14px]">00 • Master Context File</h3>
-      <p class="text-[11px] text-zinc-500 mt-1">Fill ONCE. Generates AI-ready block</p>
-      <p class="text-[11px] text-zinc-600 mt-3 leading-relaxed">Niche, audience, 5 problems, skills, goal, tone. Copy block ONCE at start of AI chat, then use Version A prompts in same chat. Auto-saves forever.</p>
-      <div class="mt-4 flex gap-2">
-        <span class="text-[10px] bg-zinc-900 text-white px-3 py-1.5 rounded-full font-bold">Open →</span>
-        <span class="text-[10px] text-zinc-500" id="masterMini">Checking...</span>
-      </div>
-    </a>
-
-    <a href="From-Idea-To-Cash-Master-Checklist.html" class="card-hover bg-white rounded-[20px] border border-zinc-200 p-5 block">
-      <div class="flex items-start justify-between mb-3">
-        <div class="w-10 h-10 rounded-full bg-[#C9A84C] text-zinc-900 flex items-center justify-center font-black text-[13px]">✓</div>
-        <span class="text-[10px] px-2.5 py-1 rounded-full bg-[#FFF8E7] border border-[#C9A84C]/30 text-[#8a6d2b] font-bold">54 steps • 7h total</span>
-      </div>
-      <h3 class="font-black text-[14px]">Master Checklist • 54 Steps</h3>
-      <p class="text-[11px] text-zinc-500 mt-1">All 5 chapters • Interactive • Auto-saves</p>
-      <p class="text-[11px] text-zinc-600 mt-3 leading-relaxed">Check steps, they dim and save. Progress bars per chapter + overall. Each chapter links here. Export progress. Hosted on GitHub Pages.</p>
-      <div class="mt-3 h-1.5 bg-zinc-100 rounded-full overflow-hidden">
-        <div id="checklistBar" class="h-full bg-zinc-900 transition-all" style="width:0%"></div>
-      </div>
-      <div class="mt-2 flex gap-2">
-        <span class="text-[10px] bg-zinc-900 text-white px-3 py-1.5 rounded-full font-bold">Open Checklist →</span>
-        <span class="text-[10px] text-zinc-500" id="checklistMini">0/54</span>
-      </div>
-    </a>
-
-    <a href="From-Idea-To-Cash-Prompts.html" class="card-hover bg-zinc-900 rounded-[20px] border border-zinc-800 p-5 block">
-      <div class="absolute -top-10 -right-10 w-[120px] h-[120px] bg-[#C9A84C]/20 blur-[20px] rounded-full pointer-events-none"></div>
-      <div class="relative">
-        <div class="flex items-start justify-between mb-3">
-          <div class="w-10 h-10 rounded-full bg-[#C9A84C] text-zinc-900 flex items-center justify-center font-black text-[13px]">P</div>
-          <span class="text-[10px] px-2.5 py-1 rounded-full bg-white/10 border border-white/10 text-white/70 font-bold">50 prompts • Practical</span>
-        </div>
-        <h3 class="font-black text-[14px] text-white">Prompts Library • 50 Prompts</h3>
-        <p class="text-[11px] text-white/50 mt-1">Version A practical + Version B standalone</p>
-        <p class="text-[11px] text-white/60 mt-3 leading-relaxed">Version A: Paste Master once at start of chat, then use any prompt in SAME chat - no need to paste again. Version B: Fill [BRACKETS] anywhere. Collapsible, search, one-click copy. Referenced inside each chapter's end section.</p>
-        <div class="mt-4 flex gap-2">
-          <span class="text-[10px] bg-[#C9A84C] text-zinc-900 px-3 py-1.5 rounded-full font-black">Open Library →</span>
-          <span class="text-[10px] text-white/40">Version A = practical</span>
-        </div>
-      </div>
-    </a>
-
-  </div>
-
-  <div class="text-center text-[11px] text-zinc-400 pb-8">
-    From Idea To Cash • 8 files • Chapters first, core tools after • Each chapter has collapsible prompts at end • No master link inside chapters • Same design as original link
+  <div class="mt-8 text-center text-[11px] text-zinc-400 pb-10">
+    Built for From Idea To Cash • Single file • GitHub Pages ready • Official colors #faf9f6 / #C9A84C / zinc-900 • Practical Version A: Master Context pasted once
   </div>
 </div>
 
 <script>
-function updateProgress(){
-  try{
-    // Simple progress based on localStorage keys existence
-    const keys = ['FITC-Ch01-MarketScoring','FITC-Ch02-Audience','FITC-Ch03-ProblemBank','FITC-Ch04-OfferBuilder','FITC-Ch05-Validation'];
-    let done = 0;
-    keys.forEach((k,i)=>{
-      const data = localStorage.getItem(k);
-      if(data && data.length > 50) done++;
-      const bar = document.getElementById('ch0'+(i+1)+'Bar');
-      if(bar) bar.style.width = (data && data.length>50) ? '100%' : '0%';
-    });
-    document.getElementById('progressText').textContent = done + ' of 5 completed';
-    document.getElementById('progressBar').style.width = (done/5*100)+'%';
-    document.getElementById('progressPercent').textContent = Math.round(done/5*100)+'%';
+const STORAGE_KEY = 'FITC-Prompts-Tabs';
+const OPEN_KEY = 'FITC-Prompts-Open';
 
-    const masterData = JSON.parse(localStorage.getItem('fitc_master_context_v1')||'{}');
-    const masterKeys = ['niche','audience_who','audience_where','audience_dream','prob1','skills','goal'];
-    let filled = 0;
-    masterKeys.forEach(k=>{ if(masterData[k] && masterData[k].trim().length>5) filled++; });
-    const mm = document.getElementById('masterMini');
-    if(mm) mm.textContent = filled ? filled+'/'+masterKeys.length+' filled' : 'Not started';
+const chapters = [
+  {
+    id: 'ch01',
+    number: '01',
+    title: 'THE MARKET',
+    subtitle: 'Pick ONE Profitable Market Even With Zero Experience',
+    versionA: {
+      label: 'VERSION A: SMART CONTEXT-BASED (Paste Master Once)',
+      desc: 'How to use: You already pasted your Master Context File block ONCE at the start of this AI chat. Now just paste any prompt below - AI already knows your skills, goals, and niche. No need to paste Master again.',
+      prompts: [
+        {
+          id:'ch01-a1',
+          title:'PROMPT A1 - EXPERIENCED PATH - Score My Market Brutally',
+          content: `You are a market validation expert who is brutally honest and hates fluffy advice.
+You already have my Master Context from the beginning of this chat - use it.
 
-    const checklistData = JSON.parse(localStorage.getItem('FITC-Master-Checklist')||'{}');
-    const checklistKeys = Object.keys(checklistData).filter(k=>!k.startsWith('open_'));
-    const completed = checklistKeys.filter(k=>checklistData[k]).length;
-    const cb = document.getElementById('checklistBar');
-    const cm = document.getElementById('checklistMini');
-    if(cb) cb.style.width = Math.round(completed/54*100)+'%';
-    if(cm) cm.textContent = completed+'/54 steps';
-  }catch(e){}
+Now, score THIS market for me: [Take your market from Row 1 of your scoring sheet - paste it here]
+
+Score it 1-5 on these 4 criteria:
+1. Pain Points: Are there real, daily complaints? People losing time/money or blocked? Search in your head for YouTube/TikTok comments saying "[niche] my problem" - are they complaining daily?
+2. Growing: Is demand going UP? Check Google Trends mental model + Gumroad - are new products dropping weekly or dead for 2 years?
+3. Easy to Find: Can I reach them for FREE in FB Groups, LinkedIn, Reddit? Or do I have to burn ad money?
+4. Can Pay: Do they actually have money and willingness to pay? This is the killer.
+
+Give me:
+- Score for each 1-5 with 1-sentence why
+- Total /20
+- Verdict: KILL, TEST DEEPER, or WINNER
+- If Can Pay <3, tell me why it's dead and suggest a PIVOT inside same market to an audience WITH money (like HR example: job seekers = broke, hiring companies = rich)
+
+Be direct, American English, like talking to a homie.`
+        },
+        {
+          id:'ch01-a2',
+          title:'PROMPT A2 - ZERO EXPERIENCE PATH - Find Me 10 Hidden Profitable Markets',
+          content: `You are a digital product market hunter. You only find markets where people HAVE MONEY and complain daily.
+You already have my Master Context from the start of this chat - use my skills & goal from it.
+
+Task: Give me 10 hyper-specific sub-markets using the 4 criteria: Pain, Growing, Easy to Find, Can Pay.
+Rules:
+- Format each market as: [Specific Audience who PAYS] struggling with [Specific Recurring Weekly Problem]
+- AVOID: students, broke people, generic "productivity" or "business"
+- Each must waste time OR lose money OR block important goal OR cause chaos
+- Must be easy to find on LinkedIn, FB Groups, or Reddit
+- Must have money to pay $20-$100 for a template/system/course
+
+For each market, give me quick scores 1-5 on the 4 criteria and total /20. Then rank top 3.
+Example good: "Online course creators with 500+ students drowning in student support emails"
+Example bad: "People who want to be productive" <- TOO VAGUE, KILL IT.
+
+American English, casual, no fluff.`
+        },
+        {
+          id:'ch01-a3',
+          title:'PROMPT A3 - GOOGLE TRENDS + GUMROAD VALIDATOR',
+          content: `You already have my Master Context from the start of this chat.
+
+I have these Top 3 markets from my scoring sheet:
+Market 1: [paste]
+Market 2: [paste]
+Market 3: [paste]
+
+Act like a research assistant. For each market, tell me:
+1. What EXACTLY to type into Google Trends to check if it's growing last 12 months (give me 3 keyword variations)
+2. What EXACTLY to search on Gumroad, Etsy, and LinkedIn Groups to see if new products are dropping weekly and communities are active
+3. Red flags that mean the market is shrinking (like print newspapers -> digital)
+4. Green flags that mean it's growing
+
+Give me a simple table I can fill in after I search.`
+        },
+        {
+          id:'ch01-a4',
+          title:'PROMPT A4 - THE CAN PAY DETECTIVE (Most Important)',
+          content: `You already have my Master Context from the start of this chat.
+
+Take my market: [paste your market idea]
+
+I need you to be brutal about Can Pay. Answer:
+1. Who in this market HAS money vs who is BROKE? Split it like Relationships example: University students = broke, Seniors 30+ with jobs = can pay.
+2. What are they already paying for? (tools, courses, coaches, SaaS)
+3. What's their average income or budget for solving this?
+4. If I sell a $49 template or $29/mo community, would they pay without thinking too much? Why or why not?
+5. If my current audience is broke, give me 2 pivots to a richer audience inside SAME problem space.
+
+Be savage. If they are broke, say it.`
+        },
+        {
+          id:'ch01-a5',
+          title:'PROMPT A5 - FINAL ONE-LINER CRAFTER',
+          content: `You already have my Master Context from the start of this chat.
+
+My winning market after scoring is: [paste your winner + scores]
+
+Help me write my final one-liner in this exact format:
+"I help [super specific audience] solve [specific recurring painful problem] without [common objection]"
+
+Give me 5 variations:
+- 1 super niche (like "online teachers wasting 10h/week on lesson prep")
+- 1 broader but still specific
+- 1 focused on money outcome
+- 1 focused on time outcome
+- 1 focused on status/outcome
+
+Then pick the best one and tell me why it will sell easiest based on Can Pay + Easy to Find.
+American, punchy, like a homie writing copy.`
+        }
+      ]
+    },
+    versionB: {
+      label: 'VERSION B: FILL-IN-THE-BLANKS',
+      desc: 'Copy-paste and fill [BRACKETS]. Standalone, no Master File needed.',
+      prompts: [
+        {
+          id:'ch01-b1',
+          title:'PROMPT B1 - Experienced Path',
+          content: `I'm an expert in [YOUR FIELD] with [X YEARS] experience. I know [WHAT YOU KNOW DEEPLY]. 
+Score this market: [YOUR MARKET IDEA as Audience + Problem]
+Score it 1-5 on:
+1- Pain: Does it waste time, block goal, lose money/clients, cause chaos? Do people complain daily on YouTube/TikTok searching "[niche] my problem"?
+2- Growing: Is demand going UP? Check Google Trends last 12 months + Gumroad - new products weekly?
+3- Easy to Find: Can I reach them FREE on LinkedIn, FB Groups, Reddit?
+4- Can Pay: Do they have money? This is killer.
+
+Give total /20, verdict (KILL/TEST/WINNER), and if Can Pay <3, suggest pivot to richer audience in same market.`
+        },
+        {
+          id:'ch01-b2',
+          title:'PROMPT B2 - Zero Experience Path',
+          content: `I have zero experience and want a profitable market. My skills are [YOUR 2-3 SKILLS]. My goal is [YOUR INCOME GOAL].
+Suggest 10 hyper-specific sub-markets as [Specific Paying Audience] struggling with [Specific Weekly Problem]. Avoid students/broke. Each must have real pain (time/money/blocked/chaos), be growing, easy to find on LinkedIn/FB/Reddit, and able to pay $20-$100.
+Score each 1-5 on Pain, Growing, Easy, Can Pay, total /20. Rank top 3.`
+        },
+        {
+          id:'ch01-b3',
+          title:'PROMPT B3 - Validator',
+          content: `My Top 3 markets are:
+1. [MARKET 1]
+2. [MARKET 2]
+3. [MARKET 3]
+
+For each, tell me exactly what to type into Google Trends (3 keyword variations) and Gumroad to validate growth, and what red/green flags to look for.
+Give me a table to fill.`
+        },
+        {
+          id:'ch01-b4',
+          title:'PROMPT B4 - Can Pay Detective',
+          content: `My market is: [YOUR MARKET]
+Split audience into HAS MONEY vs BROKE like: University students = broke vs Seniors 30+ = can pay.
+
+Answer: What are they already paying for? Average income? Would they pay $49 for template or $29/mo community without hesitation? If my audience is broke, give 2 pivots to richer audience in same problem.`
+        },
+        {
+          id:'ch01-b5',
+          title:'PROMPT B5 - One-Liner Crafter',
+          content: `My winning market is: [WINNER MARKET + SCORES: Pain X/5, Growing X/5, Easy X/5, Can Pay X/5]
+
+Write 5 one-liners as "I help [specific audience] solve [specific problem] without [objection]" - variations: super niche, broader, money-focused, time-focused, status-focused. Pick best and explain why based on Can Pay + Easy to Find.`
+        }
+      ]
+    }
+  },
+  {
+    id: 'ch02',
+    number: '02',
+    title: 'THE AUDIENCE',
+    subtitle: 'Find Audience Ready To Pay',
+    versionA: {
+      label: 'VERSION A: SMART CONTEXT-BASED (Master Already Pasted)',
+      desc: 'Master Context already pasted once at start of chat. This version also uses your Ch01 Winner which AI already knows from earlier in same chat. Just paste the prompt.',
+      prompts: [
+        {
+          id:'ch02-a1',
+          title:'PROMPT A1 - SPLIT AUDIENCE INTO BROKE VS RICH (Most Important)',
+          content: `You are a ruthless audience auditor. You kill broke audiences.
+You already have my Master Context and my Ch01 Winner from earlier in this chat.
+
+My market from Chapter 01 is: [If not already shared, paste Ch01 Winner again: I help ...]
+
+Task: Inside this ONE market, there are at least 2 audiences: one BROKE and one RICH, same problem but different wallet.
+Example:
+- Relationships: University students = broke 1/5 Can Pay, Seniors 30+ with jobs = rich 5/5 Can Pay
+- HR: Job seekers = broke 1/5, Hiring managers at 10-50 employee startups = rich 5/5
+
+Give me 3 audience splits inside my market:
+Audience A: [specific + why broke]
+Audience B: [specific + why rich]
+
+For each, score 1-5 on Pain, Growing, Easy to Find, Can Pay, total /20.
+Then tell me which ONE is ready to pay and where they hang out: give me 3 specific places (exact FB Group names >10k, exact Subreddits, LinkedIn hashtags).
+
+Be brutal, American English, like homie.`
+        },
+        {
+          id:'ch02-a2',
+          title:'PROMPT A2 - 3 MINES DEEP DIVE - WHERE TO FIND THEM',
+          content: `You already have my Master Context and Ch01 Winner from the start of this chat.
+
+My target audience guess is: [YOUR GUESS FROM AUDIENCE TABLE]
+
+Act as my research assistant for 90 minutes.
+Give me EXACT search queries to run in:
+
+MINE 1 - Amazon Reviews (Can Pay Proof):
+- What exact book/product title to search for my audience?
+- How to filter Best Sellers with 200+ reviews?
+- What to look for in 5★ reviews ("worth every penny") vs 3★/2★ ("I wish it had...") - that's my product gap
+- What counts as proof they pay $20+ vs proof they want free?
+
+MINE 2 - Facebook Groups (Easy + Vocal):
+- What exact 5 group names to search? (Groups + [audience])
+- What 7 complaint keywords to search inside each group? (struggling, help, recommendations, tired of, hate, looking for, wish)
+- How to know if group is dead vs Active/Vocal (5-6 new complaints daily = good)
+
+MINE 3 - Reddit (Real Gold):
+- What 3 Subreddits to check?
+- How to use New + Top Past Week filters to know if problem daily or seasonal?
+- What keywords to search inside?
+
+Make it a checklist I can tick off in 90 minutes.`
+        },
+        {
+          id:'ch02-a3',
+          title:'PROMPT A3 - 5 SIGNALS VALIDATOR',
+          content: `You already have my Master Context and Ch01 Winner.
+
+I found this audience: [PASTE YOUR AUDIENCE NAME]
+I found them in: [Place 1: FB Group X 45k, Place 2: Subreddit Y 50k, Place 3: LinkedIn hashtag]
+
+Validate it against 5 signals - give me ✅ or ❌ for each with evidence:
+1. Can Pay Signal: Did you find "I bought this template and it saved me" or Gumroad $19/$39/$99? Or "any free alternative?" -> If free, KILL
+2. Concentrated Signal: Do I have 3 places where they gather? Or scattered?
+3. Vocal Signal: Do they complain daily with long posts? Or silent?
+4. Job Signal: Employees? freelancers paid in USD? business owners? Or high school/job seekers = weak?
+5. Recommendation Signal: Do they ask "What tool do you recommend?" - strongest buying intent?
+
+If they pass 4/5, say READY. If 2/5, say go back to Ch01 and pick another audience inside same market.`
+        },
+        {
+          id:'ch02-a4',
+          title:'PROMPT A4 - 20 COMPLAINTS EXTRACTOR + PAYING KEYWORDS',
+          content: `You already have my Master Context.
+
+I'm targeting audience: [YOUR AUDIENCE]
+
+Give me 10 English + 10 Arabic keywords to search for complaints and paying signals in FB Groups, Reddit, Amazon Reviews.
+
+Paying signals: "worth every penny", "I bought", "finally found something that works", "game changer", "saved me hours"
+Broke signals: "any free alternative?", "free template?", "too expensive", "can't afford"
+Complaint signals: "struggling with", "tired of", "hate when", "wish there was", "looking for", "recommendations for", "how do you handle"
+
+Also give me a table format to collect 20 verbatim complaints: Column A Verbatim Text, Column B Source, Column C Link, Column D Keywords, Column E Pain Type`
+        },
+        {
+          id:'ch02-a5',
+          title:'PROMPT A5 - FINAL AUDIENCE ONE-LINER CRAFTER',
+          content: `You already have my Master Context, Ch01 Winner, Validated Audience, 3 Places, Paying Proof and 5 Complaints from earlier in this chat.
+
+My validated audience is: [If needed paste again: AUDIENCE NAME + SCORES]
+Paying proof: [Product X at $Y with Z reviews]
+Where they hang: [3 places]
+
+Write my final one-liner in this exact format:
+"I help [specific audience with money specs] solve [specific recurring weekly problem]"
+
+Give me 5 variations: Super niche with money spec, Broader but still rich, Time-focused, Money-focused, Outcome-focused.
+Pick best and explain why it passes Can Pay + Concentrated + Vocal.
+Then tell me: Is this audience ready for Chapter 03? If yes, say GO. If no, say PIVOT audience, not market.`
+        }
+      ]
+    },
+    versionB: {
+      label: 'VERSION B: FILL-IN-THE-BLANKS',
+      desc: 'Standalone - fill [BRACKETS], no Master needed.',
+      prompts: [
+        {
+          id:'ch02-b1',
+          title:'PROMPT B1 - Broke vs Rich Split',
+          content: `I picked market [YOUR MARKET FROM CH01].
+Inside it there are 2 audiences: [AUDIENCE A - e.g., students] and [AUDIENCE B - e.g., seniors 30+ with jobs]
+Score each 1-5 on Pain, Growing, Easy to Find, Can Pay, total /20. Tell me which is ready to pay more and why, and give me 3 online places where rich audience gathers.`
+        },
+        {
+          id:'ch02-b2',
+          title:'PROMPT B2 - 3 Mines Checklist',
+          content: `My audience guess is [YOUR AUDIENCE GUESS].
+Give me exact search queries for:
+- Amazon: what product to search, how to filter Best Sellers 200+ reviews, what to look for in 5★ vs 3★ reviews
+- FB Groups: 5 exact group names to search, 7 complaint keywords to search inside
+- Reddit: 3 Subreddits to check, how to use New + Top Past Week filters
+
+Make checklist for 90 minutes.`
+        },
+        {
+          id:'ch02-b3',
+          title:'PROMPT B3 - 5 Signals Validator',
+          content: `My audience: [YOUR AUDIENCE]
+Found in: [Place1, Place2, Place3]
+Complaints found: [paste 2-3 complaints]
+
+Validate against 5 signals: Can Pay, Concentrated, Vocal, Job, Recommendation. Give ✅/❌ each. If 4/5 READY, if 2/5 go back to Ch01.`
+        },
+        {
+          id:'ch02-b4',
+          title:'PROMPT B4 - Keywords + Complaints Table',
+          content: `Targeting audience [YOUR AUDIENCE].
+Give me 10 English keywords for paying signals, broke signals, complaint signals.
+And table format for 20 verbatim complaints: Verbatim Text, Source, Link, Keywords, Pain Type.`
+        },
+        {
+          id:'ch02-b5',
+          title:'PROMPT B5 - Final One-Liner',
+          content: `My validated audience: [NAME + SCORES]
+Paying proof: [Product at $Price with X reviews]
+Where they hang: [3 places]
+
+Write 5 one-liners as "I help [specific audience with money specs] solve [recurring weekly problem]" - variations: super niche, broader, time, money, outcome. Pick best.`
+        }
+      ]
+    }
+  },
+  {
+    id: 'ch03',
+    number: '03',
+    title: 'PROBLEM HUNTING',
+    subtitle: '30 Complaints = 30 Products',
+    versionA: {
+      label: 'VERSION A: SMART CONTEXT-BASED (Master + Ch01 + Ch02 Already Pasted)',
+      desc: 'You already pasted Master + Ch01 Winner + Ch02 Audience at start of chat. AI remembers them. Just use prompt below with your 30 complaints.',
+      prompts: [
+        {
+          id:'ch03-a1',
+          title:'PROMPT A1 - GENERATE 15 REAL COMPLAINTS TO GO HUNT',
+          content: `You already have my Master Context, Ch01 Winner and Ch02 Audience from the start of this chat.
+You know my audience: [If needed remind: paste final audience sentence]
+They hang out: [3 places]
+They already pay for: [Paying proof]
+
+Task: Give me 15 REAL complaint sentences in verbatim text that I can actually find on Reddit, Facebook Groups, Amazon Reviews, YouTube Comments.
+
+Each complaint must start with:
+- "I struggle with..."
+- "I waste X hours every week on..."
+- "I wish there was..."
+- "I'm tired of..."
+- "I hate when..."
+- "How do you handle when...?"
+
+Rules: Include specific details: time (6 hours/week), money lost, or chaos. BAD: "I want to be productive" -> vague KILL. GOOD: "I waste 6 hours every week organizing client feedback from 3 tools, it's killing me"
+Make them sound like real person, slightly emotional. Also give me 10 search keywords English + Arabic.`
+        },
+        {
+          id:'ch03-a2',
+          title:'PROMPT A2 - 6 MINES EXACT SEARCH PLAN',
+          content: `You already have my Master Context, Ch01 Winner and Ch02 Audience from the start of this chat.
+
+I need to collect 30 complaints: 5 from each of 6 mines. Give me exact step-by-step search plan for 90-120 minutes:
+
+MINE 1 Amazon Reviews, MINE 2 FB Groups, MINE 3 Reddit, MINE 4 YouTube Comments, MINE 5 Gumroad/Etsy/AppSumo, MINE 6 App Store
+
+For each: what exact product/group/subreddit/video titles to search, how to filter, what keywords inside, what counts as paying signal vs free-seeker?
+
+Give table: Mine | Goal 5 | Exact Queries | What to copy | Paying check`
+        },
+        {
+          id:'ch03-a3',
+          title:'PROMPT A3 - ANALYZE MY 30 COMPLAINTS - FIND GOLDEN PROBLEM',
+          content: `You already have my Master Context, Ch01 and Ch02 from the start of this chat.
+
+Here are my 30 complaints I collected:
+[PASTE YOUR 30 COMPLAINTS HERE - Numbered 1-30, each with source, paying Yes/No, keyword]
+
+Task:
+1. Read all 30 verbatim.
+2. Extract top 10 keywords/phrases that repeat. Count how many times each repeats.
+3. Find golden problem that repeats 5+ times.
+4. For that golden problem, count paying signals.
+5. Is it ready to pay or looking for free?
+6. Suggest product type: Template $19? Notion $29? Course? SaaS $15/mo? Community?
+
+Give table: Keyword | Count | Is Golden? (>=5) | Paying Yes Count | Verdict`
+        },
+        {
+          id:'ch03-a4',
+          title:'PROMPT A4 - PAYING SIGNALS DETECTOR',
+          content: `You already have my Master Context and Ch02 Audience.
+
+I need to prove this audience pays. From my 30 complaints below, extract 5 sentences that PROVE paying intent.
+
+[PASTE YOUR 30 COMPLAINTS HERE]
+
+Look for: "I bought this template and it saved me", "I would pay for...", "Worth every penny", "Finally found something that works", "Game changer"
+Flag broke signals: "Any free alternative?", "Free template?", "Too expensive"
+
+Give me 5 paying proof sentences verbatim with source + 5 broke signals to avoid + Verdict: Can Pay 5/5 or 1/5?`
+        },
+        {
+          id:'ch03-a5',
+          title:'PROMPT A5 - TURN GOLDEN PROBLEM INTO PRODUCT IDEAS',
+          content: `You already have my Master Context, Ch01 and Ch02. Golden problem already discussed.
+
+My golden problem that repeats 8 times is: [PASTE GOLDEN PROBLEM]
+Paying signals: [3 said "I would pay for simple sheet"]
+
+Task: Turn this ONE golden problem into 5 product ideas:
+1. Template $19-$29
+2. System/Workflow $49
+3. Course $99
+4. SaaS $15/mo - 2-3 features only
+5. Community $20/mo
+
+For each: Name, Promise, What it includes (3 bullets), Why they would pay (based on time/money pain).`
+        }
+      ]
+    },
+    versionB: {
+      label: 'VERSION B: FILL-IN-THE-BLANKS',
+      desc: 'Standalone - fill [BRACKETS]',
+      prompts: [
+        {
+          id:'ch03-b1',
+          title:'PROMPT B1 - Generate 15 Complaints',
+          content: `I'm targeting audience [YOUR EXACT AUDIENCE].
+Give me 15 real verbatim complaint sentences starting with "I struggle with - I waste time on - I wish there was"
+Include specific details like 6 hours/week, messy, forget. Bad example "I want to succeed" is vague.
+Give me 10 search keywords English + Arabic.`
+        },
+        {
+          id:'ch03-b2',
+          title:'PROMPT B2 - 6 Mines Plan',
+          content: `I need 30 complaints, 5 from each of 6 mines: Amazon Reviews, FB Groups, Reddit, YouTube Comments, Gumroad/Etsy, App Store.
+My audience is [YOUR AUDIENCE].
+Give me exact search plan: what product/group/subreddit/video titles to search, how to filter, what keywords inside, what counts as paying signal.`
+        },
+        {
+          id:'ch03-b3',
+          title:'PROMPT B3 - Analyze 30 Complaints',
+          content: `Here are my 30 complaints:
+[PASTE 30 HERE with source, paying Yes/No, keyword]
+Find top 10 keywords that repeat, count, find golden problem repeating 5+ times, count paying signals, tell if ready to pay, suggest product type.`
+        },
+        {
+          id:'ch03-b4',
+          title:'PROMPT B4 - Paying Signals',
+          content: `From my 30 complaints [PASTE], extract 5 sentences proving paying intent and flag broke signals.
+Verdict Can Pay 5/5 or 1/5?`
+        },
+        {
+          id:'ch03-b5',
+          title:'PROMPT B5 - Product Ideas from Golden',
+          content: `My golden problem repeating 8 times is [YOUR GOLDEN PROBLEM] with paying signals [X said would pay].
+Turn into 5 product ideas: Template, System, Course, SaaS, Community. For each: Name, Promise, Includes, Why they'd pay.`
+        }
+      ]
+    }
+  },
+  {
+    id: 'ch04',
+    number: '04',
+    title: 'OFFER PAGE BUILDER',
+    subtitle: '10 Sections + P.A.G.E Score /20',
+    versionA: {
+      label: 'VERSION A: SMART CONTEXT-BASED (Master + Ch02 + Ch03 Already Pasted)',
+      desc: 'Master Context + Ch02 Audience + Ch03 Golden + 3 Complaints already pasted once at start of chat. AI remembers them. Just paste any prompt below.',
+      prompts: [
+        {
+          id:'ch04-a1',
+          title:'PROMPT A1 - CHOOSE PAGE TYPE - DECISION MATRIX',
+          content: `You already have my Master Context, Ch02 Audience and Ch03 Golden from the start of this chat.
+You also have my Ch04 context:
+My audience size: [0 / 100 / 1000 / 5000] and trust: [none / medium / high]
+First product? [yes/no]
+
+Task: Tell me which of 4 page types to choose using Decision Matrix:
+- >1000 + high trust = Pre-order $19 - GO 3 payments $19 in 48h
+- 100-1000 engaged = Deposit $5 - GO 5 reservations $5
+- 0 audience = Waitlist - GO 15 entered +5 said pay now
+- 0 audience fast test = Fake Door ethical - GO 20% clicked Buy Now
+
+Give table: Audience Size | Trust | Recommended Type | CTA Text | GO/NO-GO Metric | Why`
+        },
+        {
+          id:'ch04-a2',
+          title:'PROMPT A2 - BUILD FULL OFFER PAGE 10 SECTIONS',
+          content: `You already have my Master Context, Ch02 Audience, Ch03 Golden and Top 3 Verbatim Complaints from the start of this chat.
+
+Task: Build full offer page with 10 sections in 4 layers:
+LAYER1 HOOK Hero+Mechanism, LAYER2 PROOF Pain 3 verbatim, LAYER3 VALUE Stack+How works+Guarantee+FAQ+Video/Images, LAYER4 ACTION CTA+Scarcity+PS
+
+Structure each section with What it is + Structure + Weak vs Strong + Score.
+
+Must include:
+- Hero: How to [result] in [time] without [hate]
+- Mechanism: With [product type + how 30sec + where works]
+- Pain: 3 boxes "[verbatim with time/money]" - Name Role Source (use my 3 complaints)
+- Value Stack: Core $49 + Bonus1 $19 + Bonus2 $29 + Bonus3 $50 = $147 -> $19 first10 (MOST IMPORTANT 5pts)
+- Video 2min Loom + 4 images Before/After/Mobile/Bonus without product
+- How works 3 steps, Guarantee + FAQ 3 questions, CTA Reserve copy $19 Delivery Saturday 7 left, Scarcity First10 $19 then $39 close 48h, PS disqualifies
+
+Give full page copy ready for Gumroad + P.A.G.E Score /20.`
+        },
+        {
+          id:'ch04-a3',
+          title:'PROMPT A3 - VIDEO + IMAGES WITHOUT PRODUCT',
+          content: `You already have my Master Context, Ch02 and Ch03 Golden from start of chat.
+
+My golden problem: [If needed remind: e.g., loses revisions on WhatsApp wastes 4h/week]
+
+Task: Give exact plan to make Video 2min Loom + 4 images WITHOUT product in 30 minutes.
+
+Video: First 60 sec problem (messy WhatsApp), Next 60 sec mockup Canva table, Last 30 sec delivery date + price $19 first10
+
+Images: Before messy WhatsApp blur, After Canva table 3 rows, Mobile Google Form, Bonus 20 replies
+
+Table: Asset | What it is | How to make 5-10min | Structure | Example | Tool`
+        },
+        {
+          id:'ch04-a4',
+          title:'PROMPT A4 - WAITLIST FILTER FORM - 4 BRUTAL QUESTIONS',
+          content: `You already have my Ch02 Audience and Ch03 Golden from start of chat.
+
+I have zero audience and will use Waitlist with strong filter. Need Tally.so form with 4 questions filtering broke vs paying.
+
+My golden problem: [If needed remind: paste golden]
+
+Task: Build 4 questions:
+Q1 biggest problem detail - filters weekly pain vocal
+Q2 tried before how much paid - Checks Can Pay
+Q3 if stays 30 days lose how much - Checks urgency
+Q4 will pay $19 Yes now / Yes $5 / No - Direct intent
+
+Table: # | Question | Why filters | Good answer (paying) | Bad answer (broke kill)
+Also give CTA: Join first 15 +50% off - Answer 3Q in 60 sec`
+        },
+        {
+          id:'ch04-a5',
+          title:'PROMPT A5 - P.A.G.E SCORE AUDIT + GO/NO-GO',
+          content: `You already have my Master Context, Ch02, Ch03 from start of chat.
+
+Here is my current offer page copy:
+[PASTE YOUR 10 SECTIONS COPY FROM HTML BUILDER]
+
+Task:
+1. Score each section P.A.G.E /20 breakdown
+2. Tell GO/NO-GO based on page type
+3. Rewrite weak sections to get 16+/20 - Hero result+time+without, Value Stack $147->$19, CTA Reserve copy $19 Delivery Saturday 7 left, video/images plan, scarcity
+4. Give final improved copy ready for Gumroad
+
+Be brutally honest.`
+        }
+      ]
+    },
+    versionB: {
+      label: 'VERSION B: FILL-IN-THE-BLANKS',
+      desc: 'Standalone - fill [BRACKETS]',
+      prompts: [
+        {
+          id:'ch04-b1',
+          title:'PROMPT B1 - Choose Page Type',
+          content: `I have audience size [0 / 100 / 1000 / 5000] and trust [none / medium / high] and first product [yes/no].
+Tell me which of 4 page types to choose using Decision Matrix. Table: Size | Trust | Type | CTA | GO/NO-GO | Why`
+        },
+        {
+          id:'ch04-b2',
+          title:'PROMPT B2 - Build Full Offer Page 10 Sections',
+          content: `I have golden problem [YOUR GOLDEN] for audience [YOUR AUDIENCE].
+Build full offer page with 10 sections in 4 layers. Include Hero How to [result] in [time] without [hate], Mechanism, Pain 3 verbatim, Value Stack $147->$19, Video + Images, How works 3 steps, Guarantee + FAQ, CTA, Scarcity, PS. Give full copy + P.A.G.E Score /20.`
+        },
+        {
+          id:'ch04-b3',
+          title:'PROMPT B3 - Video Images Without Product',
+          content: `My offer page looks Fake no video no images product not made yet. My golden problem [YOUR GOLDEN] audience [YOUR AUDIENCE].
+Give plan to make Video 2min Loom + 4 images Before After Mobile Bonus in 30 min. Table: Asset | What | How | Structure | Example | Tool`
+        },
+        {
+          id:'ch04-b4',
+          title:'PROMPT B4 - Waitlist Filter Form',
+          content: `I have zero audience will use Waitlist filter. My golden problem [YOUR GOLDEN].
+Build 4 questions for Tally form filtering broke vs paying. Table: # | Question | Why | Good paying answer | Bad broke kill`
+        },
+        {
+          id:'ch04-b5',
+          title:'PROMPT B5 - P.A.G.E Score Audit',
+          content: `Here is my offer page copy:
+[PASTE YOUR 10 SECTIONS]
+Score each P.A.G.E /20, tell GO/NO-GO, rewrite weak sections to get 16+/20, give final improved copy ready Gumroad.`
+        }
+      ]
+    }
+  },
+  {
+    id: 'ch05',
+    number: '05',
+    title: '48H VALIDATION SPRINT',
+    subtitle: 'Get 3 Payments in 48h',
+    versionA: {
+      label: 'VERSION A: SMART CONTEXT-BASED (Master + Ch02 + Ch03 + Ch04 Already Pasted)',
+      desc: 'Master Context + Ch02 Audience + Ch03 Golden + Ch04 Offer Page (Hero + Value Stack + CTA type + Delivery) already pasted once at start of chat. Just use prompts below.',
+      prompts: [
+        {
+          id:'ch05-a1',
+          title:'PROMPT A1 - 48H SPRINT PLAN - HAVE AUDIENCE vs ZERO vs COMMUNITY',
+          content: `You already have my Master Context, Ch02 Audience, Ch03 Golden and Ch04 Offer Page from the start of this chat.
+My audience size: [0 / 100 / 1000 / 5000] and trust [none / medium / high]
+Have community? [Telegram / Discord / Skool / None]
+
+Task: Give me 48h sprint plan to get 3 payments $19 or 5 reservations $5 or 15 strong waitlist +3 say I'll pay now.
+
+- If have audience (500+): 3 IG stories Day1 (Poll, Screenshot page, Close Friends link) + Broadcast Channel + DM script + LinkedIn B2B + TikTok 30sec Hook
+- If zero audience: Facebook groups no ban method (20 comments = 15 waitlist). Search group, find complaint post 3 days ago, comment without link "Exactly same problem... 2 weeks testing simple Sheet logs revision 30s from phone... Opening waitlist first 15 $9 instead $19 delivery Saturday DM me" -> DM -> Tally link. Don't put link in comment. Reddit same, YouTube, Quora, LinkedIn cold 20 requests.
+- If community: Poll first then DM only Yes voters. Skool Founding Members Offer.
+
+Give table: Platform | Situation | Goal | Script | Where put link | Avoid ban tip | Expected result`
+        },
+        {
+          id:'ch05-a2',
+          title:'PROMPT A2 - SCRIPTS BY PLATFORM - COPY-PASTE READY',
+          content: `You already have my Master Context, Ch02, Ch03 Golden and Ch04 Offer Page from the start of this chat.
+
+I need 3 scripts copy-paste ready:
+
+Script1: Instagram 3 stories Day1 + DM for Interested - Goal 3 payments $19 in 24h - Story1 Poll, Story2 Screenshot page, Story3 Close Friends only + Gumroad link + Broadcast + DM script
+
+Script2: Facebook group comment without ban + Reddit comment - Goal 15 waitlist joins from 20 comments - No link in comment, have them DM you, then send Tally link. Search group for posts complaining about "WhatsApp revisions"
+
+Script3: Skool Founding Members Offer - Goal 3 payments $19 from paid community - I'm building [Product Name], solves [Key Problem] saves [Time]. Open for first10 as Founding Members $19 instead $39 lifetime + 30-min call + name in thank you page.
+
+Give all 3 scripts copy-paste ready with placeholders [Name] [Link] [Golden Problem] [Time Saved].`
+        },
+        {
+          id:'ch05-a3',
+          title:'PROMPT A3 - GO / PIVOT / NO-GO DECISION AFTER 48H',
+          content: `You already have my Master, Ch02, Ch03, Ch04 from earlier.
+
+My 48h results:
+- How many saw page? [number]
+- How many clicked CTA? [number]
+- How many joined waitlist? [number]
+- How many said I'll pay now? [number]
+- How many paid $19 / $5? [number]
+- What objections? [Expensive / Not understand / Free alternative?]
+- Page type: [Pre-order / Deposit / Waitlist / Fake Door]
+
+Task: Tell decision:
+GO = Build now if got 3x $19 OR 5x $5 OR 15 strong waitlist +3 said I'll pay now OR Fake Door 10 clicks (20%)
+PIVOT = Fix offer/angle if got 15 waitlist but all said expensive
+NO-GO = Back to Part 2 if 50 DMs + 20 comments no join
+
+Analyze my numbers and tell me which + what to do next exactly.`
+        },
+        {
+          id:'ch05-a4',
+          title:'PROMPT A4 - OBJECTION HANDLING',
+          content: `You already have my Ch04 Offer Page from start of chat.
+
+During 48h sprint people said:
+- "Expensive"
+- "Don't understand what I'll get"
+- "Free alternative exists"
+- "I'll think about it"
+
+Task: Give 3 reply scripts for each objection to convert to payment, using Value Stack $147->$19 and Guarantee "If doesn't save 4h first week refund $19" and scarcity "First10 $19 then $39 close after 48h"
+
+Table: Objection | Why they say it | Reply script copy-paste | When to use`
+        },
+        {
+          id:'ch05-a5',
+          title:'PROMPT A5 - ZERO AUDIENCE 20 COMMENTS PLAN - NO BAN',
+          content: `You already have my Ch02 Audience and Ch03 Golden from start of chat.
+
+I have zero audience. Need to get 15 strong waitlist joins in 48h from FB groups + Reddit + LinkedIn cold without getting banned.
+
+Give exact 48h plan hour by hour:
+Day1 Morning: Find 3 FB groups 10k+ where audience gathers, search "Modifications - WhatsApp - revisions", find 5 posts complaining, list links
+Day1 Afternoon: Write 10 comments script "I have same problem..." without link, let them DM you then Tally link. How to avoid ban? No link.
+Day1 Evening: Find 2 Subreddits, search struggling with revisions, 5 posts, 5 comments no link
+Day2 Morning: LinkedIn search Video Editor 20 profiles 20 requests with note
+Day2 Afternoon: Follow up DMs payment/Tally link
+Day2 Evening: Log sheet
+
+Goal: 20 comments + 20 LinkedIn = 15 waitlist + 4 said I'll pay now = GO
+
+Give checklist with times.`
+        }
+      ]
+    },
+    versionB: {
+      label: 'VERSION B: FILL-IN-THE-BLANKS',
+      desc: 'Standalone - fill [BRACKETS]',
+      prompts: [
+        {
+          id:'ch05-b1',
+          title:'PROMPT B1 - 48h Sprint Plan',
+          content: `I have offer page [link or description] for audience [YOUR AUDIENCE] and golden problem [YOUR GOLDEN]. My page type [Pre-order $19 / Deposit $5 / Waitlist / Fake Door] delivery Saturday 8PM.
+Give me 48h sprint plan to get 3 payments $19 or 5 reservations $5 or 15 strong waitlist +3 pay now.
+Include Have audience IG stories, Zero audience FB groups no ban 20 comments = 15 waitlist, Reddit, YouTube, Quora, LinkedIn cold, Community Poll then DM, Skool Founding Members. Table: Platform | Situation | Goal | Script | Where put link | Avoid ban tip | Expected result`
+        },
+        {
+          id:'ch05-b2',
+          title:'PROMPT B2 - Scripts Copy-Paste',
+          content: `I have offer page [description] for audience [YOUR AUDIENCE] problem [YOUR PROBLEM] value stack $147->$19 delivery Saturday 8PM.
+Write 3 scripts copy-paste: Instagram 3 stories + DM, Facebook group comment without ban + Reddit comment, Skool Founding Members Offer. Include placeholders [Name] [Link].`
+        },
+        {
+          id:'ch05-b3',
+          title:'PROMPT B3 - GO/PIVOT/NO-GO Decision',
+          content: `My 48h results: Saw page [number], Clicked CTA [number], Joined waitlist [number], Said I'll pay now [number], Paid $19/$5 [number], Objections [Expensive/Not understand/Free], Page type [Pre-order/Deposit/Waitlist/Fake Door]
+Tell decision: GO if 3x $19 OR 5x $5 OR 15 strong +3 pay now OR 10 clicks 20%, PIVOT if 15 waitlist but expensive, NO-GO if 50 DMs +20 comments no join. Analyze and tell what to do next.`
+        },
+        {
+          id:'ch05-b4',
+          title:'PROMPT B4 - Objection Handling',
+          content: `During 48h sprint people said Expensive / Not understand / Free alternative / I'll think.
+Give reply scripts for each objection using Value Stack $147->$19 + Guarantee refund if doesn't save 4h + Scarcity first10 $19 then $39 close 48h. Table: Objection | Why | Reply script | When to use`
+        },
+        {
+          id:'ch05-b5',
+          title:'PROMPT B5 - Zero Audience 20 Comments Plan No Ban',
+          content: `I have zero audience audience [YOUR AUDIENCE] golden problem [YOUR GOLDEN].
+Give exact 48h hour-by-hour plan to get 15 waitlist from FB groups + Reddit + LinkedIn cold without ban. Checklist with times.`
+        }
+      ]
+    }
+  }
+];
+
+function loadTabs(){
+  try{ return JSON.parse(localStorage.getItem(STORAGE_KEY) || '{}'); }catch(e){return {}}
 }
-updateProgress();
-setInterval(updateProgress, 2000);
+function saveTabs(obj){ localStorage.setItem(STORAGE_KEY, JSON.stringify(obj)); }
+function loadOpen(){
+  try{ return JSON.parse(localStorage.getItem(OPEN_KEY) || '{}'); }catch(e){return {}}
+}
+function saveOpen(obj){ localStorage.setItem(OPEN_KEY, JSON.stringify(obj)); }
+
+let tabsState = loadTabs();
+let openState = loadOpen();
+if(Object.keys(openState).length === 0){
+  chapters.forEach((ch, idx) => { openState[ch.id] = idx === 0; });
+  saveOpen(openState);
+}
+
+function render(){
+  const container = document.getElementById('chaptersContainer');
+  const query = (document.getElementById('searchInput').value || '').toLowerCase();
+  
+  container.innerHTML = chapters.map(ch => {
+    const activeTab = tabsState[ch.id] || 'A';
+    const isOpen = openState[ch.id] !== false;
+    
+    const filterPrompt = (p) => {
+      if(!query) return true;
+      return (p.title + ' ' + p.content).toLowerCase().includes(query);
+    };
+    
+    const versionAFiltered = ch.versionA.prompts.filter(filterPrompt);
+    const versionBFiltered = ch.versionB.prompts.filter(filterPrompt);
+    
+    if(query && versionAFiltered.length===0 && versionBFiltered.length===0) return '';
+    
+    const totalPrompts = ch.versionA.prompts.length + ch.versionB.prompts.length;
+    const visibleCount = activeTab==='A' ? versionAFiltered.length : versionBFiltered.length;
+    
+    return `
+    <div class="bg-white rounded-[20px] border border-zinc-200 shadow-[0_4px_24px_rgba(0,0,0,0.04)] overflow-hidden transition-all">
+      <button onclick="toggleChapter('${ch.id}')" class="w-full p-5 md:p-6 text-left hover:bg-zinc-50/70 transition flex items-center gap-3">
+        <div class="w-10 h-10 rounded-full ${isOpen ? 'bg-zinc-900 text-white' : 'bg-zinc-100 text-zinc-600'} flex items-center justify-center font-black text-[14px] transition-colors">${ch.number}</div>
+        <div class="flex-1 min-w-0 text-left">
+          <div class="flex items-center gap-2 flex-wrap">
+            <h2 class="font-black text-[16px] md:text-[18px] tracking-tight">${ch.title}</h2>
+            <span class="text-[11px] px-2.5 py-1 rounded-full bg-[#FFF8E7] border border-[#C9A84C]/30 text-[#8a6d2b] font-bold">${totalPrompts} prompts</span>
+            <span class="text-[11px] text-zinc-500 hidden md:inline">${ch.subtitle}</span>
+          </div>
+          <p class="md:hidden text-[11px] text-zinc-500 mt-1 truncate">${ch.subtitle}</p>
+        </div>
+        <div class="flex items-center gap-2 ml-2">
+          <span class="text-[11px] font-bold px-3 py-1.5 rounded-full ${isOpen ? 'bg-zinc-900 text-white' : 'bg-zinc-100 text-zinc-600'} transition-colors">
+            ${isOpen ? '− Collapse' : '+ Expand'} ${!isOpen ? `• ${visibleCount}` : ''}
+          </span>
+          <div class="w-6 h-6 rounded-full border border-zinc-200 flex items-center justify-center text-[10px] transition-transform ${isOpen ? 'rotate-180' : ''}">▼</div>
+        </div>
+      </button>
+      
+      <div id="body_${ch.id}" class="overflow-hidden transition-all duration-300 ease-out ${isOpen ? 'max-h-[10000px] opacity-100' : 'max-h-0 opacity-0'}">
+        <div class="border-t border-zinc-100">
+          <div class="p-4 bg-zinc-50/70 border-b border-zinc-100">
+            <div class="flex gap-2">
+              <button onclick="switchTab('${ch.id}','A'); event.stopPropagation();" class="flex-1 md:flex-none text-[12px] font-bold px-5 py-3 rounded-full border transition ${activeTab==='A' ? 'tab-active' : 'tab-inactive'}">
+                <span class="hidden md:inline">${ch.versionA.label}</span>
+                <span class="md:hidden">Version A</span>
+                <span class="ml-2 text-[10px] opacity-70">(${versionAFiltered.length})</span>
+              </button>
+              <button onclick="switchTab('${ch.id}','B'); event.stopPropagation();" class="flex-1 md:flex-none text-[12px] font-bold px-5 py-3 rounded-full border transition ${activeTab==='B' ? 'tab-active' : 'tab-inactive'}">
+                <span class="hidden md:inline">${ch.versionB.label}</span>
+                <span class="md:hidden">Version B</span>
+                <span class="ml-2 text-[10px] opacity-70">(${versionBFiltered.length})</span>
+              </button>
+            </div>
+            <p class="mt-3 text-[11px] text-zinc-500 leading-relaxed">${activeTab==='A' ? ch.versionA.desc : ch.versionB.desc}</p>
+          </div>
+          
+          <div class="p-3 md:p-4 bg-[#faf9f6] space-y-4">
+            ${(activeTab==='A' ? versionAFiltered : versionBFiltered).map(p => `
+              <div class="bg-white border border-zinc-200 rounded-[16px] overflow-hidden hover:border-zinc-300 transition">
+                <div class="p-4">
+                  <h3 class="font-bold text-[13px] md:text-[14px] leading-tight pr-2">${p.title}</h3>
+                  <div class="mt-3 bg-zinc-900 rounded-[12px] p-4 relative group">
+                    <pre class="prompt-block mono text-[11px] md:text-[12px] text-zinc-100 leading-relaxed whitespace-pre-wrap pr-[90px]">${escapeHtml(p.content)}</pre>
+                    <button onclick="copyPrompt('${p.id}')" id="btn_${p.id}" class="copy-btn absolute top-3 right-3 bg-white text-zinc-900 font-bold text-[11px] px-4 py-2 rounded-full hover:bg-[#C9A84C] transition shadow-lg">
+                      📋 Copy
+                    </button>
+                  </div>
+                </div>
+              </div>
+            `).join('') || '<div class="text-center py-8 text-[13px] text-zinc-500">No prompts match your search.</div>'}
+          </div>
+        </div>
+      </div>
+    </div>
+    `;
+  }).join('');
+}
+
+function escapeHtml(str){ return str.replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;'); }
+function switchTab(chId, tab){
+  tabsState[chId]=tab;
+  saveTabs(tabsState);
+  render();
+  if(openState[chId]===false){ openState[chId]=true; saveOpen(openState); }
+}
+function toggleChapter(chId){
+  openState[chId] = !openState[chId];
+  saveOpen(openState);
+  render();
+}
+function copyPrompt(promptId){
+  let content = '';
+  for(const ch of chapters){
+    for(const p of [...ch.versionA.prompts, ...ch.versionB.prompts]){
+      if(p.id===promptId){ content=p.content; break; }
+    }
+  }
+  if(!content) return;
+  navigator.clipboard.writeText(content).then(()=>{
+    const btn = document.getElementById('btn_'+promptId);
+    if(!btn) return;
+    const old = btn.innerHTML;
+    btn.innerHTML = '✅ Copied!';
+    btn.classList.add('bg-[#C9A84C]');
+    setTimeout(()=>{ btn.innerHTML = old; btn.classList.remove('bg-[#C9A84C]'); },1500);
+  });
+}
+document.getElementById('searchInput').addEventListener('input', render);
+render();
 </script>
 </body>
 </html>
